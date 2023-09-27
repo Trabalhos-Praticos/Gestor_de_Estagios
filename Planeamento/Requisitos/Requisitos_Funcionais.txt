@@ -1,0 +1,39 @@
+Coordenador de Curso
+
+Como Coordenador de curso posso Acrescentar ofertas de estagio;
+
+Como Coordenador de curso posso registar os alunos em estagio;
+
+Como Coordenador de curso posso atribuir estagio a um aluno;
+
+Como coordenador de curso posso exportar um documento de todos os alunos;
+
+Como coordenador de curso posso exportar todos os documentos referentes a um aluno;
+
+Como coordenador de curso posso criar alertas;
+
+Como coordenador de curso posso enviar alertas.
+
+como coordenador de curso posso efetuar login na plataforma.
+
+Como coordenador de curso posso fornecer informações referentes às empresas com oferta de estágio;
+
+
+
+Aluno
+
+como aluno posso consultar todos os estágios disponíveis;
+
+como aluno posso consultar informação sobre as empresas com oferta de estágio;
+
+como aluno posso acrescentar assiduidade do mês;
+
+como aluno posso acrescentar o plano de estagio;
+
+como aluno posso acrescentar o relatório de estagio;
+
+Como aluno posso efetuar login na plataforma.
+
+Como aluno devo fornecer as minhas informações pessoais e profissionais (Curriculum Vitae);
+
+Como aluno devo escolher duas opções de área de estágio;

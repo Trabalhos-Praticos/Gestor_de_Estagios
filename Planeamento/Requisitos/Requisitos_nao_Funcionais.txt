@@ -1,0 +1,7 @@
+A interface deve ter um aspeto moderno.
+
+O login da plataforma será utilizado o email escolar.
+
+A interface deverá ser otimizada.
+
+Informações da empresa geradas para o aluno (o documento deve conter todas as informaçoes necessarias sobre a impresa).
