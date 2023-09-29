@@ -1,0 +1,73 @@
+<mxfile host="Electron" modified="2023-09-27T20:44:34.879Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="pVHMsTow_VlQXMNGsZ2b" version="21.7.5" type="device">
+  <diagram name="Página-1" id="rpqNmyPRvnypmdpf9RWT">
+    <mxGraphModel dx="880" dy="527" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aVHOaRRhzYFvku1WxRMA-1" value="Aluno" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="339" y="130" width="160" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="aVHOaRRhzYFvku1WxRMA-2" value="Email&lt;br&gt;Password&lt;br&gt;Nome&lt;br&gt;Cordenador de curso&lt;br&gt;Curso&lt;br&gt;Ano&lt;br&gt;ID&lt;br&gt;Tutor de Estagio" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="aVHOaRRhzYFvku1WxRMA-1" vertex="1">
+          <mxGeometry y="50" width="160" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-1" value="Empresa" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="579" y="375" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-2" value="CAE&lt;br&gt;Nome&lt;br&gt;Morada" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="_cklOQgLQtkoXtS7veaS-1">
+          <mxGeometry y="50" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-4" value="Estagio" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="349" y="360" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-5" value="Hora de entrada&lt;br&gt;Hora de saida&lt;br&gt;Data&lt;br&gt;nome do aluno&lt;br&gt;CAE da empresa&lt;br&gt;Cordenador de Curso&lt;br&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="_cklOQgLQtkoXtS7veaS-4">
+          <mxGeometry y="50" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=ERzeroToMany;endFill=0;startArrow=ERmandOne;startFill=0;" edge="1" parent="1" source="_cklOQgLQtkoXtS7veaS-2" target="_cklOQgLQtkoXtS7veaS-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=ERmandOne;endFill=0;startArrow=ERmandOne;startFill=0;" edge="1" parent="1" source="aVHOaRRhzYFvku1WxRMA-2" target="_cklOQgLQtkoXtS7veaS-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="419" y="340" />
+              <mxPoint x="329" y="340" />
+              <mxPoint x="329" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-8" value="Cordenador de Curso" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="89" y="140" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-9" value="Email&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Password&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Nome&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Cordenador de curso&lt;br&gt;Curso&lt;br&gt;ID" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="_cklOQgLQtkoXtS7veaS-8">
+          <mxGeometry y="50" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;endArrow=ERoneToMany;endFill=0;startArrow=ERmandOne;startFill=0;" edge="1" parent="1" source="_cklOQgLQtkoXtS7veaS-9" target="_cklOQgLQtkoXtS7veaS-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="169" y="350" />
+              <mxPoint x="299" y="350" />
+              <mxPoint x="299" y="485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-14" value="Tutor de Estagio" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="549" y="140" width="170" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-15" value="Email&lt;br&gt;Password&lt;br&gt;Nome&lt;br&gt;ID&lt;br&gt;ID_Aluno" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="_cklOQgLQtkoXtS7veaS-14">
+          <mxGeometry y="50" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=ERmandOne;endFill=0;startArrow=ERoneToMany;startFill=0;" edge="1" parent="1" source="aVHOaRRhzYFvku1WxRMA-2" target="_cklOQgLQtkoXtS7veaS-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="524" y="213" />
+              <mxPoint x="524" y="320" />
+              <mxPoint x="634" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_cklOQgLQtkoXtS7veaS-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=ERmandOne;endFill=0;startArrow=ERoneToMany;startFill=0;" edge="1" parent="1" source="aVHOaRRhzYFvku1WxRMA-2" target="_cklOQgLQtkoXtS7veaS-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
