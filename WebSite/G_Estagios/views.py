@@ -32,6 +32,7 @@ def register(request):
         return HttpResponse("Já existe um utilizador com esse email.")
     else:
         confirmation_code = send_confirmation_email(Email)
+        activateEmail
         Password=request.POST.get('Password')
         Nome = request.POST.get('Nome')
         V_e= verify_email(Email)
