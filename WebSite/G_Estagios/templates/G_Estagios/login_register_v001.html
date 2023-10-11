@@ -30,15 +30,9 @@
             </div>
             <input type="submit" value="Login" class="btn solid" />
           </form>
-          {% if messages %}
-              <ul class="messages">
-              {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-              {% endfor %}
-              </ul>
-          {% endif %}
           <form action="{% url "register" %}" class="sign-up-form" method='POST'  >
             {% csrf_token %}
+            <p>{{ mensagem }}</p>
             <h2 class="title">Criar conta</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>

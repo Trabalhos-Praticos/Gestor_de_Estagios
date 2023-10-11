@@ -1,13 +1,28 @@
 from django.http import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import verify_email,CustomUser
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
+from django.contrib.auth.models import Group
 
 
 
+
+@login_required
+def D_v(request):
+    user = request.user
+    is_aluno = user.groups.filter(name='Alunos').exists()
+    is_professor = user.groups.filter(name='Professores').exists()
+    
+    context = {
+        'is_aluno': is_aluno,
+        'is_professor': is_professor,
+        'user_name': user.username  # Nome do usuário
+    }
+    return render(request, 'Dashboard.html', context)
 
 
 def Mainpage(request):
@@ -38,16 +53,17 @@ def register(request):
         if V_e == "Invalido":
             messages.error(request, 'Email invalido')
             return render(request, 'Registo_Users/login.html')
-        elif V_e== 'Aluno':
-            newuser.groups.add(name='Aluno')
+        elif V_e == 'Aluno':
             newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
             newuser.save()
-            return render(request,'')
-        elif V_e== 'Professor':
+            mensagem = "User registado com sucesso"
+            contexto = {'mensagem': mensagem}
+            return render(request,'G_Estagios/login_register_v001.html', contexto)
+        elif V_e == 'Professor':
+            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
+            newuser.save()
             newuser.groups.add(name='Professor')
-            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
-            newuser.save()
-            return HttpResponse('Parabens está registado')
+            return render(request,'G_Estagios/login_register_v001.html')
 
 def login_view(request):
     
