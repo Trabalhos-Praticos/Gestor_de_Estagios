@@ -42,13 +42,12 @@ def register(request):
             newuser.groups.add(name='Aluno')
             newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
             newuser.save()
-            return HttpResponse('Parabens está registado')
+            return render(request,'')
         elif V_e== 'Professor':
             newuser.groups.add(name='Professor')
             newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
             newuser.save()
             return HttpResponse('Parabens está registado')
-    
 
 def login_view(request):
     
