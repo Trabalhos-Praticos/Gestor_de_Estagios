@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
-from .models import verify_email,CustomUser, send_confirmation_email
+from .models import verify_email,CustomUser
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -31,15 +31,14 @@ def register(request):
     if V_Email:
         return HttpResponse("Já existe um utilizador com esse email.")
     else:
-        confirmation_code = send_confirmation_email(Email)
-        activateEmail
+        #confirmation_code = send_confirmation_email(Email)
         Password=request.POST.get('Password')
         Nome = request.POST.get('Nome')
         V_e= verify_email(Email)
         if V_e == "Invalido":
             messages.error(request, 'Email invalido')
             return render(request, 'Registo_Users/login.html')
-        newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,confirmation_code=confirmation_code)
+        newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
         newuser.save()
         return HttpResponse('Parabens está registado')
     

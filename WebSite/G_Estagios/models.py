@@ -18,17 +18,10 @@ class CustomUser(AbstractUser):
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
     is_confirmed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
-    confirmation_code= models.CharField(max_length=255)
+    #confirmation_code= models.CharField(max_length=255)
 
 
-class Assiduidade(models.Model):
-    id=models.AutoField(primary_key=True)
-    data=models.DateField(auto_created=True,blank=True)
-    id_Aluno=models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
-    File = models.FileField(upload_to='Documentos/Assiduidade/',blank=True)
-    
 
-    
 #Função que guarda o upload feito
 def Upload_Assiduidade(request, id_aluno, id_assiduidade):
     if request.method == 'POST' and request.FILES['arquivo']:
@@ -72,19 +65,30 @@ def Upload_Assiduidade(request, id_aluno, id_assiduidade):
 class Polo(models.Model):
     id=models.AutoField(primary_key=True)
     nome=models.CharField(max_length=50)
-def Add_Polo(request):
-    pass
+    def __str__(self):
+        return self.nome
+
 class Curso(models.Model):
     id = models.AutoField(primary_key=True)
     nome_curso= models.CharField(max_length=70,blank=True)
     Polo= models.ForeignKey(Polo,on_delete=models.DO_NOTHING)
+    def __str__(self):
+        return self.nome_curso
 def Add_Curso(request):
     pass
 class Empresa(models.Model):
     id= models.AutoField(primary_key=True)
     nome = models.CharField(max_length=120,blank=True)
+    def __str__(self):
+        return self.nome_curso
+class Assiduidade(models.Model):
+    id=models.AutoField(primary_key=True)
+    data=models.DateField(auto_created=True,blank=True)
+    id_Aluno=models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
+    File = models.FileField(upload_to='Documentos/Assiduidade/',blank=True)
+    
 
-
+    
 class Estagio(models.Model):
     id = models.AutoField(primary_key=True)
     horas_totais = models.IntegerField(blank=True)
@@ -111,26 +115,26 @@ def verify_email(Email):
     if Email.endswith('@ipvc.pt'):
         return 'Aluno'
     elif not Email.endswith('ipvc.pt'):
-        return 'Externo'
+        return 'invalido'
 
 
 #Gera ium codigo unico 
-def generate_unique_confirmation_code():
-    while True:
-        characters = string.ascii_letters + string.digits
-        confirmation_code = ''.join(secrets.choice(characters) for _ in range(20))
+# def generate_unique_confirmation_code():
+#     while True:
+#         characters = string.ascii_letters + string.digits
+#         confirmation_code = ''.join(secrets.choice(characters) for _ in range(20))
         
-        # Verifique se o código já existe na base de dados
-        if not CustomUser.objects.filter(confirmation_code=confirmation_code).exists():
-            return confirmation_code
+#         # Verifique se o código já existe na base de dados
+#         if not CustomUser.objects.filter(confirmation_code=confirmation_code).exists():
+#             return confirmation_code
 
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 
-def send_confirmation_email(Email):
-    confirmation_code = generate_unique_confirmation_code()
-    subject = 'Confirmação de Registro'
-    message = f'Seja bem-vindo ao nosso site! Seu código de confirmação é: {confirmation_code}'
-    from_email = 'esquilogpg2@gmail.com'
-    recipient_list = [Email]
-    send_mail(subject, message, from_email, recipient_list)
-    return confirmation_code
+# def send_confirmation_email(Email):
+#     confirmation_code = generate_unique_confirmation_code()
+#     subject = 'Confirmação de Registro'
+#     message = f'Seja bem-vindo ao nosso site! Seu código de confirmação é: {confirmation_code}'
+#     from_email = 'esquilogpg2@gmail.com'
+#     recipient_list = [Email]
+#     send_mail(subject, message, from_email, recipient_list)
+#     return confirmation_code
