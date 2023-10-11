@@ -38,9 +38,16 @@ def register(request):
         if V_e == "Invalido":
             messages.error(request, 'Email invalido')
             return render(request, 'Registo_Users/login.html')
-        newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
-        newuser.save()
-        return HttpResponse('Parabens está registado')
+        elif V_e== 'Aluno':
+            newuser.groups.add(name='Aluno')
+            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
+            newuser.save()
+            return HttpResponse('Parabens está registado')
+        elif V_e== 'Professor':
+            newuser.groups.add(name='Professor')
+            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
+            newuser.save()
+            return HttpResponse('Parabens está registado')
     
 
 def login_view(request):
