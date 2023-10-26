@@ -8,7 +8,7 @@ Este é um projeto que pode vir a ajudar muitas escolas que ainda não tenham es
 ## Framework
 ### Django
    Django é uma framework de desenvolvimento web em Python que facilita a criação de sites e aplicações web. Ele fornece um conjunto de ferramentas e funcionalidades pré-construídas para ajudar o processo de desenvolvimento, incluindo gestão de bases de dados, autenticação de utilizadores e criação de interfaces de administração.
- - Vantagens
+ - **Vantagens**
     - Produtividade: O Django fornece uma série de componentes pré-construídos e funcionalidades comuns, o que acelera o desenvolvimento de aplicações web. Isso permite que os desenvolvedores se concentrem mais na lógica específica da aplicação em vez de reinventar a roda.
       
     - Segurança: O Django possui medidas de segurança integradas para proteger contra vulnerabilidades comuns, como a injeção de SQL, cross-site scripting (XSS) e cross-site request forgery (CSRF). Isso ajuda a desenvolver aplicações mais seguras por padrão.
