@@ -123,8 +123,7 @@ def verify_email(Email):
 #     while True:
 #         characters = string.ascii_letters + string.digits
 #         confirmation_code = ''.join(secrets.choice(characters) for _ in range(20))
-        
-#         # Verifique se o código já existe na base de dados
+        # Verifique se o código já existe na base de dados
 #         if not CustomUser.objects.filter(confirmation_code=confirmation_code).exists():
 #             return confirmation_code
 
