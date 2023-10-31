@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
     is_Coordenador_Curso=models.BooleanField(default=False)
     is_Tutor_estagio_Empresa=models.BooleanField(default=False)
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
-    is_confirmed = models.BooleanField(default=False)
+    #is_confirmed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
     #confirmation_code= models.CharField(max_length=255)
 
@@ -101,10 +101,6 @@ class Estagio(models.Model):
     Assiduidade = models.ForeignKey(Assiduidade, on_delete=models.DO_NOTHING)
     id_Protocolos=models.ForeignKey(Protocolos, on_delete=models.DO_NOTHING)
     id_Tutor_empresa = models.ForeignKey(Empresa, related_name='tutor_Empresa',on_delete=models.DO_NOTHING)
-    
-    
-#class Assiduidade(models.models):
-#   pass
 
     
 

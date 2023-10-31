@@ -8,11 +8,11 @@
 </head>
 <body>
     {% if is_aluno %}
-    <p>Olá aluno "{{ user_name }}"</p>
+    <p>Olá aluno {{ user_name }}</p>
     {% elif is_professor %}
-    <p>Olá professor "{{ user_name }}"</p>
+    <p>Olá professor {{ user_name }}</p>
     {% else %}
-    <p>Olá usuário "{{ user_name }}"</p>
+    <p>Olá usuário {{ user_name }}</p>
     {% endif %}
 </body>
 </html>

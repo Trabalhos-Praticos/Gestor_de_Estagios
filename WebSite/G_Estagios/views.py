@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 from .models import verify_email,CustomUser
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
@@ -20,18 +21,14 @@ def D_v(request):
     context = {
         'is_aluno': is_aluno,
         'is_professor': is_professor,
-        'user_name': user.username  # Nome do usuário
+        'user_name': user.first_name  # Nome do usuário
     }
-    return render(request, 'Dashboard.html', context)
+    return render(request, 'G_Estagios/dashboard.html', context)
 
 
 def Mainpage(request):
     if request.method == "GET":
         return render(request,'G_Estagios/login_register_v001.html')
-
-def dashboard(request):
-    if request.method == "GET":
-        return render(request,'Registo_Users/dashboard.html')
 
 
 
@@ -73,7 +70,7 @@ def login_view(request):
     if user is not None:
         login(request, user)
         # Redirecione para uma página de sucesso.
-        return HttpResponse("logado")
+        return HttpResponseRedirect(reverse('dash'))
         
     else:
         # Retorne uma mensagem de erro de 'login inválido'.
