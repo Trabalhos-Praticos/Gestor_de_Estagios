@@ -26,7 +26,11 @@ def D_v(request):
     return render(request, 'G_Estagios/dashboard.html', context)
 
 
-def Mainpage(request):
+def Register(request):
+    if request.method == "GET":
+        return render(request,'G_Estagios/login_register_v001.html')
+
+def Login(request):
     if request.method == "GET":
         return render(request,'G_Estagios/login_register_v001.html')
 
