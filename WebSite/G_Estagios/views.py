@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from .models import verify_email,CustomUser
+from .models import verify_email,CustomUser,Curso
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -14,17 +14,30 @@ from django.contrib.auth.models import Group
 
 @login_required
 def D_v(request):
-    user = request.user
-    is_aluno = user.groups.filter(name='Alunos').exists()
-    is_professor = user.groups.filter(name='Professores').exists()
+    # user = request.user
+    # is_aluno = user.groups.filter(name='Alunos').exists()
+    # is_professor = user.groups.filter(name='Professores').exists()
     
-    context = {
-        'is_aluno': is_aluno,
-        'is_professor': is_professor,
-        'user_name': user.first_name  # Nome do usuário
-    }
-    return render(request, 'G_Estagios/dashboard.html', context)
-
+    # context = {
+    #     'is_aluno': is_aluno,
+    #     'is_professor': is_professor,
+    #     'user_name': user.first_name  # Nome do usuário
+    # }
+    if request.method == "GET":
+        Users=CustomUser.objects.all()
+        curso=Curso
+        cursos=curso.objects.all()
+        return render(request, 'G_Estagios/users.html',({'cursos': cursos, 'customusers': Users}))
+    
+@login_required
+def f_Registo(request):
+    if request.method == "GET":
+        return render(request,'G_Estagios/Finalizar_Registo.html')
+    elif request.method == 'POST':
+        user=request.user
+        user = user.objects.get(id=user.id)
+        return HttpResponseRedirect(reverse('dash'))
+    
 
 def Register(request):
     if request.method == "GET":
