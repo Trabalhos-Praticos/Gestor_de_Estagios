@@ -34,6 +34,7 @@ Este é um projeto que pode vir a ajudar muitas escolas que ainda não tenham es
 APIs são regras que permitem que programas diferentes comuniquem e partilhem informações de forma padronizada, facilitando a integração entre aplicações e a partilha de dados.
 # Firebase
 
+# Venv
 # Dependências
 ## Node.js
 **Node.js** é um ambiente de execução de código JavaScript no lado do servidor, construído no motor V8 do Google Chrome. Permite executar JavaScript no servidor, oferecendo uma maneira eficiente de criar aplicativos da web escaláveis e em tempo real.
