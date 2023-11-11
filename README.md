@@ -4,6 +4,7 @@ Este é um projeto que pode vir a ajudar muitas escolas que ainda não tenham es
 ## Indice
 - [Framework](#Framework)
      - [Django](#Django)
+- [Dependencias](#dependências)
 - [API](#API)
 ## Framework
 ### Django
@@ -32,3 +33,18 @@ Este é um projeto que pode vir a ajudar muitas escolas que ainda não tenham es
 ## Api
 APIs são regras que permitem que programas diferentes comuniquem e partilhem informações de forma padronizada, facilitando a integração entre aplicações e a partilha de dados.
 ## Firebase
+
+## Dependências
+
+Este projeto depende do Node.js para algumas funcionalidades. Certifique-se de ter o Node.js instalado.
+
+### Configuração do Ambiente Node.js
+
+1. Instale as dependências Node.js:
+
+   ```bash
+   npm install
+   ```
+   ou
+   ```bash
+   yarn install
