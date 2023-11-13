@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'Gestor_Estagios.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'db.rxpmviaksgbicuyrxqtr.supabase.co', 
+        'NAME': 'postgres',
+        'PORT': '5432',
+        'USER': 'postgres',
+        'PASSWORD': 'rl3pnb4LeWwOpmmu',
     }
 }
 
