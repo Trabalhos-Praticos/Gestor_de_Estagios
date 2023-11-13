@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.contrib.auth.models import Group
+import os
+from supabase import create_client, Client
 
 
 
@@ -39,7 +41,10 @@ def f_Registo(request):
         return HttpResponseRedirect(reverse('dash'))
     
 
-def Register(request):
+def create_client(request):
+    url: str = os.environ.get("SUPABASE_URL")
+    key: str = os.environ.get("SUPABASE_KEY")
+    supabase: Client = create_client(url, key)
     if request.method == "GET":
         return render(request,'G_Estagios/login_register_v001.html')
 
