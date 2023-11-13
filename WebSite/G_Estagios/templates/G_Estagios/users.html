@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Lista Users</h1>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>id</th>
+            <th>nome</th>
+            <th>email</th>
+         </tr>
+         {%for customuser in customusers %}
+        <tr>
+         <!-- <th scope="row"></th> -->
+        <td>{{customusers.id}}</td>
+        <td>{{customusers.first_name}}</td>
+        <td>{{customusers.username}}</td> 
+      </tr>
+      {% endfor %}
+    </table>
+    <h1>Lista de Cursos</h1>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>id</th>
+            <th>nome</th>
+            <th>polo</th>
+         </tr>
+         {%for curso in cursos %}
+        <tr>
+         <!-- <th scope="row"></th> -->
+        <td>{{curso.id}}</td>
+        <td>{{curso.nome_curso}}</td>
+        <td>{{curso.id_polo}}</td> 
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+  </body>
+</html>
