@@ -25,8 +25,9 @@ from G_Estagios import views
 urlpatterns = [
     #rota,view,nome de referencia
     path('admin/', admin.site.urls),
-    path('',views.Register, name='register'),
-    path('Registo/',views.f_Registo , name="finalizar_registo"),
+    path('',views.starting, name='home'),
+    path('Register/',views.Register, name='Register'),
+    path('Register/C_Register',views.f_Registo , name="finalizar_registo"),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/',views.D_v, name='dash'),
