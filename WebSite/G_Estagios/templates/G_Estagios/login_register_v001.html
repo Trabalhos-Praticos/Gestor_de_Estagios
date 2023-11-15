@@ -22,15 +22,15 @@
             <h2 class="title">Entrar</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" name="username" placeholder="Email">
+              <input type="text" name="Email" placeholder="Email">
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" name='password' placeholder="password" />
+              <input type="password" name='Password' placeholder="password" />
             </div>
             <input type="submit" value="Login" class="btn solid" />
           </form>
-          <form action="{% url "Register" %}" class="sign-up-form" method='POST'  >
+          <form action="{% url "Register" %}" class="sign-up-form" method='POST'>
             {% csrf_token %}
             <p>{{ mensagem }}</p>
             <h2 class="title">Criar conta</h2>
