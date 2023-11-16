@@ -110,8 +110,8 @@ def verify_email(Email):
         return 'Professor'
     if Email.endswith('@ipvc.pt'):
         return 'Aluno'
-    elif not Email.endswith('ipvc.pt'):
-        return 'invalido'
+    elif not Email.endswith('@ipvc.pt'):
+        return 'Invalido'
 
 
 #Gera ium codigo unico 

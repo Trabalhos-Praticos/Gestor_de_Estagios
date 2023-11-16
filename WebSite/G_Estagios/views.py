@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import redirect, render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
@@ -41,16 +41,9 @@ def f_Registo(request):
 
 def Register(request):
     if request.method == "GET":
-        return render(request,'G_Estagios/login_register_v001.html')
+        return render(request,'G_Estagios/Register.html')
 
-def Login(request):
-    if request.method == "GET":
-        return render(request,'G_Estagios/login_register_v001.html')
-
-
-
-
-def register(request):
+def registo(request):
     User=CustomUser
     Email= request.POST.get('Email')
     try:
@@ -58,44 +51,47 @@ def register(request):
     except User.DoesNotExist:
         V_Email = False
     if V_Email:
-        return HttpResponse("Já existe um utilizador com esse email.")
+        messages.error(request,"Já existe um utilizador com esse email")
+        return redirect('register')
     else:
-        #confirmation_code = send_confirmation_email(Email)
         Password=request.POST.get('Password')
         Nome = request.POST.get('Nome')
-        V_e= verify_email(Email)
+        V_e = verify_email(Email)
         if V_e == "Invalido":
             messages.error(request, 'Email invalido')
-            return render(request, 'Registo_Users/login.html')
+            return redirect('register')
         elif V_e == 'Aluno':
             newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
             newuser.save()
-            mensagem = "User registado com sucesso"
-            contexto = {'mensagem': mensagem}
-            return render(request,'G_Estagios/login_register_v001.html', contexto)
+            messages.info(request,"Registo bem sucedido")
+            return redirect('register')
         elif V_e == 'Professor':
             newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
             newuser.save()
-            newuser.groups.add(name='Professor')
-            return render(request,'G_Estagios/login_register_v001.html')
+            messages.success(request,"Registo bem sucedido")
+            return redirect('register')
 
-def login_view(request):
-    
-    username = request.POST["username"]
-    password = request.POST["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        # Redirecione para uma página de sucesso.
-        return HttpResponseRedirect(reverse('dash'))
-        
-    else:
-        # Retorne uma mensagem de erro de 'login inválido'.
-        return HttpResponse("Email e/ou palavrapasse incorretas.")
-    
+def login(request):
+    if request.method == "GET":
+        return render(request,'G_Estagios/login_register_v001.html')
+    if request.method == 'POST':
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirecione para uma página de sucesso.
+            return HttpResponseRedirect(reverse('dash'))
+
+        else:
+            # Retorne uma mensagem de erro de 'login inválido'.
+            return HttpResponse("Email e/ou palavrapasse incorretas.")
+
+@login_required
 def logout_view(request):
     logout(request)
-    return render(request,'Registo_Users/registo.html')
+    return render(request,'G_Estagios/index.html')
 
-
-
+def Home(request):
+    if request.method =='GET':
+        return render(request,'G_Estagios/index.html')
