@@ -81,11 +81,11 @@ def login(request):
         if user is not None:
             login(request, user)
             # Redirecione para uma página de sucesso.
-            return HttpResponseRedirect(reverse('dash'))
-
+            return HttpResponseRedirect(reverse ('dash'))
         else:
             # Retorne uma mensagem de erro de 'login inválido'.
-            return HttpResponse("Email e/ou palavrapasse incorretas.")
+            messages.info(request,"Endereço de email ou password invalidos")
+            return redirect('login')
 
 @login_required
 def logout_view(request):
