@@ -29,6 +29,6 @@ urlpatterns = [
     path('Register/',views.Register, name='Register'),
     #path('Register/C_Register',views.f_Registo , name="finalizar_registo"),
     path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('/sign_out', views.sign_out, name='logout'),
     path('dashboard/',views.D_V, name='dash'),
 ]
