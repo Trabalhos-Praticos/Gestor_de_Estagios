@@ -73,7 +73,7 @@ def registo(request):
 
 def login(request):
     if request.method == "GET":
-        return render(request,'G_Estagios/login_register_v001.html')
+        return render(request,'G_Estagios/Login.html')
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
