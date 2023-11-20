@@ -14,20 +14,12 @@ from django.contrib.auth.models import Group
 
 @login_required
 def D_v(request):
-    # user = request.user
-    # is_aluno = user.groups.filter(name='Alunos').exists()
-    # is_professor = user.groups.filter(name='Professores').exists()
-    
-    # context = {
-    #     'is_aluno': is_aluno,
-    #     'is_professor': is_professor,
-    #     'user_name': user.first_name  # Nome do usuário
-    # }
     if request.method == "GET":
         Users=CustomUser.objects.all()
         curso=Curso
         cursos=curso.objects.all()
-        return render(request, 'G_Estagios/users.html',({'cursos': cursos, 'customusers': Users}))
+        if request.user.is_authenticated and request.user.groups.filter(name='Admin').exists():
+            return render(request, 'G_Estagios/dashboard.html',({'cursos': cursos, 'customusers': Users}))
     
 @login_required
 def f_Registo(request):
@@ -71,13 +63,13 @@ def registo(request):
             messages.success(request,"Registo bem sucedido")
             return redirect('register')
 
-def login(request):
+def view_login(request):
     if request.method == "GET":
         return render(request,'G_Estagios/Login.html')
     if request.method == 'POST':
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
+        Username = request.POST["username"]
+        Password = request.POST["password"]
+        user = authenticate(request, username=Username, password=Password)
         if user is not None:
             login(request, user)
             # Redirecione para uma página de sucesso.

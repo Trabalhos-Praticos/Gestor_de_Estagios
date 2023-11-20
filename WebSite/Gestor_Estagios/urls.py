@@ -29,7 +29,7 @@ urlpatterns = [
     path('register/',views.Register, name='register'),
     path("register/register",views.registo,name='registo'),
     path('Registo/f_r',views.f_Registo , name="finalizar_registo"),
-    path('login/', views.login, name='login'),
+    path('login/', views.view_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/',views.D_v, name='dash'),
 ]

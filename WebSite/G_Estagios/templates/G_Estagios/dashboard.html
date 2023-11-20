@@ -7,11 +7,12 @@
     <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 <body>
-    {% if is_aluno %}
-    <p>Olá aluno {{ user_name }}</p>
-    
-    {% elif is_professor %}
-    
-    {% endif %}
+    <ul>
+        <h2>Lista de CustomUsers:</h2>
+        {% for customuser in customusers %}
+          <li>{{ customuser.username }} - {{ customuser.curso}}</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url "logout" %}"><button> Logout </button></a>
 </body>
 </html>
