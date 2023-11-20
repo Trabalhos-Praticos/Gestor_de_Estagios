@@ -113,7 +113,15 @@ def verify_email(Email):
     elif not Email.endswith('@ipvc.pt'):
         return 'Invalido'
 
+def verificar_palavra_passe(password):
+    pass
 
+from django import forms
+
+class MeuFormulario(forms.Form):
+    nome = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    senha = forms.CharField(widget=forms.PasswordInput())
 #Gera ium codigo unico 
 # def generate_unique_confirmation_code():
 #     while True:
