@@ -92,6 +92,7 @@ def logout_view(request):
     logout(request)
     return render(request,'G_Estagios/index.html')
 
+
 def Home(request):
     if request.method =='GET':
         return render(request,'G_Estagios/index.html')
