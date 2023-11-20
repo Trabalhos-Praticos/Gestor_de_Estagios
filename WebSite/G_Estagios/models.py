@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
-import secrets
-import string
+from django import forms
+from password_strength import PasswordPolicy
 # Create your models here.
 
 
@@ -113,31 +113,26 @@ def verify_email(Email):
     elif not Email.endswith('@ipvc.pt'):
         return 'Invalido'
 
-def verificar_palavra_passe(password):
-    pass
 
-from django import forms
 
-class MeuFormulario(forms.Form):
-    nome = forms.CharField(max_length=100)
+
+class FormRegisto(forms.Form):
     email = forms.EmailField()
-    senha = forms.CharField(widget=forms.PasswordInput())
-#Gera ium codigo unico 
-# def generate_unique_confirmation_code():
-#     while True:
-#         characters = string.ascii_letters + string.digits
-#         confirmation_code = ''.join(secrets.choice(characters) for _ in range(20))
-        # Verifique se o código já existe na base de dados
-#         if not CustomUser.objects.filter(confirmation_code=confirmation_code).exists():
-#             return confirmation_code
-
-# from django.core.mail import send_mail
-
-# def send_confirmation_email(Email):
-#     confirmation_code = generate_unique_confirmation_code()
-#     subject = 'Confirmação de Registro'
-#     message = f'Seja bem-vindo ao nosso site! Seu código de confirmação é: {confirmation_code}'
-#     from_email = 'esquilogpg2@gmail.com'
-#     recipient_list = [Email]
-#     send_mail(subject, message, from_email, recipient_list)
-#     return confirmation_code
+    nome = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput())
+    
+    
+    
+def verificar_palavra_passe(palavra_passe):
+    policy = PasswordPolicy.from_names(
+        length=8,  # Mínimo de 8 caracteres
+        uppercase=1,  # Pelo menos uma letra maiúscula
+        numbers=1,  # Pelo menos um número
+        special=1,  # Pelo menos um caractere especial
+        nonletters=1,  # Pelo menos um caractere não alfabético
+    )
+    resultado = policy.test(palavra_passe)
+    if resultado:
+        return False, 'A palavra-passe não atende aos critérios.'  # Mensagem de erro
+    else:
+        return True, None  # Palavra-passe atende aos critérios

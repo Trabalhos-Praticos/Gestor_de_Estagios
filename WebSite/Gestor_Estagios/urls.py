@@ -26,7 +26,7 @@ urlpatterns = [
     #rota,view,nome de referencia
     path('admin/', admin.site.urls),
     path('',views.Home, name='Home'),
-    path('register/',views.Register, name='register'),
+    path('register/',views.registo_form, name='register'),
     path("register/register",views.registo,name='registo'),
     path('Registo/f_r',views.f_Registo , name="finalizar_registo"),
     path('login/', views.view_login, name='login'),
