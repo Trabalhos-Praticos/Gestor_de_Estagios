@@ -1,13 +1,10 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from .models import verify_email,CustomUser,Curso, verificar_palavra_passe
 from django.contrib.auth import authenticate, login, logout
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
-from django.contrib.auth.models import Group
+
 
 
 
@@ -20,6 +17,8 @@ def D_v(request):
         cursos=curso.objects.all()
         if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
             return render(request, 'G_Estagios/dashboard.html',({'cursos': cursos, 'customusers': Users}))
+
+
 
 
 @login_required
