@@ -26,10 +26,11 @@ urlpatterns = [
     #rota,view,nome de referencia
     path('admin/', admin.site.urls),
     path('',views.Home, name='Home'),
-    path('register/',views.registo_form, name='register'),
-    path("register/register",views.registo,name='registo'),
+    path('register/',views.registo, name='register'),
+    path("register/register",views.Register,name='registo'),
     path('Registo/f_r',views.f_Registo , name="finalizar_registo"),
     path('login/', views.view_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/',views.D_v, name='dash'),
+    path('alunos-do-curso/', views.view_alunos_do_curso, name='alunos_do_curso'),
 ]

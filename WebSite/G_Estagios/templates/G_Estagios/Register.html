@@ -9,7 +9,6 @@
 <body>
     <div class="container">
         <form action="{% url "register" %}" class="sign-up-form" method='POST'>
-            {% csrf_token %}
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-primary" role="alert">
@@ -19,10 +18,7 @@
             {% endif %}
             <h2 class="title">Criar conta</h2>
             {% csrf_token %}
-            {% for field in form %}
-              {{ field.label_tag }} {{ field }}
-            {% endfor %}
-            <input type="submit" value="Enviar">
+            
             <button type="submit" value="Register" class="btn btn-secondary" >Registar</button>
     </div>
   <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
