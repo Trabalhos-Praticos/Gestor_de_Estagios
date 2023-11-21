@@ -16,9 +16,8 @@ class CustomUser(AbstractUser):
     is_Coordenador_Curso=models.BooleanField(default=False)
     is_Tutor_estagio_Empresa=models.BooleanField(default=False)
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
-    #is_confirmed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
-    #confirmation_code= models.CharField(max_length=255)
+
 
 
 
@@ -113,15 +112,6 @@ def verify_email(Email):
     elif not Email.endswith('@ipvc.pt'):
         return 'Invalido'
 
-
-
-
-class FormRegisto(forms.Form):
-    email = forms.EmailField()
-    nome = forms.CharField(max_length=100)
-    password = forms.CharField(widget=forms.PasswordInput())
-    
-    
     
 def verificar_palavra_passe(palavra_passe):
     policy = PasswordPolicy.from_names(
