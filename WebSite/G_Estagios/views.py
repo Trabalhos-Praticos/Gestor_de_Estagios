@@ -31,12 +31,11 @@ def f_Registo(request):
         return HttpResponseRedirect(reverse('dash'))
 
 
-def Register(request):
-    if request.method == "GET":
-        return render(request,'G_Estagios/Register.html')
 
 
 def registo(request):
+    if request.method == "GET":
+        return render(request,'G_Estagios/Register.html')
     User=CustomUser
     Email= request.POST.get('Email')
     try:
@@ -54,12 +53,12 @@ def registo(request):
             messages.error(request, 'Email invalido')
             return redirect('register')
         elif V_e == 'Aluno':
-            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
+            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
             newuser.save()
             messages.info(request,"Registo bem sucedido")
             return redirect('register')
         elif V_e == 'Professor':
-            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password)
+            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True)
             newuser.save()
             messages.success(request,"Registo bem sucedido")
             return redirect('register')

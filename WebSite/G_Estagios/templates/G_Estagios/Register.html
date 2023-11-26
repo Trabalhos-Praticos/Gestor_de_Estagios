@@ -42,20 +42,16 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 mx-auto border p-4 shadow-sm bg-white rounded mt-4 mb-4 d-flex flex-column align-items-center">
-          <form action="{% url "register" %}" class="sign-up-form w-100" method='POST'>
+          <form action="{% url "registo" %}" class="sign-up-form w-100" method='POST'>
             {% csrf_token %}
-            {% for field in form %}
-              {{ field.label_tag }} {{ field }}
-            {% endfor %}
               <div class="form-group mb-4 w-100">
                 <label for="inputEmail">Email address</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+                <input type="Email" class="form-control" id="inputEmail" placeholder="Enter email">
               </div>
               <div class="form-group mb-4 w-100">
                 <label for="inputPassword">Password</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <input type="Password" class="form-control" id="inputPassword" placeholder="Password">
               </div>
-            <input type="submit" value="Enviar">
             <button type="submit" value="Register" class="btn btn-secondary align-items-center" >Registar</button>
     </div>
     
