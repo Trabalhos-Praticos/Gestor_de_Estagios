@@ -16,6 +16,7 @@ class CustomUser(AbstractUser):
     is_Coordenador_Curso=models.BooleanField(default=False)
     is_Tutor_estagio_Empresa=models.BooleanField(default=False)
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
 
 

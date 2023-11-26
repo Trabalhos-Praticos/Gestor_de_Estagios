@@ -26,8 +26,8 @@ def f_Registo(request):
     if request.method == "GET":
         return render(request,'G_Estagios/Finalizar_Registo.html')
     elif request.method == 'POST':
+        Curso = request.POST.get('Curso')
         user=request.user
-        user = user.objects.get(id=user.id)
         return HttpResponseRedirect(reverse('dash'))
 
 
@@ -36,32 +36,33 @@ def f_Registo(request):
 def registo(request):
     if request.method == "GET":
         return render(request,'G_Estagios/Register.html')
-    User=CustomUser
-    Email= request.POST.get('Email')
-    try:
-        V_Email = User.objects.get(username=Email)
-    except User.DoesNotExist:
-        V_Email = False
-    if V_Email:
-        messages.error(request,"Já existe um utilizador com esse email")
-        return redirect('register')
-    else:
-        Password=request.POST.get('Password')        
-        Nome = request.POST.get('Nome')
-        V_e = verify_email(Email)
-        if V_e == "Invalido":
-            messages.error(request, 'Email invalido')
+    if request.method == "POST":
+        User=CustomUser
+        Email= request.POST.get('Email')
+        try:
+            V_Email = User.objects.get(username=Email)
+        except User.DoesNotExist:
+            V_Email = False
+        if V_Email:
+            messages.error(request,"Já existe um utilizador com esse email")
             return redirect('register')
-        elif V_e == 'Aluno':
-            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
-            newuser.save()
-            messages.info(request,"Registo bem sucedido")
-            return redirect('register')
-        elif V_e == 'Professor':
-            newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True)
-            newuser.save()
-            messages.success(request,"Registo bem sucedido")
-            return redirect('register')
+        else:
+            Password=request.POST.get('Password')        
+            Nome = request.POST.get('Nome')
+            V_e = verify_email(Email)
+            if V_e == "Invalido":
+                messages.error(request, 'Email invalido')
+                return redirect('register')
+            elif V_e == 'Aluno':
+                newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
+                newuser.save()
+                messages.info(request,"Registo bem sucedido")
+                return redirect('register')
+            elif V_e == 'Professor':
+                newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True)
+                newuser.save()
+                messages.success(request,"Registo bem sucedido")
+                return redirect('register')
     
 def view_login(request):
     if request.method == "GET":
