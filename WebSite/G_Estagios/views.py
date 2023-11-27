@@ -1,8 +1,8 @@
-from django.shortcuts import redirect, render, HttpResponseRedirect
+from django.shortcuts import redirect, render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from .models import verify_email,CustomUser,Curso, verificar_palavra_passe
+from .models import Assiduidade, verify_email,CustomUser,Curso, verificar_palavra_passe, Upload_Assiduidade
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -19,18 +19,30 @@ def D_v(request):
             return render(request, 'G_Estagios/dashboard.html',({'cursos': cursos, 'customusers': Users}))
 
 
-
+def obter_polo_por_curso(nome_curso):
+        curso = Curso.objects.get(nome_curso=nome_curso)
+        polo_associado = curso.polo
+        return polo_associado
 
 @login_required
 def f_Registo(request):
+    
+    user=request.user
+    
+    if user.is_completed:
+        return HttpResponseRedirect(reverse('dash'))
+    
     if request.method == "GET":
         return render(request,'G_Estagios/Finalizar_Registo.html')
+    
     elif request.method == 'POST':
         Curso = request.POST.get('Curso')
-        user=request.user
-        return HttpResponseRedirect(reverse('dash'))
-
-
+        escola = obter_polo_por_curso(Curso)
+        user.curso = Curso
+        user.escola = escola
+        user.is_completed = True
+        user.save()
+        return HttpResponseRedirect(reverse('dash'),{'user':user})
 
 
 def registo(request):
@@ -59,11 +71,48 @@ def registo(request):
                 messages.info(request,"Registo bem sucedido")
                 return redirect('register')
             elif V_e == 'Professor':
-                newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True)
+                newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True,is_completed = True)
                 newuser.save()
                 messages.success(request,"Registo bem sucedido")
                 return redirect('register')
-    
+
+def edit_user_admin(request):
+    pass
+
+def verificar_tipo_arquivo(arquivo):
+    # Obtém a extensão do arquivo
+    extensao = arquivo.name.split('.')[-1].lower()
+
+    # Mapeia extensões conhecidas para tipos de arquivo
+    tipos_permitidos = {
+        'pdf': 'pdf',
+        'docx': 'docx',
+    }
+
+    # Verifica se a extensão é permitida
+    if extensao in tipos_permitidos:
+        return tipos_permitidos[extensao]
+    else:
+        return None
+
+def add_Assiduidade(request):
+    if request.method == 'POST':
+        arquivo = request.FILES.get('arquivo')
+
+        if arquivo:
+            # Verifique o tipo de arquivo
+            tipo_arquivo = verificar_tipo_arquivo(arquivo)
+
+            if tipo_arquivo in ['pdf', 'docx']:
+                # Aqui você pode chamar a função Upload_Assiduidade
+                # Certifique-se de passar os parâmetros necessários
+                Upload_Assiduidade(request, id_aluno=1)
+                return HttpResponse("Upload bem-sucedido!")
+            else:
+                return HttpResponse("Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.")
+    return render(request, 'G_Estagios/dashoard.html')
+
+
 def view_login(request):
     if request.method == "GET":
         return render(request,'G_Estagios/Login.html')
@@ -101,3 +150,11 @@ def view_alunos_do_curso(request):
 
     # Renderize a página com a lista de alunos
     return render(request, 'alunos_do_curso.html', {'alunos': alunos_do_curso})
+
+
+def mostrar_assiduidades(request, id_aluno, id_estagio):
+    # Obtenha as assiduidades filtradas com base no usuário e no estágio
+    assiduidades = Assiduidade.objects.filter(id_Aluno=id_aluno, id_Estagio=id_estagio)
+    
+    # Renderize a página com as assiduidades
+    return render(request, 'mostrar_assiduidades.html', {'assiduidades': assiduidades})
