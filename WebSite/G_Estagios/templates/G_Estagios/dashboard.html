@@ -7,6 +7,19 @@
     <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 <body>
+  {% if is_professor %}
+  <p>Ola professor {{ user.first_name }}</p>
+  {% else %}
+  <p>Ola Aluno {{ user.first_name}}</p>
+  {% endif%}
+  <form action="{% url 'upload_assiduidade' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="arquivo">Escolha um arquivo (PDF ou DOCX):</label>
+    <input type="file" name="arquivo" accept=".pdf, .docx" required>
+    <input type="submit" value="Enviar">
+  </form>
+  {%for assiduidade in assiduidade %}
+  {%endfor %}
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Your Brand</a>

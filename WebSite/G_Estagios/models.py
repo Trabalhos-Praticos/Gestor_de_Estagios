@@ -16,28 +16,25 @@ class CustomUser(AbstractUser):
     is_Coordenador_Curso=models.BooleanField(default=False)
     is_Tutor_estagio_Empresa=models.BooleanField(default=False)
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
-
+    ano = models.IntegerField(blank=True, default=1)
 
 
 
 #Função que guarda o upload feito
-def Upload_Assiduidade(request, id_aluno, id_assiduidade):
+def Upload_Assiduidade(request, id_aluno):
     if request.method == 'POST' and request.FILES['arquivo']:
         arquivo_enviado = request.FILES['arquivo']
         data_publicacao = timezone.now().strftime("%Y%m%d%H%M%S")
-        nome_arquivo = f"{data_publicacao}_aluno{id_aluno}_assiduidade{id_assiduidade}_{arquivo_enviado.name}"
-
+        nome_arquivo = f"{data_publicacao}_aluno{id_aluno}_assiduidade_{arquivo_enviado.name}"
+        # Guarda o arquivo no sistema de arquivos
         fs = FileSystemStorage(location='Documentos/Assiduidade/')
         filename = fs.save(nome_arquivo, arquivo_enviado)
-
-        # Salve o nome do arquivo na base de dados
-        assiduidade = Assiduidade.objects.get(pk=id_assiduidade)
-        assiduidade.nome_arquivo = nome_arquivo
+        # Cria uma nova instância de Assiduidade associada ao aluno correspondente
+        assiduidade = Assiduidade.objects.create(id_Aluno=id_aluno, File=nome_arquivo)
         assiduidade.save()
-
-def alteruser(request):
-    pass
+        return assiduidade
 
 class Protocolos(models.Model):
     id=models.AutoField(primary_key=True)
@@ -46,21 +43,6 @@ class Protocolos(models.Model):
     id_Aluno=models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
 
 
-#Função que guarda o upload feito
-def Upload_Assiduidade(request, id_aluno, id_assiduidade):
-    if request.method == 'POST' and request.FILES['arquivo']:
-        arquivo_enviado = request.FILES['arquivo']
-        data_publicacao = timezone.now().strftime("%Y%m%d%H%M%S")
-        nome_arquivo = f"{data_publicacao}_aluno{id_aluno}_assiduidade{id_assiduidade}_{arquivo_enviado.name}"
-
-        fs = FileSystemStorage(location='Documentos/Assiduidade/')
-        filename = fs.save(nome_arquivo, arquivo_enviado)
-
-        # Salve o nome do arquivo na base de dados
-        assiduidade = Protocolos.objects.get(pk=id_assiduidade)
-        assiduidade.nome_arquivo = nome_arquivo
-        assiduidade.save()
-        
 class Polo(models.Model):
     id=models.AutoField(primary_key=True)
     nome=models.CharField(max_length=50)
