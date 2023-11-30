@@ -122,8 +122,13 @@ def view_login(request):
         user = authenticate(request, username=Username, password=Password)
         if user is not None:
             login(request, user)
-            # Redirecione para uma página de sucesso.
-            return HttpResponseRedirect(reverse ('dash'))
+            user = request.user
+            completo = user.is_completed
+            if completo == True:
+                # Redirecione para uma página de sucesso.
+                return HttpResponseRedirect(reverse ('dash'))
+            elif completo == False:
+                return HttpResponseRedirect(reverse('finalizar_registo'))
         else:
             # Retorne uma mensagem de erro de 'login inválido'.
             messages.error(request,"Endereço de email ou password invalidos")

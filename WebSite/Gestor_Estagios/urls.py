@@ -31,5 +31,6 @@ urlpatterns = [
     path('login/', views.view_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/',views.D_v, name='dash'),
+    path('upload_assiduidade/',views.add_Assiduidade,name = 'Upload_Assiduidade'),
     path('alunos-do-curso/', views.view_alunos_do_curso, name='alunos_do_curso'),
 ]
