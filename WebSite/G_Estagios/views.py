@@ -25,6 +25,11 @@ def obter_polo_por_curso(nome_curso):
         return polo_associado
 
 @login_required
+def View_DocAluno(request):
+    if request.methtod == 'GET':
+         return render(request, 'G_Estagios/Aluno/documentos.html')
+
+@login_required
 def f_Registo(request):
     
     user=request.user
