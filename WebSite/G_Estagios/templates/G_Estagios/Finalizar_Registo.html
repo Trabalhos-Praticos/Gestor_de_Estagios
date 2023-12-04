@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +7,15 @@
     <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 <body>
-    {% if is_completed == 'False' %}
     <form action="{% url "finalizar_registo" %}" class="sign-in-form" method='POST'>
         <h2 class="title">Finalizar registo</h2>
         <select name="Cursos" id="cursos">
             <option value="" disabled selected>Selecione o curso</option>
-            {%for cursos in curso %}
+            {%for curso in cursos %}
             <option>{{curso.nome_curso}}</option>
             {% endfor %}
         </select>
-        <div class="input-field">
-          <i class="fas fa-lock"></i>
-          <input type="password" name='password' placeholder="password" />
-        </div>
-        <input type="submit" value="Login" class="btn solid" />
+        <input type="submit" value="fn" class="btn solid" />
       </form>
-    {% endif %}
 </body>
 </html>

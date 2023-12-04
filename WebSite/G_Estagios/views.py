@@ -31,19 +31,17 @@ def View_DocAluno(request):
 
 @login_required
 def f_Registo(request):
-    
     user=request.user
-    
-    if user.is_completed:
-        return HttpResponseRedirect(reverse('dash'))
-    
     if request.method == "GET":
-        return render(request,'G_Estagios/Finalizar_Registo.html')
-    
+        curso = Curso
+        cursos=curso.objects.all()
+        return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos}))
+    elif user.is_completed:
+        return HttpResponseRedirect(reverse('dash'))
     elif request.method == 'POST':
-        Curso = request.POST.get('Curso')
+        v_Curso = request.POST.get('Curso')
         escola = obter_polo_por_curso(Curso)
-        user.curso = Curso
+        user.curso = v_Curso
         user.escola = escola
         user.is_completed = True
         user.save()
@@ -133,7 +131,7 @@ def view_login(request):
                 # Redirecione para uma página de sucesso.
                 return HttpResponseRedirect(reverse ('dash'))
             elif completo == False:
-                return HttpResponseRedirect(reverse('finalizar_registo'),{'is_completed':completo,'':user})
+                return HttpResponseRedirect(reverse('finalizar_registo'))
         else:
             # Retorne uma mensagem de erro de 'login inválido'.
             messages.error(request,"Endereço de email ou password invalidos")
