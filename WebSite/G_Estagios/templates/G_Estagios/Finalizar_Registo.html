@@ -7,13 +7,14 @@
     <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 <body>
-    {% if is_aluno %}
+    {% if is_completed == 'False' %}
     <form action="{% url "finalizar_registo" %}" class="sign-in-form" method='POST'>
         <h2 class="title">Finalizar registo</h2>
         <select name="Cursos" id="cursos">
             <option value="" disabled selected>Selecione o curso</option>
             {%for cursos in curso %}
-            <td>{{curso.nome_curso}}</td>
+            <option>{{curso.nome_curso}}</option>
+            {% endfor %}
         </select>
         <div class="input-field">
           <i class="fas fa-lock"></i>
