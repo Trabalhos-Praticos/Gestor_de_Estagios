@@ -62,24 +62,24 @@ def registo(request):
             V_Email = False
         if V_Email:
             messages.error(request,"Já existe um utilizador com esse email")
-            return redirect('register')
+            return HttpResponseRedirect(reverse('registo'))
         else:
             Password=request.POST.get('Password')        
             Nome = request.POST.get('Nome')
             V_e = verify_email(Email)
             if V_e == "Invalido":
                 messages.error(request, 'Email invalido')
-                return redirect('register')
+                return HttpResponseRedirect(reverse('registo'))
             elif V_e == 'Aluno':
                 newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
                 newuser.save()
                 messages.info(request,"Registo bem sucedido")
-                return redirect('register')
+                return HttpResponseRedirect(reverse('registo'))
             elif V_e == 'Professor':
                 newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True,is_completed = True)
                 newuser.save()
                 messages.success(request,"Registo bem sucedido")
-                return redirect('register')
+                return HttpResponseRedirect(reverse('registo'))
 
 def edit_user_admin(request):
     pass
