@@ -133,7 +133,7 @@ def view_login(request):
                 # Redirecione para uma página de sucesso.
                 return HttpResponseRedirect(reverse ('dash'))
             elif completo == False:
-                return HttpResponseRedirect(reverse('finalizar_registo'))
+                return HttpResponseRedirect(reverse('finalizar_registo'),{'is_completed':completo,'':user})
         else:
             # Retorne uma mensagem de erro de 'login inválido'.
             messages.error(request,"Endereço de email ou password invalidos")
