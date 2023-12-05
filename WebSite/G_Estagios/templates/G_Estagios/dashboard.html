@@ -22,16 +22,16 @@
     <table class="table table-bordered table-dark">
       <thead>
         <tr>
-          <th scope="col">Email</th>
+          <th scope="col">Nome</th>
           <th scope="col">Curso</th>
-          <th scope="col">Polo</th>
+          <th scope="col">Faculdade</th>
           <th scope="col">Ano</th>
         </tr>
       </thead>
       <tbody>
         {% for customuser in customusers %}
         <tr>
-            <td>{{ customuser.username }}</td>
+            <td>{{ customuser.first_name }}</td>
             <td>{{ customuser.curso }}</td>
             <td>{{ customuser.escola }}</td>
             <td>{{ customuser.ano }}</td>
