@@ -13,7 +13,8 @@ from django.contrib.auth import authenticate, login, logout
 def Dashboard(request):
     if request.method == "GET":
         user = request.user
-        Users=CustomUser.objects.get(curso = user.curso)
+        #Users=CustomUser.objects.get(curso = user.curso)
+        Users=CustomUser.objects.all()
         if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
             return render(request, 'G_Estagios/dashboard.html',({ 'customusers': Users, 'user':user}))
 
