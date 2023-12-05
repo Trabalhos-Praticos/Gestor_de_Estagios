@@ -10,14 +10,12 @@ from django.contrib.auth import authenticate, login, logout
 
 
 @login_required
-def D_v(request):
-    print(request.user.privilegio)
+def Dashboard(request):
     if request.method == "GET":
-        Users=CustomUser.objects.all()
-        curso=Curso
-        cursos=curso.objects.all()
+        user = request.user
+        Users=CustomUser.objects.get(curso = user.curso)
         if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
-            return render(request, 'G_Estagios/dashboard.html',({'cursos': cursos, 'customusers': Users}))
+            return render(request, 'G_Estagios/dashboard.html',({ 'customusers': Users, 'user':user}))
 
 
 

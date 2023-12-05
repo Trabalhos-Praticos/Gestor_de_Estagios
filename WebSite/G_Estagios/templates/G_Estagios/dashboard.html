@@ -13,42 +13,47 @@
 
 <body>
   
-  {% if is_professor == 'True' %}
+  {% if user.privilegio == 'Professor' or user.is_superuser == 1%}
+  {% if user.privilegio == 'Professor'%}
   <p>Olá, professor {{ user.first_name }}</p>
-  {% else %}
+  {% endif%}
+  <div class="container mt-4">
+    <h2>Lista dos Alunos:</h2>
+    <table class="table table-bordered table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Email</th>
+          <th scope="col">Curso</th>
+          <th scope="col">Polo</th>
+          <th scope="col">Ano</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customuser in customusers %}
+        <tr>
+            <td>{{ customuser.username }}</td>
+            <td>{{ customuser.curso }}</td>
+            <td>{{ customuser.escola }}</td>
+            <td>{{ customuser.ano }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif%}
+  {% if user.privilegio == 'Aluno'%}
   <p>Olá, {{ user.first_name}}</p>
   {% endif%}
   
 
-  <div class="container mt-4">
-  <table class="table table-bordered table-dark">
-    <thead>
-      <tr>
-        <th scope="col">Email</th>
-        <th scope="col">Curso</th>
-        <th scope="col">Polo</th>
-        <th scope="col">Ano</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for customuser in customusers %}
-      <tr>
-          <td>{{ customuser.username }}</td>
-          <td>{{ customuser.curso }}</td>
-          <td>{{ customuser.escola }}</td>
-          <td>{{ customuser.ano }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+
 
 
 
   <div class="card mt-0 align-items-center mb-4 vh-100 vw-100"></div>
   <div class="container"> </div>
     <ul>
-        <h2>Lista de CustomUsers:</h2>
+        
         
       </ul>
      
