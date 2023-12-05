@@ -33,9 +33,13 @@ def View_DocAluno(request):
 def f_Registo(request):
     user=request.user
     if request.method == "GET":
-        curso = Curso
-        cursos=curso.objects.all()
-        return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos}))
+        if user.is_completed == 1:
+            return HttpResponseRedirect(reverse('dash'))
+        else:
+            curso = Curso
+            cursos=curso.objects.all()
+            return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos}))
+        
     elif request.method == 'POST':
         id_curso = request.POST.get('Curso')
         id_escola = obter_polo_por_curso(id_curso)
@@ -48,8 +52,6 @@ def f_Registo(request):
         user.is_completed = True
         user.save()
         return HttpResponseRedirect(reverse('dash'),{'user':user})
-    elif user.is_completed:
-        return HttpResponseRedirect(reverse('dash'))
 
 
 def registo(request):

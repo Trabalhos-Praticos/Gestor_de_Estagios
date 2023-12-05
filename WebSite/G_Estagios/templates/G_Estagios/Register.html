@@ -16,7 +16,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         {% for message in messages %}
-                            <div class="alert alert-danger" role="alert">
+                            <div class="" role="alert">
                                 <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
                             </div>
                         {% endfor %}
@@ -47,6 +47,8 @@
                         </div>
                     </form>
                 </div>
+                <br>
+                <a href="{% url "login" %}" class="btn btn-primary mr-2">Login</a>
             </div>
         </div>
     </div>
