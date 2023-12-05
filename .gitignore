@@ -2,9 +2,9 @@
 *.log
 *.pot
 *.pyc
-__pycache__
-media
-db.sqlite3
+Website/__pycache__
+Website/media
+Website/db.sqlite3
 # Backup files # 
 *.bak 
 
