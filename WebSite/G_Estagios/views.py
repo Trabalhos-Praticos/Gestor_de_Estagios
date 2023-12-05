@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render, HttpResponseRedirect, HttpRespons
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from .models import Assiduidade, verify_email,CustomUser,Curso, verificar_palavra_passe, Upload_Assiduidade
+from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -22,10 +22,10 @@ def D_v(request):
             return render(request, 'G_Estagios/dashboard.html',({'cursos': cursos, 'customusers': Users}))
 
 
-def obter_polo_por_curso(nome_do_curso):
-        curso = Curso.objects.get(nome_curso=nome_do_curso)
-        polo_associado = curso.polo
-        return polo_associado
+
+    
+def addicionar_Polo(request):
+    pass
 
 @login_required
 def View_DocAluno(request):
@@ -40,9 +40,10 @@ def f_Registo(request):
         cursos=curso.objects.all()
         return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos}))
     elif request.method == 'POST':
-        v_Curso = request.POST.get('Curso')
-        escola = obter_polo_por_curso(v_Curso)
-        user.curso = v_Curso
+        id_curso = request.POST.get('Curso')
+        print(id_curso)
+        escola = obter_polo_por_curso(id_curso)
+        user.curso = id_curso
         user.escola = escola
         user.is_completed = True
         user.save()

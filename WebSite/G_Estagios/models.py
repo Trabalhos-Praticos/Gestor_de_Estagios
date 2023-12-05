@@ -48,11 +48,17 @@ class Polo(models.Model):
     nome=models.CharField(max_length=50)
     def __str__(self):
         return self.nome
+    
+def obter_polo_por_curso(id_curso):
+    curso = Curso.objects.get(id=id_curso)
+    polo_associado = curso.Polo
+    polo = Polo.objects.get(nome=polo_associado)
+    return polo.id
 
 class Curso(models.Model):
     id = models.AutoField(primary_key=True)
     nome_curso= models.CharField(max_length=70,blank=True)
-    Polo= models.ForeignKey(Polo,on_delete=models.DO_NOTHING)
+    Polo = models.ForeignKey(Polo,on_delete=models.DO_NOTHING)
     def __str__(self):
         return self.nome_curso
 def Add_Curso(request):

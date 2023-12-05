@@ -13,7 +13,7 @@
         <select name="Curso">
             <option value="" disabled selected>Selecione o curso</option>
             {%for curso in cursos %}
-            <option value = {{'curso.id'}} >{{curso.nome_curso}}</option>
+            <option value = {{curso.id}} >{{curso.nome_curso}}</option>
             {% endfor %}
         </select>
         <button>submit</button>
