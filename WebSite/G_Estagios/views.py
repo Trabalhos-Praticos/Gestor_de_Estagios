@@ -11,7 +11,10 @@ from django.contrib.auth import authenticate, login, logout
 
 @login_required
 def D_v(request):
+    print(request.user.privilegio)
+    
     if request.method == "GET":
+    
         Users=CustomUser.objects.all()
         curso=Curso
         cursos=curso.objects.all()
@@ -19,8 +22,8 @@ def D_v(request):
             return render(request, 'G_Estagios/dashboard.html',({'cursos': cursos, 'customusers': Users}))
 
 
-def obter_polo_por_curso(nome_curso):
-        curso = Curso.objects.get(nome_curso=nome_curso)
+def obter_polo_por_curso(nome_do_curso):
+        curso = Curso.objects.get(nome_curso=nome_do_curso)
         polo_associado = curso.polo
         return polo_associado
 
@@ -40,7 +43,7 @@ def f_Registo(request):
         return HttpResponseRedirect(reverse('dash'))
     elif request.method == 'POST':
         v_Curso = request.POST.get('Curso')
-        escola = obter_polo_por_curso(Curso)
+        escola = obter_polo_por_curso(v_Curso)
         user.curso = v_Curso
         user.escola = escola
         user.is_completed = True
@@ -81,6 +84,7 @@ def registo(request):
 
 def edit_user_admin(request):
     pass
+
 
 def verificar_tipo_arquivo(arquivo):
     # Obtém a extensão do arquivo

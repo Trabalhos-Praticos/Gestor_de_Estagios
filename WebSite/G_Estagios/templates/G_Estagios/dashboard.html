@@ -14,18 +14,7 @@
   
   {% if is_professor %}
   <p>Olá professor {{ user.first_name }}</p>
-  {% else %}
-  <p>Olá Aluno {{ user.first_name}}</p>
-  {% endif%}
-  <form action="{% url 'Upload_Assiduidade' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="arquivo">Escolha um arquivo (PDF ou DOCX):</label>
-    <input type="file" name="arquivo" accept=".pdf, .docx" required>
-    <input type="submit" value="Enviar">
-  </form>
-  {%for assiduidade in assiduidade %}
-  {%endfor %}
-
+  {% endif %}
   
   <table class="table table-bordered table-dark">
     <thead>
@@ -38,24 +27,16 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
+        {% for customuser in customusers %}
+          <th>{{ customuser.username }}</th>
+          <th>{{ customuser.curso }}</th>
+          <th>{{ customuser.polo }}</th>
+          <th>{{ customuser.ano }}</th>
+        {% endfor %}
       </tr>
     </tbody>
   </table>
+
 
 
 
@@ -63,9 +44,7 @@
   <div class="container"> </div>
     <ul>
         <h2>Lista de CustomUsers:</h2>
-        {% for customuser in customusers %}
-          <li>{{ customuser.username }} - {{ customuser.curso}}</li>
-        {% endfor %}
+        
       </ul>
      
       <a href="{% url "logout" %}"><button class="btn btn-primary" type="submit"> Logout </button></a>
