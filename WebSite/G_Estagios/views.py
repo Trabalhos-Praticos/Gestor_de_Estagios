@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render, HttpResponseRedirect, HttpRespons
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade
+from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade,Polo
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -12,9 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 @login_required
 def D_v(request):
     print(request.user.privilegio)
-    
     if request.method == "GET":
-    
         Users=CustomUser.objects.all()
         curso=Curso
         cursos=curso.objects.all()
@@ -41,10 +39,13 @@ def f_Registo(request):
         return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos}))
     elif request.method == 'POST':
         id_curso = request.POST.get('Curso')
-        print(id_curso)
-        escola = obter_polo_por_curso(id_curso)
-        user.curso = id_curso
-        user.escola = escola
+        id_escola = obter_polo_por_curso(id_curso)
+        escola = Polo.objects.get(id=id_escola)
+        nome_escola = escola.nome
+        curso= Curso.objects.get(id=id_curso)
+        nome_curso = curso.nome_curso
+        user.curso = nome_curso
+        user.escola = nome_escola
         user.is_completed = True
         user.save()
         return HttpResponseRedirect(reverse('dash'),{'user':user})

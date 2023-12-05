@@ -24,19 +24,18 @@
   <table class="table table-bordered table-dark">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Email</th>
+        <th scope="col">Curso</th>
+        <th scope="col">Polo</th>
+        <th scope="col">Ano</th>
       </tr>
     </thead>
     <tbody>
       {% for customuser in customusers %}
       <tr>
-        <th scope="row">{{ loop.index }}</th>
           <td>{{ customuser.username }}</td>
           <td>{{ customuser.curso }}</td>
-          <td>{{ customuser.polo }}</td>
+          <td>{{ customuser.escola }}</td>
           <td>{{ customuser.ano }}</td>
       </tr>
       {% endfor %}
