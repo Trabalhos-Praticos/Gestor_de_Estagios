@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <audio controls src="../../audio/musica.mp3" autoplay ></audio>
+  <source controls src="../../audio/musica.mp3" autoplay > </source>
   {% if user.privilegio == 'Professor' or user.is_superuser == 1%}
   {% if user.privilegio == 'Professor'%}
   <p>Olá, professor {{ user.first_name }}</p>
