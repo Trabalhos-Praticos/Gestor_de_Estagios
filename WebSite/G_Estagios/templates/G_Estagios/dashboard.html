@@ -13,13 +13,11 @@
 
 <body>
   
-  {% if is_aluno %}
-  <p>Olá, {{ user.first_name }}</p>
-  {% endif %}
-
-  {% if is_professor %}
-  <p>Olá professor {{ user.first_name }}</p>
-  {% endif %}
+  {% if is_professor == 'True' %}
+  <p>Olá, professor {{ user.first_name }}</p>
+  {% else %}
+  <p>Olá, {{ user.first_name}}</p>
+  {% endif%}
   
 
   <div class="container mt-4">
