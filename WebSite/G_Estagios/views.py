@@ -39,8 +39,6 @@ def f_Registo(request):
         curso = Curso
         cursos=curso.objects.all()
         return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos}))
-    elif user.is_completed:
-        return HttpResponseRedirect(reverse('dash'))
     elif request.method == 'POST':
         v_Curso = request.POST.get('Curso')
         escola = obter_polo_por_curso(v_Curso)
@@ -49,6 +47,8 @@ def f_Registo(request):
         user.is_completed = True
         user.save()
         return HttpResponseRedirect(reverse('dash'),{'user':user})
+    elif user.is_completed:
+        return HttpResponseRedirect(reverse('dash'))
 
 
 def registo(request):

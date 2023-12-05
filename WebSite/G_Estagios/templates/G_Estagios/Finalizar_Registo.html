@@ -10,13 +10,13 @@
     <form action="{% url "finalizar_registo" %}" class="sign-in-form" method='POST'>
         {% csrf_token %}
         <h2 class="title">Finalizar registo</h2>
-        <select name="Cursos" id="cursos">
+        <select name="Curso">
             <option value="" disabled selected>Selecione o curso</option>
             {%for curso in cursos %}
-            <option value = 'curso.id' >{{curso.nome_curso}}</option>
+            <option value = {{'curso.id'}} >{{curso.nome_curso}}</option>
             {% endfor %}
         </select>
-        <input type="submit" value="fn" class="btn solid" />
+        <button>submit</button>
       </form>
 </body>
 </html>
