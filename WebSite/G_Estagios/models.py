@@ -111,6 +111,6 @@ def verificar_palavra_passe(palavra_passe):
     )
     resultado = policy.test(palavra_passe)
     if resultado:
-        return False, 'A palavra-passe não atende aos critérios.'  # Mensagem de erro
+        return False
     else:
-        return True, None  # Palavra-passe atende aos critérios
+        return True  # Palavra-passe atende aos critérios

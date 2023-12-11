@@ -73,19 +73,24 @@ def registo(request):
             Password=request.POST.get('Password')        
             Nome = request.POST.get('Nome')
             V_e = verify_email(Email)
-            if V_e == "Invalido":
-                messages.error(request, 'Email invalido')
+            v_Password = verificar_palavra_passe(Password)
+            if v_Password == False:
+                messages.error(request,"Palavra-passe deve, pelo menos um caractere não alfabético, pelo menos uma letra maiúscula,Mínimo de 8 caracteres, pelo menos um número e pelo menos um caractere especial")
                 return HttpResponseRedirect(reverse('registo'))
-            elif V_e == 'Aluno':
-                newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
-                newuser.save()
-                messages.info(request,"Registo bem sucedido")
-                return HttpResponseRedirect(reverse('registo'))
-            elif V_e == 'Professor':
-                newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True,is_completed = True)
-                newuser.save()
-                messages.success(request,"Registo bem sucedido")
-                return HttpResponseRedirect(reverse('registo'))
+            elif v_Password == True:
+                if V_e == "Invalido":
+                    messages.error(request, 'Email invalido')
+                    return HttpResponseRedirect(reverse('registo'))
+                elif V_e == 'Aluno':
+                    newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
+                    newuser.save()
+                    messages.info(request,"Registo bem sucedido")
+                    return HttpResponseRedirect(reverse('registo'))
+                elif V_e == 'Professor':
+                    newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True,is_completed = True)
+                    newuser.save()
+                    messages.success(request,"Registo bem sucedido")
+                    return HttpResponseRedirect(reverse('registo'))
 
 def edit_user_admin(request):
     pass
@@ -118,7 +123,8 @@ def add_Assiduidade(request):
             if tipo_arquivo in ['pdf', 'docx']:
                 # Aqui você pode chamar a função Upload_Assiduidade
                 # Certifique-se de passar os parâmetros necessários
-                Upload_Assiduidade(request, id_aluno=1)
+                id_aluno = request.POST['id']
+                Upload_Assiduidade(request,id_aluno)
                 return HttpResponse("Upload bem-sucedido!")
             else:
                 return HttpResponse("Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.")
@@ -175,3 +181,25 @@ def mostrar_assiduidades(request, id_aluno, id_estagio):
     
     # Renderize a página com as assiduidades
     return render(request, 'mostrar_assiduidades.html', {'assiduidades': assiduidades})
+
+
+def alter_user(request):
+    if request.method == 'GET':
+        return render(request,'G_Estagios/alteruser.html')
+    if request.method == 'POST':
+        novo_nome = request.POST.get('novo_nome')
+        Password = request.POST.get('password')
+        v_pass= verificar_palavra_passe(Password)
+        if v_pass == False:
+            messages.error(request,"Palavra-passe deve, pelo menos um caractere não alfabético, pelo menos uma letra maiúscula,Mínimo de 8 caracteres, pelo menos um número e pelo menos um caractere especial")
+            return HttpResponseRedirect(reverse('registo'))
+        elif v_pass == True:
+            # Obtenha o usuário atual
+            user = request.user
+            # Faça as alterações necessárias
+            user.first_name = novo_nome
+            user.password = Password
+            # Salve as alterações no banco de dados
+            user.save()
+            messages.success(request, 'As informações foram atualizadas com sucesso!')
+        
