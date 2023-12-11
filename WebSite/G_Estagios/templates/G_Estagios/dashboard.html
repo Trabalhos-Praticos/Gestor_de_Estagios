@@ -14,10 +14,7 @@
 </head>
 
 <body>
-
-  
-
-
+  {% include 'G_Estagios/nav.html' %}
   <!-- <a href="{% url "logout" %}"><button class="btn btn-primary" type="submit"> Logout </button></a> -->
   {% if user.privilegio == 'Professor' or user.is_superuser == 1%}
   {% if user.privilegio == 'Professor'%}
