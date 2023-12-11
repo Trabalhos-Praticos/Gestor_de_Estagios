@@ -9,8 +9,53 @@
 <body>
 
 
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Barra lateral -->
+            <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Serviços
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+                                <a class="dropdown-item" href="#">Consultoria Financeira</a>
+                                <a class="dropdown-item" href="#">Contabilidade</a>
+                                <a class="dropdown-item" href="#">Recursos Humanos</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Documentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Alertas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                <button class="btn btn-primary" type="submit">Logout</button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    
+            <!-- Conteúdo principal -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <!-- Conteúdo da página vai aqui -->
+            </main>
+        </div>
+    </div>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">Menu</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +84,7 @@
             </ul>
         </div>
     </div>
-</nav>
+</nav> -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
