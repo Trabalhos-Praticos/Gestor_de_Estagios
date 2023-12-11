@@ -35,4 +35,6 @@ urlpatterns = [
     path('alunos-do-curso/', views.view_alunos_do_curso, name='alunos_do_curso'),
     path('submeter_docs/', views.submeter_docs, name="sub_docs"),
     path('alterar_user/', views.alter_user, name='alterar_usuario'),
+    path('criar/escola_curso',views.view_polo_curso,name='polo_curso'),
+
 ]
