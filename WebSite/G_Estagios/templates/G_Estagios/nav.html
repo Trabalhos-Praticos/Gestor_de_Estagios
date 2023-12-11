@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href={% static 'css/dashboard.css' %}>
+    <title>Dashborad</title>
 </head>
 <body>
-
-
     <div class="container-fluid">
         <div class="row">
-            <!-- Barra lateral -->
-            <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
+            <nav class=" d-none d-md-block bg-dark">
+                
+                
+                <ul class="nav">
+                    <img class="logo" src={% static "img/Logo.png" %}>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Serviços
                             </a>
