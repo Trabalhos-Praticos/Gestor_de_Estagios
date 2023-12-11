@@ -33,4 +33,5 @@ urlpatterns = [
     path('dashboard/',views.Dashboard, name='dash'),
     path('upload_assiduidade/',views.add_Assiduidade,name = 'Upload_Assiduidade'),
     path('alunos-do-curso/', views.view_alunos_do_curso, name='alunos_do_curso'),
+    path('submeter_docs/', views.submeter_docs, name="sub_docs"),
 ]

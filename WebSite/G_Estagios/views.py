@@ -19,7 +19,9 @@ def Dashboard(request):
             return render(request, 'G_Estagios/dashboard.html',({ 'customusers': Users, 'user':user}))
 
 
-
+def submeter_docs(request):
+    if request.method == 'GET':
+        return render(request, 'G_Estagios/documentosAlunoCC.html')
     
 def addicionar_Polo(request):
     pass
