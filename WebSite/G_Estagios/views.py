@@ -115,7 +115,6 @@ def verificar_tipo_arquivo(arquivo):
 def add_Assiduidade(request):
     if request.method == 'POST':
         arquivo = request.FILES.get('arquivo')
-
         if arquivo:
             # Verifique o tipo de arquivo
             tipo_arquivo = verificar_tipo_arquivo(arquivo)
@@ -184,15 +183,15 @@ def mostrar_assiduidades(request, id_aluno, id_estagio):
 
 
 def alter_user(request):
-    if request.method == 'GET':
-        return render(request,'G_Estagios/alteruser.html')
+    #if request.method == 'GET':
+    #    return render(request,'G_Estagios/alteruser.html')
     if request.method == 'POST':
         novo_nome = request.POST.get('novo_nome')
         Password = request.POST.get('password')
         v_pass= verificar_palavra_passe(Password)
         if v_pass == False:
             messages.error(request,"Palavra-passe deve, pelo menos um caractere não alfabético, pelo menos uma letra maiúscula,Mínimo de 8 caracteres, pelo menos um número e pelo menos um caractere especial")
-            return HttpResponseRedirect(reverse('registo'))
+            return HttpResponseRedirect(reverse('pag'))
         elif v_pass == True:
             # Obtenha o usuário atual
             user = request.user
@@ -202,4 +201,7 @@ def alter_user(request):
             # Salve as alterações no banco de dados
             user.save()
             messages.success(request, 'As informações foram atualizadas com sucesso!')
+            return HttpResponseRedirect(reverse('pag'))
+    
+    return render(request,'G_Estagios/alteruser.html')
         
