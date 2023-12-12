@@ -11,19 +11,19 @@ from django.contrib.auth import authenticate, login, logout
 
 @login_required
 def Dashboard(request):
+    
     if request.method == "GET":
+        
         user = request.user
         #Users=CustomUser.objects.get(curso = user.curso)
         Users=CustomUser.objects.all()
+        
         if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
             return render(request, 'G_Estagios/dashboard.html',({ 'customusers': Users, 'user':user}))
 
 
-
-
 def submeter_docs(request):
-    if request.method == 'GET':
-        return render(request, 'G_Estagios/documentosAlunoCC.html')
+    return render(request, 'G_Estagios/documentosAlunoCC.html')
     
 def addicionar_Polo(request):
     pass
@@ -59,44 +59,60 @@ def f_Registo(request):
 
 
 def registo(request):
-    if request.method == "GET":
-        return render(request,'G_Estagios/Register.html')
+   
     if request.method == "POST":
         User=CustomUser
         Email= request.POST.get('Email')
+        
         try:
             V_Email = User.objects.get(username=Email)
+        
         except User.DoesNotExist:
+        
             V_Email = False
+        
         if V_Email:
+        
             messages.error(request,"Já existe um utilizador com esse email")
             return HttpResponseRedirect(reverse('registo'))
+        
         else:
+        
             Password=request.POST.get('Password')        
             Nome = request.POST.get('Nome')
             V_e = verify_email(Email)
             v_Password = verificar_palavra_passe(Password)
+        
             if v_Password == False:
+        
                 messages.error(request,"Palavra-passe deve, pelo menos um caractere não alfabético, pelo menos uma letra maiúscula,Mínimo de 8 caracteres, pelo menos um número e pelo menos um caractere especial")
                 return HttpResponseRedirect(reverse('registo'))
+           
             elif v_Password == True:
+           
                 if V_e == "Invalido":
+           
                     messages.error(request, 'Email invalido')
                     return HttpResponseRedirect(reverse('registo'))
+           
                 elif V_e == 'Aluno':
+           
                     newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
                     newuser.save()
                     messages.info(request,"Registo bem sucedido")
+           
                     return HttpResponseRedirect(reverse('registo'))
+           
                 elif V_e == 'Professor':
+           
                     newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True,is_completed = True)
                     newuser.save()
                     messages.success(request,"Registo bem sucedido")
+           
                     return HttpResponseRedirect(reverse('registo'))
-
-def edit_user_admin(request):
-    pass
-
+                
+                
+    return render(request,'G_Estagios/Register.html')
 
 def verificar_tipo_arquivo(arquivo):
     # Obtém a extensão do arquivo
@@ -133,25 +149,33 @@ def add_Assiduidade(request):
 
 
 def view_login(request):
-    if request.method == "GET":
-        return render(request,'G_Estagios/Login.html')
+   
     if request.method == 'POST':
+   
         Username = request.POST["username"]
         Password = request.POST["password"]
         user = authenticate(request, username=Username, password=Password)
+   
         if user is not None:
+   
             login(request, user)
             user = request.user
             completo = user.is_completed
+   
             if completo == True:
                 # Redirecione para uma página de sucesso.
                 return HttpResponseRedirect(reverse ('dash'))
+   
             elif completo == False:
                 return HttpResponseRedirect(reverse('finalizar_registo'))
+   
         else:
+   
             # Retorne uma mensagem de erro de 'login inválido'.
             messages.error(request,"Endereço de email ou password invalidos")
             return redirect('login')
+     
+    return render(request,'G_Estagios/Login.html')
 
 
 @login_required
@@ -161,8 +185,11 @@ def logout_view(request):
 
 
 def Home(request):
-    if request.method =='GET':
-        return render(request,'G_Estagios/index.html')
+    user = request.user
+    if user.is_authenticated:
+        return HttpResponseRedirect(reverse('dash'))
+    
+    return render(request,'G_Estagios/index.html')
 
 
 def view_alunos_do_curso(request):
@@ -185,16 +212,20 @@ def mostrar_assiduidades(request, id_aluno, id_estagio):
 
 
 def alter_user(request):
-    #if request.method == 'GET':
-    #    return render(request,'G_Estagios/alteruser.html')
+    
     if request.method == 'POST':
+    
         novo_nome = request.POST.get('novo_nome')
         Password = request.POST.get('password')
         v_pass= verificar_palavra_passe(Password)
+    
         if v_pass == False:
+    
             messages.error(request,"Palavra-passe deve, pelo menos um caractere não alfabético, pelo menos uma letra maiúscula,Mínimo de 8 caracteres, pelo menos um número e pelo menos um caractere especial")
             return HttpResponseRedirect(reverse('pag'))
+    
         elif v_pass == True:
+    
             # Obtenha o usuário atual
             user = request.user
             # Faça as alterações necessárias
@@ -203,7 +234,38 @@ def alter_user(request):
             # Salve as alterações no banco de dados
             user.save()
             messages.success(request, 'As informações foram atualizadas com sucesso!')
+    
             return HttpResponseRedirect(reverse('pag'))
     
     return render(request,'G_Estagios/alteruser.html')
+
+
+@login_required
+def view_polo_curso(request):
+    user = request.user
+    if user.is_superuser == 0:
+        return HttpResponseRedirect(reverse('dash'))
+
+def create_curso(request):
+    user = request.user
+    if user.is_superuser == 0:
+        curso = Curso
         
+        
+        return HttpResponseRedirect(reverse('dash'))
+
+def create_polo(request):
+    user = request.user
+    if user.is_superuser == 0:
+        return HttpResponseRedirect(reverse('dash'))
+    if request.method == 'POST':
+            polo = Polo
+            nome_polo = request.POST['nome']
+            polo.save()
+            messages.success = 'Escola adicionada a base de dados com sucesso'
+            
+def edit_user_admin(request):
+    user = request.user
+    if request.method == 'POST':
+        
+        pass
