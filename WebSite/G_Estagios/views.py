@@ -1,10 +1,9 @@
-from django.shortcuts import redirect, render, HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect, render, HttpResponseRedirect, HttpResponse,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade,Polo
 from django.contrib.auth import authenticate, login, logout
-
 
 
 
@@ -21,17 +20,21 @@ def Dashboard(request):
         if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
             return render(request, 'G_Estagios/dashboard.html',({ 'customusers': Users, 'user':user}))
 
-
+@login_required
 def submeter_docs(request):
     return render(request, 'G_Estagios/documentosAlunoCC.html')
     
+    
+@login_required
 def addicionar_Polo(request):
     pass
+
 
 @login_required
 def View_DocAluno(request):
     if request.methtod == 'GET':
          return render(request, 'G_Estagios/Aluno/documentos.html')
+
 
 @login_required
 def f_Registo(request):
@@ -100,7 +103,6 @@ def registo(request):
                     newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
                     newuser.save()
                     messages.info(request,"Registo bem sucedido")
-           
                     return HttpResponseRedirect(reverse('registo'))
            
                 elif V_e == 'Professor':
@@ -114,6 +116,8 @@ def registo(request):
                 
     return render(request,'G_Estagios/Register.html')
 
+
+@login_required
 def verificar_tipo_arquivo(arquivo):
     # Obtém a extensão do arquivo
     extensao = arquivo.name.split('.')[-1].lower()
@@ -129,7 +133,9 @@ def verificar_tipo_arquivo(arquivo):
         return tipos_permitidos[extensao]
     else:
         return None
-
+    
+    
+@login_required
 def add_Assiduidade(request):
     if request.method == 'POST':
         arquivo = request.FILES.get('arquivo')
@@ -191,7 +197,7 @@ def Home(request):
     
     return render(request,'G_Estagios/index.html')
 
-
+@login_required
 def view_alunos_do_curso(request):
     # Recupere o usuário atualmente autenticado (coordenador de curso)
     coordenador = CustomUser.objects.get(username=request.user.username)
@@ -202,7 +208,7 @@ def view_alunos_do_curso(request):
     # Renderize a página com a lista de alunos
     return render(request, 'alunos_do_curso.html', {'alunos': alunos_do_curso})
 
-
+@login_required
 def mostrar_assiduidades(request, id_aluno, id_estagio):
     # Obtenha as assiduidades filtradas com base no usuário e no estágio
     assiduidades = Assiduidade.objects.filter(id_Aluno=id_aluno, id_Estagio=id_estagio)
@@ -211,6 +217,7 @@ def mostrar_assiduidades(request, id_aluno, id_estagio):
     return render(request, 'mostrar_assiduidades.html', {'assiduidades': assiduidades})
 
 
+@login_required
 def alter_user(request):
     
     if request.method == 'POST':
@@ -243,29 +250,60 @@ def alter_user(request):
 @login_required
 def view_polo_curso(request):
     user = request.user
+    cursos = Curso.objects.all()
+    Polos = Polo.objects.all()
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
+    return render(request,'G_Estagios/administracao/CRUDcurso__e_escola.html',{'cursos':cursos , 'Polos':Polos })
 
+
+@login_required
 def create_curso(request):
     user = request.user
     if user.is_superuser == 0:
-        curso = Curso
-        
-        
         return HttpResponseRedirect(reverse('dash'))
+    if request.method == 'POST':
+        curso = Curso
+        curso_nome = request.POST['nome']
+        curso_polo = request.POST['polo']
+        polo = Polo.objects.get(id=curso_polo)
+        new_curso = curso.objects.create(nome_curso=curso_nome, Polo=polo)
+        new_curso.save()
+        messages.success(request,'Curso criado e associado com sucesso.')   
+        return HttpResponseRedirect(reverse('polo_curso'))
+        
+@login_required    
+def eliminar_curso(request, curso_id):
+    user = request.user
+    if user.is_superuser == 0:
+        return HttpResponseRedirect(reverse('dash'))
+    if request.method == 'POST':
+        curso = get_object_or_404(Curso, id=curso_id)
+        curso.delete()
+        messages.success(request,'Curso eliminado com sucesso.')
+        return HttpResponseRedirect(reverse('polo_curso'))      
 
+
+@login_required
 def create_polo(request):
     user = request.user
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
     if request.method == 'POST':
+            
             polo = Polo
             nome_polo = request.POST['nome']
-            polo.save()
-            messages.success = 'Escola adicionada a base de dados com sucesso'
+            new_polo = polo.objects.create(nome=nome_polo)
+            
+            new_polo.save()
+            
+            messages.success('Escola criada com sucesso.')
+            return HttpResponseRedirect(reverse('polo_curso'))
             
 def edit_user_admin(request):
     user = request.user
     if request.method == 'POST':
-        
         pass
+    
+def adm_panel(request):
+    return render(request,'G_Estagios/administracao/adm_panel.html')

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Adicionar curso e escola</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    {% include 'G_Estagios/nav.html'%}
+    <div class="container mt-4">
+        {% if messages %}
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        {% for message in messages %}
+                            <div class="" role="alert">
+                                <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %} 
+        <h2>Adicionar Curso</h2>
+        <form id="form" action="{% url 'criar_curso' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-row align-items-end"> <!-- Adicionada a classe align-items-end -->
+                <div class="col-md-4 mb-3">
+                    <input type="text" class="form-control" id="Curso" placeholder="Curso" name = 'nome' required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <select name="polo">
+                        <option value="" disabled selected>Selecione o curso</option>
+                        {%for polo in Polos %}
+                        <option value = {{polo.id}} >{{polo.nome}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <button class="btn btn-primary" type="submit">Adicionar</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="container mt-4">
+            <h2>Adicionar escola</h2>
+            <form id="form" method="POST"> 
+                {% csrf_token %}
+                    <div class="col-md-4 mb-3">
+                        <label for="Faculdade">Faculdade</label>
+                        <input type="text" class="form-control" id="Faculdade" placeholder="Faculdade" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button class="btn btn-primary" type="submit">Adicionar</button>
+                    </div>
+                </div>
+            </form>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Faculdade</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            {%for curso in cursos %}
+                <tr>
+                    <td>{{curso.nome_curso}}</td>
+                    <td>{{curso.Polo}}</td>
+                
+                    <td>
+                        <form method="post" action="{% url 'eliminar_curso' curso.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {%endfor%}
+
+        </tbody>
+    </table>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Faculdade</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            {%for polo in Polos %}
+                <tr>
+                    <td>{{polo.nome}}</td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
