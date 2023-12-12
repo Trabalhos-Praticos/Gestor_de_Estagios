@@ -1,96 +1,154 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="pt-pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href={% static 'css/dashboard.css' %}>
-    <title>Dashborad</title>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <nav class=" d-none d-md-block bg-dark">
-                <ul class="nav">
-                    <img class="logo" src={% static "img/Logo.png" %}>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Serviços
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="servicesDropdown">
-                                <a class="dropdown-item" href="#">Consultoria Financeira</a>
-                                <a class="dropdown-item" href="#">Contabilidade</a>
-                                <a class="dropdown-item" href="#">Recursos Humanos</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Documentos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Alertas</a>
-                        </li>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== REMIXICONS ===============-->
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href={% static 'css/nav.css' %}>
+
+        <!--=============== JS ===============-->
+        <script src={% static 'js/nav.js' %}></script>
+
+        <title>Navbar - template</title>
+    </head>
+    <body>
+        <!--=============== HEADER ===============-->
+        <header class="header">
+            <nav class="nav container">
+                <div class="nav__data">
+                    <a href="#" class="nav__logo ml-auto">
+                        <img class="logo" src="{% static 'img/Logo.png' %}">
+                    </a>
+    
+                    <div class="nav__toggle" id="nav-toggle">
+                        <i class="ri-menu-line nav__toggle-menu"></i>
+                        <i class="ri-close-line nav__toggle-close"></i>
+                    </div>
+                </div>
+
+                <!--=============== NAV MENU ===============-->
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
                         <li>
-                            <a href="{% url 'admin' %}">Painel Admin</a>
+                            <a href="{% url 'dash' %}" class="nav__link">Dashboard</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">
-                                <button class="btn btn-primary" type="submit">Logout</button>
-                            </a>
+
+                        
+                        <li>
+                            <a href="{% url 'sub_docs' %}" class="nav__link">Documentos</a>
+                        </li>
+
+                      
+                        <li>
+                            <a href="#" class="nav__link">Alunos</a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="nav__link">Alertas</a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="nav__link">Empresas</a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="nav__link">Estágio</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'admin' %}" class="nav-link">Painel Admin</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'logout' %}" class="nav-link"><button class="btn btn-primary" type="submit">Logout</button></a>
                         </li>
                     </ul>
-                </div>
+                </div>           
             </nav>
-    
-            <!-- Conteúdo principal -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <!-- Conteúdo da página vai aqui -->
-            </main>
-        </div>
-    </div>
-
-
-
-
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">Menu</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serviços</a>
-                    <div class="dropdown-menu" aria-labelledby="servicesDropdown">
-                        <a class="dropdown-item" href="#">Consultoria Financeira</a>
-                        <a class="dropdown-item" href="#">Contabilidade</a>
-                        <a class="dropdown-item" href="#">Recursos Humanos</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Documentos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Alertas</a>
-                </li>
-                <li class="nav-item align-content-end"> <a href="{% url "logout" %}"><button class="btn btn-primary" type="submit"> Logout </button></a></li>
-            </ul>
-        </div>
-    </div>
-</nav> -->
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</body>
+       
+        
+        <!--=============== MAIN JS ===============-->
+        <script>
+            /*=============== SHOW MENU ===============*/
+const showMenu = (toggleId, navId) =>{
+    const toggle = document.getElementById(toggleId),
+          nav = document.getElementById(navId)
+ 
+    toggle.addEventListener('click', () =>{
+        // Add show-menu class to nav menu
+        nav.classList.toggle('show-menu')
+        // Add show-icon to show and hide menu icon
+        toggle.classList.toggle('show-icon')
+    })
+ }
+ 
+ showMenu('nav-toggle','nav-menu')
+ 
+ /*=============== SHOW DROPDOWN MENU ===============*/
+ const dropdownItems = document.querySelectorAll('.dropdown__item')
+ 
+ // 1. Select each dropdown item
+ dropdownItems.forEach((item) =>{
+     const dropdownButton = item.querySelector('.dropdown__button') 
+ 
+     // 2. Select each button click
+     dropdownButton.addEventListener('click', () =>{
+         // 7. Select the current show-dropdown class
+         const showDropdown = document.querySelector('.show-dropdown')
+         
+         // 5. Call the toggleItem function
+         toggleItem(item)
+ 
+         // 8. Remove the show-dropdown class from other items
+         if(showDropdown && showDropdown!== item){
+             toggleItem(showDropdown)
+         }
+     })
+ })
+ 
+ // 3. Create a function to display the dropdown
+ const toggleItem = (item) =>{
+     // 3.1. Select each dropdown content
+     const dropdownContainer = item.querySelector('.dropdown__container')
+ 
+     // 6. If the same item contains the show-dropdown class, remove
+     if(item.classList.contains('show-dropdown')){
+         dropdownContainer.removeAttribute('style')
+         item.classList.remove('show-dropdown')
+     } else{
+         // 4. Add the maximum height to the dropdown content and add the show-dropdown class
+         dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px'
+         item.classList.add('show-dropdown')
+     }
+ }
+ 
+ /*=============== DELETE DROPDOWN STYLES ===============*/
+ const mediaQuery = matchMedia('(min-width: 1118px)'),
+       dropdownContainer = document.querySelectorAll('.dropdown__container')
+ 
+ // Function to remove dropdown styles in mobile mode when browser resizes
+ const removeStyle = () =>{
+     // Validate if the media query reaches 1118px
+     if(mediaQuery.matches){
+         // Remove the dropdown container height style
+         dropdownContainer.forEach((e) =>{
+             e.removeAttribute('style')
+         })
+ 
+         // Remove the show-dropdown class from dropdown item
+         dropdownItems.forEach((e) =>{
+             e.classList.remove('show-dropdown')
+         })
+     }
+ }
+ 
+ addEventListener('resize', removeStyle)
+        </script>
+    </body>
 </html>
+
