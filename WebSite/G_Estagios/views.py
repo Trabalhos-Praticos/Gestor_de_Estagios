@@ -4,8 +4,7 @@ from django.contrib import messages
 from django.urls import reverse
 from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade,Polo
 from django.contrib.auth import authenticate, login, logout
-
-
+from .forms import CursoForm
 
 
 @login_required
@@ -283,6 +282,25 @@ def eliminar_curso(request, curso_id):
         messages.success(request,'Curso eliminado com sucesso.')
         return HttpResponseRedirect(reverse('polo_curso'))      
 
+@login_required
+def editar_curso(request, curso_id):
+    user = request.user
+    if user.is_superuser == 0:
+        return HttpResponseRedirect(reverse('dash'))
+    
+    curso = get_object_or_404(Curso, id=curso_id)
+    
+    if request.method == 'POST':
+        form = CursoForm(request.POST, instance=curso)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('polo_curso'))
+    else:
+        form = CursoForm(instance=curso)
+
+    return render(request, 'G_Estagios/administracao/editarCurso.html', {'form': form, 'curso': curso})
+
+
 
 @login_required
 def create_polo(request):
@@ -297,13 +315,27 @@ def create_polo(request):
             
             new_polo.save()
             
-            messages.success('Escola criada com sucesso.')
+            messages.success(request,'Escola criada com sucesso.')
             return HttpResponseRedirect(reverse('polo_curso'))
-            
+
+@login_required
+def eliminar_polo(request, polo_id):
+    user = request.user
+    if user.is_superuser == 0:
+        return HttpResponseRedirect(reverse('dash'))
+    if request.method == 'POST':
+        polo = get_object_or_404(Polo, id=polo_id)
+        polo.delete()
+        return HttpResponseRedirect(reverse('polo_curso'))
+
+
 def edit_user_admin(request):
     user = request.user
     if request.method == 'POST':
         pass
     
 def adm_panel(request):
+    user = request.user
+    if user.is_superuser == 0:
+        return HttpResponseRedirect(reverse('dash'))
     return render(request,'G_Estagios/administracao/adm_panel.html')

@@ -43,11 +43,11 @@
 
         <div class="container mt-4">
             <h2>Adicionar escola</h2>
-            <form id="form" method="POST"> 
+            <form id="form" action="{% url 'criar_polo' %}" method="POST"> 
                 {% csrf_token %}
                     <div class="col-md-4 mb-3">
                         <label for="Faculdade">Faculdade</label>
-                        <input type="text" class="form-control" id="Faculdade" placeholder="Faculdade" required>
+                        <input type="text" name="nome" class="form-control" id="Faculdade" placeholder="Faculdade" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <button class="btn btn-primary" type="submit">Adicionar</button>
@@ -73,6 +73,9 @@
                             <button type="submit">Eliminar</button>
                         </form>
                     </td>
+                    <td>
+                        <a href="{% url 'editar_curso' curso.id %}">Editar</a>
+                    </td>
                 </tr>
             {%endfor%}
 
@@ -88,7 +91,14 @@
             {%for polo in Polos %}
                 <tr>
                     <td>{{polo.nome}}</td>
+                    <td>
+                        <form method="post" action="{% url 'eliminar_polo' polo.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Eliminar</button>
+                        </form> 
+                    </td>
                 </tr>
+                
             {%endfor%}
         </tbody>
     </table>

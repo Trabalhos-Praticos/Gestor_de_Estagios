@@ -114,3 +114,4 @@ def verificar_palavra_passe(palavra_passe):
         return False
     else:
         return True  # Palavra-passe atende aos critérios
+

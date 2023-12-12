@@ -40,4 +40,6 @@ urlpatterns = [
     path('administracao/escola_curso/CriarEscola',views.create_polo,name='criar_polo'),
     path('administracao/painelAdm',views.adm_panel,name = 'admin'),
     path('administracao/escola_curso/eliminar_curso/<int:curso_id>/', views.eliminar_curso, name='eliminar_curso'),
+    path('administracao/escola_curso/editar_curso/<int:curso_id>/', views.editar_curso, name='editar_curso'),
+    path('administracao/escola_curso/eliminar_polo/<int:polo_id>/', views.eliminar_polo, name='eliminar_polo'),
 ]
