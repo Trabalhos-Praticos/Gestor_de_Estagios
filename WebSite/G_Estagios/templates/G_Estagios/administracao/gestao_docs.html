@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de documentos</title>
+</head>
+<body>
+    <div>
+        <h1>Assiduidade</h1>
+        <form action="{% url 'Upload_Assiduidade_adm' %}" method="post">
+            <input type="file" name="file">
+        </form>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    id
+                </td>
+
+                <td>
+                    data
+                </td>
+
+                <td>
+                    id_aluno
+                </td>
+
+                <td>
+                    ficheiro
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {%for protocolo in protocolos %}
+            <tr>
+                <td>
+                    {{protocolo.id}}
+                </td>
+                <td>
+                    {{protocolo.data}}
+                </td>
+
+                <td>
+                    {{protocolo.id_aluno}}
+                </td>
+                <td>
+                    {{protocolo.file}}
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

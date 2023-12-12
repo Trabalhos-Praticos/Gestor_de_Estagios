@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render, HttpResponseRedirect, HttpRespons
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade,Polo
+from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade,Polo, Protocolos
 from django.contrib.auth import authenticate, login, logout
 from .forms import CursoForm
 
@@ -147,9 +147,11 @@ def add_Assiduidade(request):
                 # Certifique-se de passar os parâmetros necessários
                 id_aluno = request.POST['id']
                 Upload_Assiduidade(request,id_aluno)
-                return HttpResponse("Upload bem-sucedido!")
+                messages.success(request,'Upload bem sucedido')
+                return HttpResponseRedirect(reverse('documentos_adm'))
             else:
-                return HttpResponse("Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.")
+                messages.success(request,'Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.')
+                return HttpResponseRedirect(reverse('documentos_adm'))
     return render(request, 'G_Estagios/dashoard.html')
 
 
@@ -206,6 +208,9 @@ def view_alunos_do_curso(request):
 
     # Renderize a página com a lista de alunos
     return render(request, 'alunos_do_curso.html', {'alunos': alunos_do_curso})
+
+
+
 
 @login_required
 def mostrar_assiduidades(request, id_aluno, id_estagio):
@@ -308,7 +313,6 @@ def create_polo(request):
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
     if request.method == 'POST':
-            
             polo = Polo
             nome_polo = request.POST['nome']
             new_polo = polo.objects.create(nome=nome_polo)
@@ -339,3 +343,8 @@ def adm_panel(request):
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
     return render(request,'G_Estagios/administracao/adm_panel.html')
+
+def adm_docs(request):
+    assiduidade = Assiduidade.objects.all()
+    protocolos = Protocolos.objects.all()
+    return render(request,'G_Estagios/administracao/gestao_docs.html',{'protocolos':protocolos,'assiduidade':assiduidade})
