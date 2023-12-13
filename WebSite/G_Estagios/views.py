@@ -333,6 +333,9 @@ def eliminar_polo(request, polo_id):
         return HttpResponseRedirect(reverse('polo_curso'))
 
 
+
+
+
 def edit_user_admin(request):
     user = request.user
     if request.method == 'POST':

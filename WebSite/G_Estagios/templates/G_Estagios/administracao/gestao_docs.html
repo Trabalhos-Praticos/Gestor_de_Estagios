@@ -3,54 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Gestão de documentos</title>
 </head>
 <body>
+
+    {% include "G_Estagios/nav.html" %}
+
     <div>
         <h1>Assiduidade</h1>
-        <form action="{% url 'Upload_Assiduidade_adm' %}" method="post">
-            <input type="file" name="file">
-        </form>
-    <table>
-        <thead>
-            <tr>
-                <td>
-                    id
-                </td>
 
-                <td>
-                    data
-                </td>
-
-                <td>
-                    id_aluno
-                </td>
-
-                <td>
-                    ficheiro
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-            {%for protocolo in protocolos %}
-            <tr>
-                <td>
-                    {{protocolo.id}}
-                </td>
-                <td>
-                    {{protocolo.data}}
-                </td>
-
-                <td>
-                    {{protocolo.id_aluno}}
-                </td>
-                <td>
-                    {{protocolo.file}}
-                </td>
-            </tr>
-            {%endfor%}
-        </tbody>
-    </table>
+        <div class="d-flex justify-content-center">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">id_Aluno</th>
+                    <th scope="col">Ficheiro</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {%for protocolo in protocolos %}
+                <tr>
+                    <th scope="row">{{protocolo.id}}</th>
+                    <td>{{protocolo.data}}</td>
+                    <td>{{protocolo.id_aluno}}</td>
+                    <td>{{protocolo.file}}</td>  
+                </tr>
+                </tbody>
+                {%endfor%}
+            </table>
+        </div>
+    
 </div>
 </body>
 </html>
