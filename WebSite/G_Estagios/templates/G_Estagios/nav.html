@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -12,7 +13,6 @@
         <!-- <link rel="stylesheet" href={% static 'css/nav.css' %}> -->
         <link rel="stylesheet" href='../../static/css/nav.css'>
         <!--=============== JS ===============-->
-        <script src={% static 'js/nav.js' %}></script>
 
         <title>Navbar - template</title>
     </head>
@@ -74,6 +74,7 @@
         
         <!--=============== MAIN JS ===============-->
         <script src="../../static/js/nav.js"></script>
+        <script src="{% static 'nav.js' %}"></script>
     </body>
 </html>
 
