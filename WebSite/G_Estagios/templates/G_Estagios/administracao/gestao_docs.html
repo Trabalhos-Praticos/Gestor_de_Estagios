@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +9,8 @@
 </head>
 <body>
     {% include "G_Estagios/nav.html" %}
+
+    <div class="container">
 
     {% if messages %}
           <div class="row justify-content-center">
@@ -20,8 +23,119 @@
               </div>
           </div>
       {% endif %}
-    <div>
+      
+        <h2>Curriculo Vitae</h2>
+    
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="{%url 'Upload_Assiduidade'%}"> <!--Mudar caminho-->
+                            {% csrf_token %}
+                        <h5 class="card-title">Enviar Curriculo Vitae</h5>
+                        <p class="card-text">Formatos suportados: PDF, Word</p>
+                        <input type="file" name ='arquivo' class="form-control-file mb-3">
+                        <button type="reset" class="btn btn-secondary mr-2">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Documentos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+            <h3>Lista de CV's</h3>
+        
+            <div class="d-flex justify-content-center">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">id_Aluno</th>
+                        <th scope="col">Ficheiro</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {%for protocolo in protocolos %}
+                    <tr>
+                        <th scope="row">{{protocolo.id}}</th> <!--Mudar caminhos-->
+                        <td>{{protocolo.data}}</td>
+                        <td>{{protocolo.id_aluno}}</td>
+                        <td>{{protocolo.file}}</td>  
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                    
+                </table>
+            </div>
+
+
+      
+        <h2>Plano de Estágio</h2>
+    
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="{%url 'Upload_Assiduidade'%}"> <!--Mudar caminho-->
+                            {% csrf_token %}
+                        <h5 class="card-title">Enviar Plano de Estágio</h5>
+                        <p class="card-text">Formatos suportados: PDF, Word</p>
+                        <input type="file" name ='arquivo' class="form-control-file mb-3">
+                        <button type="reset" class="btn btn-secondary mr-2">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Documentos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+            <h3>Lista de Planos de Estágio</h3>
+        
+            <div class="d-flex justify-content-center">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">id_Aluno</th>
+                        <th scope="col">Ficheiro</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {%for protocolo in protocolos %}
+                    <tr>
+                        <th scope="row">{{protocolo.id}}</th> <!--Mudar caminhos-->
+                        <td>{{protocolo.data}}</td>
+                        <td>{{protocolo.id_aluno}}</td>
+                        <td>{{protocolo.file}}</td>  
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                    
+                </table>
+            </div>
+
+
+      
+        <h2>Protocolo</h2>
+    
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="{%url 'Upload_Assiduidade'%}"> <!---Mudar caminho-->
+                            {% csrf_token %}
+                        <h5 class="card-title">Enviar Protocolo</h5>
+                        <p class="card-text">Formatos suportados: PDF, Word</p>
+                        <input type="file" name ='arquivo' class="form-control-file mb-3">
+                        <button type="reset" class="btn btn-secondary mr-2">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Documentos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
         <h3>Lista de Protocolos</h3>
+    
         <div class="d-flex justify-content-center">
             <table class="table table-striped">
                 <thead>
@@ -40,13 +154,16 @@
                     <td>{{protocolo.id_aluno}}</td>
                     <td>{{protocolo.file}}</td>  
                 </tr>
-                </tbody>
                 {%endfor%}
+                </tbody>
+                
             </table>
         </div>
-    <div>
+
+
+    
         <h2>Assiduidade</h2>
-    </div>
+    
         
         <div class="col-md-6 mb-4">
             <div class="card">
@@ -65,8 +182,9 @@
         <!-- Assuma que você está renderizando esta página no seu template Django -->
 
 
-<div>
+
     <h3>Lista de Assiduidades</h3>
+
     <div class="d-flex justify-content-center">
         <table class="table table-striped">
             <thead>
@@ -88,10 +206,12 @@
                   </td>
                 </tr>
               {% endfor %}
+            </tbody>
         </table>
     </div>
-<div>
-    
+
 </div>
+    
+
 </body>
 </html>
