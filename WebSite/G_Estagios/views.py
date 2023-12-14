@@ -16,10 +16,10 @@ def Dashboard(request):
         
         user = request.user
         #Users=CustomUser.objects.get(curso = user.curso)
-        Users=CustomUser.objects.all()
+        Users=CustomUser.objects.filter(curso=user.curso)
         
         if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
-            return render(request, 'G_Estagios/dashboard.html',({ 'customusers': Users, 'user':user}))
+            return render(request, 'G_Estagios/dashboard.html',({ 'alunos': Users, 'user':user}))
 
 @login_required
 def submeter_docs(request):
@@ -156,7 +156,7 @@ def add_Assiduidade(request):
 
 
 
-
+@login_required
 def eliminar_assiduidade(request, id_assiduidade):
     # Obtém a instância de Assiduidade ou retorna um erro 404 se não existir
     assiduidade = get_object_or_404(Assiduidade, id=id_assiduidade)

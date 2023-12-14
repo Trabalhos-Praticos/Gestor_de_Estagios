@@ -8,6 +8,7 @@
 <body>
   
   {% include 'G_Estagios/nav.html'%}
+  {%if user.is_Coordenador_Curso == 1%}
     <main class="container mt-3">
         <div class="row">
             <aside class="col-3">
@@ -22,29 +23,27 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Nome do Cliente</th>
-                            <th>Nome do Empregado</th>
-                            <th>Número da Fatura</th>
-                            <th>Data de Entrada</th>
-                            <th>Status</th>
+                            <th>Nome do Aluno</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {%for aluno in alunos %}
                         <tr>
-                            <td>Cliente 1</td>
-                            <td>Empregado 1</td>
-                            <td>12345</td>
-                            <td>01/01/2023</td>
-                            <td>Ativo</td>
+                            <td>{{aluno.first_name}}</td>
+                            <td>{{aluno.email}}</td>
                         </tr>
+                        {%endfor%}
                         <!-- Adicione mais linhas conforme necessário -->
                     </tbody>
                 </table>
             </section>
         </div>
     </main>
-    <footer class="bg-light text-center p-3 mt-3">
-        <p>Projecto de Documentos - André Carvalho</p>
-    </footer>
+    {%endif%}
+    {%else%}
+    
+    {%endif%}
+    {%include 'G_Estagios/footer.html'%}
 </body>
 </html>

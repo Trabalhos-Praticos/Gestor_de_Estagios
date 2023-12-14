@@ -10,7 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
         <!--=============== CSS ===============-->
-        <!-- <link rel="stylesheet" href={% static 'css/nav.css' %}> -->
+        <link rel="stylesheet" href={% static 'css/nav.css' %}>
         <link rel="stylesheet" href='../../static/css/nav.css'>
         <!--=============== JS ===============-->
 
@@ -59,11 +59,11 @@
                         <li>
                             <a href="#" class="nav__link">Estágio</a>
                         </li>
-
+                        {%if user.is_superuser == 1%}
                         <li>
                             <a href="{%url 'admin' %}" class="nav__link">Painel Admin</a>
                         </li>
-
+                        {%endif%}
                         <li>
                             <a href="{% url 'logout' %}" class="nav__link"><button class="btn btn-primary" type="submit">Logout</button></a>
                         </li>
