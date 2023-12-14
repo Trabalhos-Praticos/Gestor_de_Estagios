@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 from django import forms
@@ -28,12 +29,19 @@ def Upload_Assiduidade(request, id_aluno):
         arquivo_enviado = request.FILES['arquivo']
         data_publicacao = timezone.now().strftime("%Y%m%d%H%M%S")
         nome_arquivo = f"{data_publicacao}_aluno{id_aluno}_assiduidade_{arquivo_enviado.name}"
+        
         # Guarda o arquivo no sistema de arquivos
-        fs = FileSystemStorage(location='Documentos/Assiduidade/')
-        filename = fs.save(nome_arquivo, arquivo_enviado)
-        # Cria uma nova instância de Assiduidade associada ao aluno correspondente
-        assiduidade = Assiduidade.objects.create(id_Aluno=id_aluno, File=nome_arquivo)
+        fs = FileSystemStorage(location='G_Estagios/Documentos/Assiduidade/')
+        fs.save(nome_arquivo, arquivo_enviado)
+        
+        # Obtém a instância do usuário a partir do ID
+        user_model = get_user_model()
+        user_instance = user_model.objects.get(id=id_aluno)
+        
+        # Cria e salva uma nova instância de Assiduidade associada ao usuário correspondente
+        assiduidade = Assiduidade(id_Aluno=user_instance, File=nome_arquivo)
         assiduidade.save()
+        
         return assiduidade
 
 class Protocolos(models.Model):
@@ -69,11 +77,15 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nome_curso
 class Assiduidade(models.Model):
-    id=models.AutoField(primary_key=True)
-    data=models.DateField(auto_created=True,blank=True)
-    id_Aluno=models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
-    File = models.FileField(upload_to='Documentos/Assiduidade/',blank=True)
-    
+    id = models.AutoField(primary_key=True)
+    data = models.DateField(auto_created=True, blank=True)
+    id_Aluno = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
+    File = models.FileField(upload_to='Documentos/Assiduidade/', blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.data:
+            self.data = timezone.now()
+        super().save(*args, **kwargs)
 
     
 class Estagio(models.Model):
@@ -114,4 +126,6 @@ def verificar_palavra_passe(palavra_passe):
         return False
     else:
         return True  # Palavra-passe atende aos critérios
+
+
 

@@ -44,4 +44,5 @@ urlpatterns = [
     path('administracao/escola_curso/eliminar_polo/<int:polo_id>/', views.eliminar_polo, name='eliminar_polo'),
     path('administracao/documentos',views.adm_docs,name='documentos_adm'),
     path('upload_assiduidade/',views.add_Assiduidade,name = 'Upload_Assiduidade_adm'),
+    path('eliminar_assiduidade/<int:id_assiduidade>/', views.eliminar_assiduidade, name='eliminar_assiduidade'),
 ]

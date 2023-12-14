@@ -1,3 +1,5 @@
+from datetime import timezone
+import os
 from django.shortcuts import redirect, render, HttpResponseRedirect, HttpResponse,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -138,21 +140,43 @@ def verificar_tipo_arquivo(arquivo):
 def add_Assiduidade(request):
     if request.method == 'POST':
         arquivo = request.FILES.get('arquivo')
+        print('oi')
         if arquivo:
             # Verifique o tipo de arquivo
-            tipo_arquivo = verificar_tipo_arquivo(arquivo)
+            # Aqui você pode chamar a função Upload_Assiduidade
+            # Certifique-se de passar os parâmetros necessários
+            id_aluno = request.user.id
+            Upload_Assiduidade(request,id_aluno)
+            messages.success(request,'Upload bem sucedido')
+            return HttpResponseRedirect(reverse('documentos_adm'))
+        else:
+            messages.success(request,'Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.')
+            return HttpResponseRedirect(reverse('documentos_adm'))
+    return render(request, 'G_Estagios/dashboard.html')
 
-            if tipo_arquivo in ['pdf', 'docx']:
-                # Aqui você pode chamar a função Upload_Assiduidade
-                # Certifique-se de passar os parâmetros necessários
-                id_aluno = request.POST['id']
-                Upload_Assiduidade(request,id_aluno)
-                messages.success(request,'Upload bem sucedido')
-                return HttpResponseRedirect(reverse('documentos_adm'))
-            else:
-                messages.success(request,'Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.')
-                return HttpResponseRedirect(reverse('documentos_adm'))
-    return render(request, 'G_Estagios/dashoard.html')
+
+
+
+def eliminar_assiduidade(request, id_assiduidade):
+    # Obtém a instância de Assiduidade ou retorna um erro 404 se não existir
+    assiduidade = get_object_or_404(Assiduidade, id=id_assiduidade)
+
+    # Obtém o caminho completo do arquivo
+    caminho_arquivo = os.path.join('G_Estagios/Documentos/Assiduidade/', assiduidade.File.name)
+
+    # Elimina a instância de Assiduidade do banco de dados
+    assiduidade.delete()
+
+    try:
+        os.remove(caminho_arquivo)
+    except Exception as e:
+        print(f"Erro ao eliminar o arquivo: {e}")
+        # Elimina o arquivo do sistema de arquivos
+        if os.path.exists(caminho_arquivo):
+            os.remove(caminho_arquivo)
+
+    # Redireciona para a página desejada após a eliminação
+    return HttpResponseRedirect(reverse('documentos_adm'))
 
 
 def view_login(request):
@@ -350,4 +374,4 @@ def adm_panel(request):
 def adm_docs(request):
     assiduidade = Assiduidade.objects.all()
     protocolos = Protocolos.objects.all()
-    return render(request,'G_Estagios/administracao/gestao_docs.html',{'protocolos':protocolos,'assiduidade':assiduidade})
+    return render(request,'G_Estagios/administracao/gestao_docs.html',{'protocolos':protocolos,'assiduidades':assiduidade})

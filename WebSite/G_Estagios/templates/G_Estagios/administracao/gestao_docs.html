@@ -7,12 +7,21 @@
     <title>Gestão de documentos</title>
 </head>
 <body>
-
     {% include "G_Estagios/nav.html" %}
 
+    {% if messages %}
+          <div class="row justify-content-center">
+              <div class="col-md-6">
+                  {% for message in messages %}
+                      <div class="alert alert-danger" role="alert">
+                          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                      </div>
+                  {% endfor %}
+              </div>
+          </div>
+      {% endif %}
     <div>
-        <h1>Assiduidade</h1>
-
+        <h3>Lista de Protocolos</h3>
         <div class="d-flex justify-content-center">
             <table class="table table-striped">
                 <thead>
@@ -35,6 +44,53 @@
                 {%endfor%}
             </table>
         </div>
+    <div>
+        <h2>Assiduidade</h2>
+    </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="{%url 'Upload_Assiduidade'%}">
+                            {% csrf_token %}
+                        <h5 class="card-title">Enviar Assiduidade</h5>
+                        <p class="card-text">Formatos suportados: PDF, Word</p>
+                        <input type="file" name ='arquivo' class="form-control-file mb-3">
+                        <button type="reset" class="btn btn-secondary mr-2">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Documentos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Assuma que você está renderizando esta página no seu template Django -->
+
+
+<div>
+    <h3>Lista de Assiduidades</h3>
+    <div class="d-flex justify-content-center">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Data</th>
+                <th scope="col">id_Aluno</th>
+                <th scope="col">Ficheiro</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for assiduidade in assiduidades %}
+                <tr>
+                  <td>{{ assiduidade.id }}</td>
+                  <td>{{ assiduidade.data }}</td>
+                  <td>{{ assiduidade.File.name }}</td>
+                  <td>
+                    <a href="{% url 'eliminar_assiduidade' assiduidade.id %}">Eliminar</a>
+                  </td>
+                </tr>
+              {% endfor %}
+        </table>
+    </div>
+<div>
     
 </div>
 </body>
