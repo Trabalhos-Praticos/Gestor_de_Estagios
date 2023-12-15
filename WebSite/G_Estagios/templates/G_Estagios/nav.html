@@ -43,11 +43,11 @@
                             <a href="{% url 'sub_docs' %}" class="nav__link">Documentos</a>
                         </li>
 
-                      
+                        {%if user.is_Coordenador_Curso == True%}
                         <li>
                             <a href="#" class="nav__link">Alunos</a>
                         </li>
-
+                        {%endif%}
                         <li>
                             <a href="#" class="nav__link">Alertas</a>
                         </li>

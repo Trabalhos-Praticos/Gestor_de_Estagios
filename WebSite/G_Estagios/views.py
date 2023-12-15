@@ -8,6 +8,13 @@ from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_c
 from django.contrib.auth import authenticate, login, logout
 from .forms import CursoForm
 
+def Home(request):
+    user = request.user
+    if user.is_authenticated:
+        return HttpResponseRedirect(reverse('dash'))
+    
+    return render(request,'G_Estagios/index.html')
+
 
 @login_required
 def Dashboard(request):
@@ -21,45 +28,6 @@ def Dashboard(request):
         if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
             return render(request, 'G_Estagios/dashboard.html',({ 'alunos': Users, 'user':user}))
 
-@login_required
-def submeter_docs(request):
-    return render(request, 'G_Estagios/documentosAlunoCC.html')
-    
-    
-@login_required
-def addicionar_Polo(request):
-    pass
-
-
-@login_required
-def View_DocAluno(request):
-    if request.methtod == 'GET':
-         return render(request, 'G_Estagios/Aluno/documentos.html')
-
-
-@login_required
-def f_Registo(request):
-    user=request.user
-    if request.method == "GET":
-        if user.is_completed == 1:
-            return HttpResponseRedirect(reverse('dash'))
-        else:
-            curso = Curso
-            cursos=curso.objects.all()
-            return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos}))
-        
-    elif request.method == 'POST':
-        id_curso = request.POST.get('Curso')
-        id_escola = obter_polo_por_curso(id_curso)
-        escola = Polo.objects.get(id=id_escola)
-        nome_escola = escola.nome
-        curso= Curso.objects.get(id=id_curso)
-        nome_curso = curso.nome_curso
-        user.curso = nome_curso
-        user.escola = nome_escola
-        user.is_completed = True
-        user.save()
-        return HttpResponseRedirect(reverse('dash'),{'user':user})
 
 
 def registo(request):
@@ -116,6 +84,35 @@ def registo(request):
                 
                 
     return render(request,'G_Estagios/Register.html')
+
+
+@login_required
+def f_Registo(request):
+    user=request.user
+    
+    if user.is_completed == 1:
+        return HttpResponseRedirect(reverse('dash'))
+    
+    elif request.method == 'POST':
+        id_curso = request.POST.get('Curso')
+        id_escola = obter_polo_por_curso(id_curso)
+        escola = Polo.objects.get(id=id_escola)
+        nome_escola = escola.nome
+        curso= Curso.objects.get(id=id_curso)
+        nome_curso = curso.nome_curso
+        user.curso = nome_curso
+        user.escola = nome_escola
+        user.is_completed = True
+        user.save()
+        return HttpResponseRedirect(reverse('dash'),{'user':user})
+    else:
+        curso = Curso
+        cursos=curso.objects.all()
+        return render(request,'G_Estagios/Finalizar_Registo.html',({'cursos':cursos})) 
+    
+    
+
+
 
 
 @login_required
@@ -215,12 +212,6 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('Home'))
 
 
-def Home(request):
-    user = request.user
-    if user.is_authenticated:
-        return HttpResponseRedirect(reverse('dash'))
-    
-    return render(request,'G_Estagios/index.html')
 
 @login_required
 def view_alunos_do_curso(request):
@@ -286,6 +277,21 @@ def view_polo_curso(request):
 
 
 @login_required
+def submeter_docs(request):
+    if request.method == 'POST':
+        pass
+    return render(request, 'G_Estagios/documentosAlunoCC.html')
+    
+
+@login_required
+def View_DocAluno(request):
+    if request.methtod == 'GET':
+         return render(request, 'G_Estagios/Aluno/documentos.html')
+
+
+#Funções para o Admin
+
+@login_required
 def create_curso(request):
     user = request.user
     if user.is_superuser == 0:
@@ -299,7 +305,11 @@ def create_curso(request):
         new_curso.save()
         messages.success(request,'Curso criado e associado com sucesso.')   
         return HttpResponseRedirect(reverse('polo_curso'))
-        
+
+@login_required
+def addicionar_Polo(request):
+    pass
+
 @login_required    
 def eliminar_curso(request, curso_id):
     user = request.user
@@ -355,10 +365,6 @@ def eliminar_polo(request, polo_id):
         polo = get_object_or_404(Polo, id=polo_id)
         polo.delete()
         return HttpResponseRedirect(reverse('polo_curso'))
-
-
-
-
 
 def edit_user_admin(request):
     user = request.user

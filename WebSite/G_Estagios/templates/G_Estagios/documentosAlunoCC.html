@@ -12,11 +12,9 @@
 
     {% include 'G_Estagios/nav.html'%}
 
-    <div class="container mt-5">
+    <div class="container">
         <h2 class="mb-4">Entregar Documentos</h2>
-    
         <div class="row">
-            
             <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-body">
@@ -28,7 +26,8 @@
                     </div>
                 </div>
             </div>
-        <form action="{%url 'Upload_Assiduidade'%}">
+        <form method="POST" enctype="multipart/form-data" action="{%url 'Upload_Assiduidade'%}">
+            {% csrf_token %}
             <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-body">
@@ -41,31 +40,21 @@
                 </div>
             </div>
         </form>
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Enviar Plano de Estágio</h5>
-                        <p class="card-text">Formatos suportados: PDF, Word</p>
-                        <input type="file" class="form-control-file mb-3">
-                        <button type="reset" class="btn btn-secondary mr-2">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar Documentos</button>
-                    </div>
-                </div>
-            </div>
     
             <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Enviar Curriculum Vitae</h5>
-                        <p class="card-text">Formatos suportados: PDF, Word</p>
-                        <input type="file" class="form-control-file mb-3">
-                        <button type="reset" class="btn btn-secondary mr-2">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar Documentos</button>
+                        <form method="POST" enctype="multipart/form-data" action="{%url 'Upload_Assiduidade'%}">
+                                {% csrf_token %}
+                            <h5 class="card-title">Enviar Curriculo Vitae</h5>
+                            <p class="card-text">Formatos suportados: PDF, Word</p>
+                            <input type="file" name ='arquivo' class="form-control-file mb-3">
+                            <button type="reset" class="btn btn-secondary mr-2">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Enviar Documentos</button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
     
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

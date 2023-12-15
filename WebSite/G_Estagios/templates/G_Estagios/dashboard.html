@@ -41,7 +41,7 @@
         </div>
     </main>
     {%endif%}
-    {%else%}
+    {% if user.privilegio == 'Aluno'%}
     
     {%endif%}
     {%include 'G_Estagios/footer.html'%}

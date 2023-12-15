@@ -21,8 +21,6 @@ class CustomUser(AbstractUser):
     privilegio = models.CharField(max_length=20,blank=True)
     ano = models.IntegerField(blank=True, default=1)
 
-
-
 #Função que guarda o upload feito
 def Upload_Assiduidade(request, id_aluno):
     if request.method == 'POST' and request.FILES['arquivo']:
@@ -69,13 +67,20 @@ class Curso(models.Model):
     Polo = models.ForeignKey(Polo,on_delete=models.DO_NOTHING)
     def __str__(self):
         return self.nome_curso
-def Add_Curso(request):
-    pass
+
+class Alertas(models.Model):
+    id = models.AutoField(primary_key=True)
+    Texto = models.TextField(blank=True)
+    curso = models.TimeField(blank=True)
+
 class Empresa(models.Model):
     id= models.AutoField(primary_key=True)
     nome = models.CharField(max_length=120,blank=True)
+    
     def __str__(self):
-        return self.nome_curso
+        return self.nome
+    
+    
 class Assiduidade(models.Model):
     id = models.AutoField(primary_key=True)
     data = models.DateField(auto_created=True, blank=True)
@@ -100,7 +105,8 @@ class Estagio(models.Model):
     Assiduidade = models.ForeignKey(Assiduidade, on_delete=models.DO_NOTHING)
     id_Protocolos=models.ForeignKey(Protocolos, on_delete=models.DO_NOTHING)
     id_Tutor_empresa = models.ForeignKey(Empresa, related_name='tutor_Empresa',on_delete=models.DO_NOTHING)
-
+    def __str__(self):
+        return self.nome
     
 
 def verify_email(Email):
