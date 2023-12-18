@@ -106,8 +106,8 @@ venv.bak/
 
 CACHE
 node_modules
-WebSite/package-lock.json
-WebSite/package.json
+package-lock.json
+package.json
 # mkdocs documentation 
 /site 
 
