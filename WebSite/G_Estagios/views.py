@@ -3,6 +3,7 @@ import os
 from django.shortcuts import redirect, render, HttpResponseRedirect, HttpResponse,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade,Polo, Protocolos
 from django.contrib.auth import authenticate, login, logout
@@ -18,15 +19,38 @@ def Home(request):
 
 @login_required
 def Dashboard(request):
+    user = request.user
+    #Users=CustomUser.objects.get(curso = user.curso)
+    Users=CustomUser.objects.filter(curso=user.curso)
+        
+         # Recupere todas as pessoas do banco de dados
+    pessoas_list = CustomUser.objects.filter(curso=user.curso)
+
+    # Número de pessoas a serem exibidas por página
+    pessoas_por_pagina = 10
+
+    # Inicialize o paginador com a lista de pessoas e o número de pessoas por página
+    paginator = Paginator(pessoas_list, pessoas_por_pagina)
+
+    # Obtenha o número da página da solicitação. Se não houver número de página, use 1.
+    page = request.GET.get('page', 1)
+
+    try:
+        # Obtenha a página atual
+        current_page = paginator.page(page)
+    except PageNotAnInteger:
+        # Se a página não for um número inteiro, vá para a primeira página
+        current_page = paginator.page(1)
+    except EmptyPage:
+        # Se a página estiver vazia, vá para a última página
+        current_page = paginator.page(paginator.num_pages)
     
-    if request.method == "GET":
+    return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page,'alunos':Users,'user':user})
+        #return render(request, 'G_Estagios/dashboard.html',({ 'alunos': Users, 'user':user}))
+        # Renderize a página com a lista de pessoas da página atual
         
-        user = request.user
-        #Users=CustomUser.objects.get(curso = user.curso)
-        Users=CustomUser.objects.filter(curso=user.curso)
+    
         
-        if request.user.is_authenticated and request.user:#and request.user.groups.filter(name='Admin').exists():
-            return render(request, 'G_Estagios/dashboard.html',({ 'alunos': Users, 'user':user}))
 
 
 
@@ -137,18 +161,20 @@ def verificar_tipo_arquivo(arquivo):
 def add_Assiduidade(request):
     if request.method == 'POST':
         arquivo = request.FILES.get('arquivo')
-        print('oi')
         if arquivo:
-            # Verifique o tipo de arquivo
-            # Aqui você pode chamar a função Upload_Assiduidade
-            # Certifique-se de passar os parâmetros necessários
             id_aluno = request.user.id
             Upload_Assiduidade(request,id_aluno)
             messages.success(request,'Upload bem sucedido')
-            return HttpResponseRedirect(reverse('documentos_adm'))
+            if request.user.is_superuser == 1:
+                return HttpResponseRedirect(reverse('documentos_adm'))
+            else:
+                return HttpResponseRedirect(reverse('dash'))
         else:
-            messages.success(request,'Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.')
-            return HttpResponseRedirect(reverse('documentos_adm'))
+            messages.error(request,'Tipo de arquivo inválido. Por favor, envie um PDF ou DOCX.')
+            if request.user.is_superuser == 1:
+                return HttpResponseRedirect(reverse('documentos_adm'))
+            else:
+                return HttpResponseRedirect(reverse('dash'))
     return render(request, 'G_Estagios/dashboard.html')
 
 
@@ -171,10 +197,9 @@ def eliminar_assiduidade(request, id_assiduidade):
         # Elimina o arquivo do sistema de arquivos
         if os.path.exists(caminho_arquivo):
             os.remove(caminho_arquivo)
-
+    
     # Redireciona para a página desejada após a eliminação
     return HttpResponseRedirect(reverse('documentos_adm'))
-
 
 def view_login(request):
    
