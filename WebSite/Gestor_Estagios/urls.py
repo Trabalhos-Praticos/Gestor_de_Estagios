@@ -26,7 +26,7 @@ urlpatterns = [
     #rota,view,nome de referencia
     path('admin/', admin.site.urls),
     path('',views.Home, name='Home'),
-    path('register/',views.registo, name='registo'),
+    path('registo/',views.registo, name='registo'),
     path('Registo/f_r',views.f_Registo , name="finalizar_registo"),
     path('login/', views.view_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
@@ -46,3 +46,4 @@ urlpatterns = [
     path('upload_assiduidade/',views.add_Assiduidade,name = 'Upload_Assiduidade_adm'),
     path('eliminar_assiduidade/<int:id_assiduidade>/', views.eliminar_assiduidade, name='eliminar_assiduidade'),
 ]
+handler404 = 'G_Estagios.views.pagina_404_personalizada'

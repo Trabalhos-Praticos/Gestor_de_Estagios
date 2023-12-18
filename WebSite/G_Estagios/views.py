@@ -50,7 +50,8 @@ def Dashboard(request):
         # Renderize a página com a lista de pessoas da página atual
         
     
-        
+def pagina_404_personalizada(request, exception):
+    return render(request, 'G_Estagios/404.html', status=404)    
 
 
 

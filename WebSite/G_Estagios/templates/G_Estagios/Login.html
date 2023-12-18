@@ -1,4 +1,5 @@
 {% extends "G_Estagios/_base.html" %}
+{% load static %}
 {% block content %}
     <div class="container-fluid">
         {% if messages %}
@@ -66,9 +67,9 @@
                         <button type="submit" class="mx-auto block text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2 text-center mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" style="background-color: #1d4ed8 !important;">
                           <a href="{% url 'login' %}">Login</a>
                       </button>
-                                            </div>
-                </form>
                 </div>
+            </form>
+        </div>
             </div>
         </div>
     </div>
