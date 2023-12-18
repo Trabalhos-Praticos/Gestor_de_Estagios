@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
 from django.core.files.storage import FileSystemStorage
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django import forms
 from password_strength import PasswordPolicy
@@ -19,7 +21,17 @@ class CustomUser(AbstractUser):
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
-    ano = models.IntegerField(blank=True, default=1)
+    ano = models.IntegerField(blank=True, default=2)
+
+
+@receiver(pre_save, sender=CustomUser)
+def atualizar_ano_academico(sender, instance, **kwargs):
+    # Obter o mês atual
+    mes_atual = timezone.now().month
+
+    # Se o mês atual for agosto (o número 8), incrementar o ano acadêmico
+    if mes_atual == 8 and instance.ano is not None:
+        instance.ano += 1
 
 #Função que guarda o upload feito
 def Upload_Assiduidade(request, id_aluno):

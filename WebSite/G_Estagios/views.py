@@ -75,7 +75,8 @@ def registo(request):
         else:
         
             Password=request.POST.get('Password')        
-            Nome = request.POST.get('Nome')
+            primeiro_Nome = request.POST.get('pnome')
+            ultimo_nome = request.POST.get('unome')
             V_e = verify_email(Email)
             v_Password = verificar_palavra_passe(Password)
         
@@ -93,14 +94,14 @@ def registo(request):
            
                 elif V_e == 'Aluno':
            
-                    newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=False)
+                    newuser = User.objects.create_user(username=Email,first_name=primeiro_Nome,last_name=ultimo_nome,password=Password,privilegio=V_e,is_professor=False)
                     newuser.save()
                     messages.info(request,"Registo bem sucedido")
                     return HttpResponseRedirect(reverse('registo'))
            
                 elif V_e == 'Professor':
            
-                    newuser = User.objects.create_user(username=Email,first_name=Nome,password=Password,privilegio=V_e,is_professor=True,is_completed = True)
+                    newuser = User.objects.create_user(username=Email,first_name=primeiro_Nome,last_name=ultimo_nome,password=Password,privilegio=V_e,is_professor=True,is_completed = True)
                     newuser.save()
                     messages.success(request,"Registo bem sucedido")
            

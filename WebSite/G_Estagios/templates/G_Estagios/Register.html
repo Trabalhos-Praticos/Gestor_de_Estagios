@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+{% extends "G_Estagios/_base.html" %}
+{%load static%}
 
-  </head>
-<body>
+{% block content %}
   <div class="container-fluid">
       <div class="row justify-content-center align-items-center">
           {% if messages %}
@@ -22,41 +14,48 @@
                         {% endfor %}
                     </div>
                 </div>
-            {% endif %}          
-        <div class="col-md-6 text-center">
-            <div class="jumbotron"> 
-                <div class="forms-container">
-                    <form action="{% url "registo" %}" class="sign-in-form" method='POST'>
+            {% endif %}  
+</div>
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-8 h-8 mr-2" src="{%static 'src/img/logo.png'%}" alt="IPVC">
+            Flowbite    
+        </a>
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    Create and account
+                </h1>
+                <form class="space-y-4 md:space-y-6" method='POST' action="{% url "registo" %}">
                         {% csrf_token %}
-                        <h2 class="title display-4 p-4">Registar</h2>
-                        <div class="form-group d-flex align-items-start mb-4">
-                            <i class="fas fa-lock mr-2 mt-2"></i>
-                            <input type="text" class="form-control" name='Nome' id="inputNome" placeholder="Nome">
+                        <div>
+                            <label for="pNome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
+                            <input type="text" name="pnome" id="pnome" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Jorge Manuel" required="">
                         </div>
-                        <div class="form-group d-flex align-items-start mb-4">
-                            <i class="fas fa-user mr-2 mt-2"></i>
-                            <input type="Email" class="form-control" name='Email' id="inputEmail" placeholder="Enter email">
+                        <div>
+                            <label for="uNome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apelido</label>
+                            <input type="text" name="unome" id="unome" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ferreira Pereira" required="">
                         </div>
-                        <div class="form-group d-flex align-items-start mb-4">
-                            <i class="fas fa-lock mr-2 mt-2"></i>
-                            <input type="Password" class="form-control" name='Password' id="inputPassword" placeholder="Password">
-                        </div>
-                        <div class="d-flex justify-content-center mt-3">
-                            <br>
-                            <button type="submit" value="Register" class="btn btn-primary">Registar</button>
-                        </div>
-                    </form>
-                </div>
-                <br>
-                <a href="{% url "login" %}" class="btn btn-primary mr-2">Login</a>
+                        <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        <input type="email" name="username" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                    </div>
+                    <div>
+                        <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+                        <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                    </div>
+                    <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                        Already have an account? <a href="{%url 'login'%}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
-</div>
-
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>    
-</body>
-</html>
+  </section>
+{%endblock content%}
