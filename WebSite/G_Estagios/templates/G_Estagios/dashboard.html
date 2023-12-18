@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="pt">
-<head>
-    <title>IPVC</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
-  
-  {% include 'G_Estagios/nav.html'%}
-  {%if user.is_Coordenador_Curso == 1%}
+{%extends 'G_Estagios/_base.html'%}
+{%block content%}
+  {%if user.is_Coordenador_Curso == 1 or user.is_superuser == 1%}
     <main class="container mt-3">
         <div class="row">
             <aside class="col-3">
@@ -44,6 +36,4 @@
     {% if user.privilegio == 'Aluno'%}
     
     {%endif%}
-    {%include 'G_Estagios/footer.html'%}
-</body>
-</html>
+    {%endblock content%}
