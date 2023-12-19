@@ -31,7 +31,6 @@ urlpatterns = [
     path('login/', views.view_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/',views.Dashboard, name='dash'),
-    path('upload_assiduidade/',views.add_Assiduidade,name = 'Upload_Assiduidade'),
     path('alunos-do-curso/', views.view_alunos_do_curso, name='alunos_do_curso'),
     path('Documentos/', views.submeter_docs, name="sub_docs"),
     path('alterar_user/', views.alter_user, name='alterar_usuario'),
@@ -42,9 +41,6 @@ urlpatterns = [
     path('administracao/escola_curso/eliminar_curso/<int:curso_id>/', views.eliminar_curso, name='eliminar_curso'),
     path('administracao/escola_curso/editar_curso/<int:curso_id>/', views.editar_curso, name='editar_curso'),
     path('administracao/escola_curso/eliminar_polo/<int:polo_id>/', views.eliminar_polo, name='eliminar_polo'),
-    path('administracao/documentos',views.adm_docs,name='documentos_adm'),
-    path('upload_assiduidade/',views.add_Assiduidade,name = 'Upload_Assiduidade_adm'),
-    path('eliminar_assiduidade/<int:id_assiduidade>/', views.eliminar_assiduidade, name='eliminar_assiduidade'),
     path('administracao/estudantes/',views.admin_user,name='painel_users'),
 ]
 handler404 = 'G_Estagios.views.pagina_404_personalizada'
