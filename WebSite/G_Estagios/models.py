@@ -6,10 +6,9 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django import forms
+import schedule
+import time
 from password_strength import PasswordPolicy
-# Create your models here.
-
-
 
 class CustomUser(AbstractUser):
     curso = models.CharField(max_length=100, blank=True)
@@ -23,15 +22,6 @@ class CustomUser(AbstractUser):
     privilegio = models.CharField(max_length=20,blank=True)
     ano = models.IntegerField(blank=True, default=2)
 
-
-@receiver(pre_save, sender=CustomUser)
-def atualizar_ano_academico(sender, instance, **kwargs):
-    # Obter o mês atual
-    mes_atual = timezone.now().month
-
-    # Se o mês atual for agosto (o número 8), incrementar o ano acadêmico
-    if mes_atual == 8 and instance.ano is not None:
-        instance.ano += 1
 
 #Função que guarda o upload feito
 def Upload_Assiduidade(request, id_aluno):
@@ -59,6 +49,7 @@ class Protocolos(models.Model):
     File = models.FileField(upload_to='Documentos/Protocolos/',blank=True)
     data=models.DateField(auto_created=True,blank=True)
     id_Aluno=models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
+
 
 
 class Polo(models.Model):
@@ -144,6 +135,7 @@ def verificar_palavra_passe(palavra_passe):
         return False
     else:
         return True  # Palavra-passe atende aos critérios
+
 
 
 

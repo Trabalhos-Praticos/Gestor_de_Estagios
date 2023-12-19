@@ -45,5 +45,6 @@ urlpatterns = [
     path('administracao/documentos',views.adm_docs,name='documentos_adm'),
     path('upload_assiduidade/',views.add_Assiduidade,name = 'Upload_Assiduidade_adm'),
     path('eliminar_assiduidade/<int:id_assiduidade>/', views.eliminar_assiduidade, name='eliminar_assiduidade'),
+    path('administracao/estudantes/',views.admin_user,name='painel_users'),
 ]
 handler404 = 'G_Estagios.views.pagina_404_personalizada'

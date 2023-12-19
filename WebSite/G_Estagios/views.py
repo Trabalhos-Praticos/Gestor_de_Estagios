@@ -383,6 +383,10 @@ def create_polo(request):
             messages.success(request,'Escola criada com sucesso.')
             return HttpResponseRedirect(reverse('polo_curso'))
 
+def admin_user(request):
+    users = CustomUser.objects.all()
+    return render(request,'G_Estagios/administracao/Registo_aluno.html',{'users':users})
+
 @login_required
 def eliminar_polo(request, polo_id):
     user = request.user
