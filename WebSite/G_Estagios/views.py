@@ -9,6 +9,8 @@ from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verifi
 from django.contrib.auth import authenticate, login, logout
 from .forms import CursoForm,DocumentoForm
 
+
+
 def Home(request):
     user = request.user
     if user.is_authenticated:
@@ -17,7 +19,6 @@ def Home(request):
     return render(request,'G_Estagios/index.html')
 
 
-@login_required
 def Dashboard(request):
     user = request.user
     #Users=CustomUser.objects.get(curso = user.curso)
@@ -56,8 +57,6 @@ def pagina_404_personalizada(request, exception):
 
 
 def registo(request):
-    
-    
     if request.method == "POST":
         User=CustomUser
         Email= request.POST.get('Email')
@@ -113,7 +112,7 @@ def registo(request):
     return render(request,'G_Estagios/Register.html')
 
 
-@login_required
+
 def f_Registo(request):
     user=request.user
     
@@ -142,7 +141,6 @@ def f_Registo(request):
 
 
 
-@login_required
 def verificar_tipo_arquivo(arquivo):
     # Obtém a extensão do arquivo
     extensao = arquivo.name.split('.')[-1].lower()
@@ -195,14 +193,13 @@ def view_login(request):
     return render(request,'G_Estagios/Login.html')
 
 
-@login_required
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('Home'))
 
 
 
-@login_required
 def view_alunos_do_curso(request):
     # Recupere o usuário atualmente autenticado (coordenador de curso)
     coordenador = CustomUser.objects.get(username=request.user.username)
@@ -215,7 +212,6 @@ def view_alunos_do_curso(request):
 
 
 
-@login_required
 def alter_user(request):
     
     if request.method == 'POST':
@@ -245,7 +241,6 @@ def alter_user(request):
     return render(request,'G_Estagios/alteruser.html')
 
 
-@login_required
 def view_polo_curso(request):
     user = request.user
     cursos = Curso.objects.all()
@@ -255,7 +250,6 @@ def view_polo_curso(request):
     return render(request,'G_Estagios/administracao/CRUDcurso__e_escola.html',{'cursos':cursos , 'Polos':Polos })
 
 
-@login_required
 def submeter_docs(request):
     if request.method == 'POST':
         form = DocumentoForm(request.POST, request.FILES)
@@ -270,7 +264,7 @@ def submeter_docs(request):
     return render(request, 'G_Estagios/documentos.html', {'form': form})
     
 
-@login_required
+
 def View_DocAluno(request):
     if request.methtod == 'GET':
          return render(request, 'G_Estagios/Aluno/documentos.html')
@@ -278,7 +272,6 @@ def View_DocAluno(request):
 
 #Funções para o Admin
 
-@login_required
 def create_curso(request):
     user = request.user
     if user.is_superuser == 0:
@@ -293,11 +286,12 @@ def create_curso(request):
         messages.success(request,'Curso criado e associado com sucesso.')   
         return HttpResponseRedirect(reverse('polo_curso'))
 
-@login_required
+
+
 def addicionar_Polo(request):
     pass
 
-@login_required    
+
 def eliminar_curso(request, curso_id):
     user = request.user
     if user.is_superuser == 0:
@@ -308,13 +302,15 @@ def eliminar_curso(request, curso_id):
         messages.success(request,'Curso eliminado com sucesso.')
         return HttpResponseRedirect(reverse('polo_curso'))      
 
-@login_required
+
+
 def editar_curso(request, curso_id):
     user = request.user
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
     
     curso = get_object_or_404(Curso, id=curso_id)
+    polos = Polo.objects.all()
     
     if request.method == 'POST':
         form = CursoForm(request.POST, instance=curso)
@@ -323,12 +319,11 @@ def editar_curso(request, curso_id):
             return HttpResponseRedirect(reverse('polo_curso'))
     else:
         form = CursoForm(instance=curso)
-
-    return render(request, 'G_Estagios/administracao/editarCurso.html', {'form': form, 'curso': curso})
-
+    return render(request, 'G_Estagios/administracao/editarCurso.html', {'form': form, 'curso': curso,'polos':polos})
 
 
-@login_required
+
+
 def create_polo(request):
     user = request.user
     if user.is_superuser == 0:
@@ -347,7 +342,6 @@ def admin_user(request):
     users = CustomUser.objects.all()
     return render(request,'G_Estagios/administracao/Registo_aluno.html',{'users':users})
 
-@login_required
 def eliminar_polo(request, polo_id):
     user = request.user
     if user.is_superuser == 0:

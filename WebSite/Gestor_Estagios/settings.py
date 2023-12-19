@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'G_Estagios.middleware.VerificarAutenticacaoMiddleware',
 ]
 
 ROOT_URLCONF = 'Gestor_Estagios.urls'
