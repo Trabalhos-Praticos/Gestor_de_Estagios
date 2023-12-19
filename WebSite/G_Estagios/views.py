@@ -56,7 +56,8 @@ def pagina_404_personalizada(request, exception):
 
 
 def registo(request):
-   
+    
+    
     if request.method == "POST":
         User=CustomUser
         Email= request.POST.get('Email')
@@ -219,6 +220,7 @@ def view_login(request):
    
             if completo == True:
                 # Redirecione para uma página de sucesso.
+                messages.success(request,"Login bem sucedido")    
                 return HttpResponseRedirect(reverse ('dash'))
    
             elif completo == False:
