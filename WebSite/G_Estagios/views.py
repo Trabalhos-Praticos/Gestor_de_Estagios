@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from .models import Assiduidade, verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe, Upload_Assiduidade,Polo, Protocolos
 from django.contrib.auth import authenticate, login, logout
-from .forms import CursoForm
+from .forms import CursoForm,DocumentoForm
 
 def Home(request):
     user = request.user
@@ -308,8 +308,16 @@ def view_polo_curso(request):
 @login_required
 def submeter_docs(request):
     if request.method == 'POST':
-        pass
-    return render(request, 'G_Estagios/documentosAlunoCC.html')
+        form = DocumentoForm(request.POST, request.FILES)
+        if form.is_valid():
+            documento = form.save(commit=False)
+            documento.user = request.user
+            documento.save()
+            return redirect('perfil')  # ou a página desejada após adicionar o documento
+    else:
+        form = DocumentoForm()
+
+    return render(request, 'G_Estagios/documentos.html', {'form': form})
     
 
 @login_required

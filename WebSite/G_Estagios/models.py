@@ -22,33 +22,20 @@ class CustomUser(AbstractUser):
     privilegio = models.CharField(max_length=20,blank=True)
     ano = models.IntegerField(blank=True, default=2)
 
+class Documento(models.Model):
+    TIPOS_DOCUMENTO = [
+        ('protocolo', 'Protocolo'),
+        ('cv', 'Currículo'),
+        ('assiduidade', 'Assiduidade'),
+        ('relatorio', 'Relatório'),
+    ]
+    
+    usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=20, choices=TIPOS_DOCUMENTO)
+    arquivo = models.FileField(upload_to='documentos/')
 
-#Função que guarda o upload feito
-def Upload_Assiduidade(request, id_aluno):
-    if request.method == 'POST' and request.FILES['arquivo']:
-        arquivo_enviado = request.FILES['arquivo']
-        data_publicacao = timezone.now().strftime("%Y%m%d%H%M%S")
-        nome_arquivo = f"{data_publicacao}_aluno{id_aluno}_assiduidade_{arquivo_enviado.name}"
-        
-        # Guarda o arquivo no sistema de arquivos
-        fs = FileSystemStorage(location='G_Estagios/Documentos/Assiduidade/')
-        fs.save(nome_arquivo, arquivo_enviado)
-        
-        # Obtém a instância do usuário a partir do ID
-        user_model = get_user_model()
-        user_instance = user_model.objects.get(id=id_aluno)
-        
-        # Cria e salva uma nova instância de Assiduidade associada ao usuário correspondente
-        assiduidade = Assiduidade(id_Aluno=user_instance, File=nome_arquivo)
-        assiduidade.save()
-        
-        return assiduidade
-
-class Protocolos(models.Model):
-    id=models.AutoField(primary_key=True)
-    File = models.FileField(upload_to='Documentos/Protocolos/',blank=True)
-    data=models.DateField(auto_created=True,blank=True)
-    id_Aluno=models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
+    def __str__(self):
+        return f"{self.tipo} - {self.usuario.username}"
 
 
 
@@ -83,19 +70,7 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nome
     
-    
-class Assiduidade(models.Model):
-    id = models.AutoField(primary_key=True)
-    data = models.DateField(auto_created=True, blank=True)
-    id_Aluno = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
-    File = models.FileField(upload_to='Documentos/Assiduidade/', blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.data:
-            self.data = timezone.now()
-        super().save(*args, **kwargs)
-
-    
 class Estagio(models.Model):
     id = models.AutoField(primary_key=True)
     horas_totais = models.IntegerField(blank=True)
@@ -105,8 +80,8 @@ class Estagio(models.Model):
     id_curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING)
     Ano_Letivo = models.CharField(max_length=9,blank=True)
     id_Empresa = models.ForeignKey(Empresa, on_delete=models.DO_NOTHING)
-    Assiduidade = models.ForeignKey(Assiduidade, on_delete=models.DO_NOTHING)
-    id_Protocolos=models.ForeignKey(Protocolos, on_delete=models.DO_NOTHING)
+    Assiduidade = models.ForeignKey(Documento,related_name='assiduidade', on_delete=models.DO_NOTHING)
+    id_Protocolos=models.ForeignKey(Documento,related_name='protocolos', on_delete=models.DO_NOTHING)
     id_Tutor_empresa = models.ForeignKey(Empresa, related_name='tutor_Empresa',on_delete=models.DO_NOTHING)
     def __str__(self):
         return self.nome
