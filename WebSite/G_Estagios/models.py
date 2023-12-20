@@ -30,13 +30,26 @@ class Documento(models.Model):
         ('relatorio', 'Relatório'),
     ]
     
+    MESES = [
+        ('fev', 'Fevereiro'),
+        ('mar', 'Março'),
+        ('abr', 'Abril'),
+        ('mai', 'Maio'),
+        ('jun', 'Junho'),
+        ('jul', 'Julho'),
+        ('ago', 'Agosto'),
+        # Adicione os outros meses conforme necessário
+    ]
+
     usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=20, choices=TIPOS_DOCUMENTO)
     arquivo = models.FileField(upload_to='documentos/')
+    
+    # Campo adicional para o mês, só é usado quando o tipo é 'assiduidade'
+    mes = models.CharField(max_length=3, choices=MESES, blank=True)
 
     def __str__(self):
         return f"{self.tipo} - {self.usuario.username}"
-
 
 
 class Polo(models.Model):
