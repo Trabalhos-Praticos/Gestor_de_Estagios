@@ -1,10 +1,9 @@
 {% extends "G_Estagios/_base.html" %}
- {% load static %} 
- {% block content %}
-
-
-
-
-
-
-{%endblock content %}
+{% block content %} 
+    <form method="post"  enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save</button>
+    </form>
+{% endblock content %}
+   

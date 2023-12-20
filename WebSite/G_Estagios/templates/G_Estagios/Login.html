@@ -3,7 +3,7 @@
 {% block content %}
 {% if messages %}
 {% for message in messages %}
-        {% if 'success' in message.tags %}
+{% if 'success' in message.tags %}
                         <!-- Faça algo específico para mensagens de sucesso -->
                         <!-- Por exemplo, adicione uma classe CSS diferente ou exiba um ícone de sucesso -->
 <div id="toast-success toast-top-right" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
@@ -40,9 +40,7 @@
 </div>
 {% endif %}
 {% endfor %}
-
-    
-    {% endif %}
+{% endif %}
     <form action="{%url "login" %}" method='POST' class="max-w-sm mx-auto" >
         {% csrf_token %}
         <label for="email-address-icon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>

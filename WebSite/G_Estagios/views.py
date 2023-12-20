@@ -222,7 +222,7 @@ def alter_user(request,user_id):
     else:
         form = CustomUserChangeForm(instance=user)
     
-    return render(request,'G_Estagios/alteruser.html',{'form':form,'user':user})
+    return render(request,'G_Estagios/editarPerfil.html',{'form':form,'user':user})
 
 
 def view_polo_curso(request):
@@ -348,3 +348,30 @@ def adm_panel(request):
 
 def painel_estagios(request):
     return render(request,'G_Estagios/estagioCC.html')
+
+def empresa_view(request):
+    empresas = Empresa.objects.all()
+    if request.method == 'POST':
+        nome_ = request.POST['nome']
+        loc = request.POST['loc']
+        empresa = Empresa.objects.create(nome = nome_, localizacao=loc)
+        empresa.save()
+        messages.success(request,'Empresa adicionada com sucesso.')
+        return HttpResponseRedirect(reverse('empresa_view'))
+    return render(request,'G_Estagios/Empresas.html',{'empresas':empresas})
+
+def alter_empresa(request,id_empresa):
+    empresa = get_object_or_404(Empresa, pk=id_empresa)
+
+    if request.method == 'POST':
+        # Se os dados do formulário foram enviados
+        empresa.nome = request.POST['nome']
+        empresa.localizacao = request.POST['loc']
+        # Adicione outros campos conforme necessário
+        empresa.save()
+        messages.success(request, 'Empresa com o ID {} editada com sucesso.'.format(empresa.id))
+        # Redirecione para a página de detalhes da empresa ou qualquer outra página desejada
+        return HttpResponseRedirect(reverse('empresa_view'))
+    else:
+        # Se é uma solicitação GET, renderize o formulário com os dados atuais
+        return render(request, 'G_Estagios/alterar_empresa.html', {'empresa': empresa})
