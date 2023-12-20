@@ -1,6 +1,6 @@
 {% extends 'G_Estagios/_base.html'%} 
 {%block content%} 
-
+{% load static %}
 {% if user.is_Coordenador_Curso == True %}
 
 
@@ -94,5 +94,6 @@
 
 {% endif %}
 
+<img src="{{user.foto_perfil.url}}"></img>
 
 {%endblock content%}
