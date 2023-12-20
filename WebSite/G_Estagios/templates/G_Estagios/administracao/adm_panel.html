@@ -1,56 +1,127 @@
-{% extends "G_Estagios/_base.html" %}
-{%load static%}
-{%block content%}   
+{% extends "G_Estagios/_base.html" %} {%load static%} {%block content%}
 
-<a href="{% url 'dash' %}">
-    <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-2 mt-2" style="background-color: #1d4ed8;">
-        <svg class="w-5 h-5 mr-2" style="transform: scaleX(-1);" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-        </svg>
-        <p>Voltar</p>
+<div class="flex mt-">
+  <a href="{% url 'dash' %}">
+    <button
+      type="button"
+      class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-2 mt-2"
+      style="background-color: #1d4ed8"
+    >
+      <svg
+        class="w-5 h-5 mr-2"
+        style="transform: scaleX(-1)"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 14 10"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 5h12m0 0L9 1m4 4L9 9"
+        />
+      </svg>
+      <p>Voltar</p>
     </button>
-    
-    
-</a>
+  </a>
 
-
-<div class="flex justify-center space-x-4">
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4">
-        <img class="mx-auto rounded-t-lg" src="{% static 'src/img/ipvc_logos.jpeg' %}" alt="" />
-        <div class="p-5 mb-4"> <!-- Adicione a classe mb-4 para adicionar margem inferior -->
-            <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Adicionar Curso ou Faculdade</h5>
-            </a>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Aqui poderá aceder ao CRUD de gestão dos cursos e/ou Faculdades. Poderá editar, eliminar e adicionar cursos e faculdades.</p>
-            <a href="{%url 'polo_curso' %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Proceder
-                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                </svg>
-            </a>
-        </div>
+  <div class="flex flex-1 justify-center space-x-10 mt-10 ">
+    <div
+      class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4"
+    >
+      <img
+        class="mx-auto rounded-t-lg"
+        src="{% static 'src/img/ipvc_logos.jpeg' %}"
+        alt=""
+      />
+      <div class="p-5 mb-4">
+        <!-- Adicione a classe mb-4 para adicionar margem inferior -->
+        <a href="#">
+          <h5
+            class="mb-2 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Adicionar Curso ou Faculdade
+          </h5>
+        </a>
+        <p
+          class="mb-3 font-normal text-center text-gray-700 dark:text-gray-400"
+        >
+          Aqui poderá aceder ao CRUD de gestão dos cursos e/ou Faculdades.
+          Poderá editar, eliminar e adicionar cursos e faculdades.
+        </p>
+        <a
+          href="{%url 'polo_curso' %}"
+          class="flex items-center justify-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Proceder
+          <svg
+            class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 5h12m0 0L9 1m4 4L9 9"
+            />
+          </svg>
+        </a>
+      </div>
     </div>
 
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4">
-        <img class="mx-auto rounded-t-lg" src="{% static '/src/img/docs.png' %}" alt="" />
-        <div class="p-5 mt-10"> <!-- Adicione a classe mb-4 para adicionar margem inferior -->
-            <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Gestão de Alunos</h5>
-            </a>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Aqui poderá aceder ao CRUD de gestão dos alunos e seus documentos. Poderá editar, eliminar e adicionar alunos e seus documentos.</p>
-            <a href="{% url 'registo' %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Proceder
-                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                </svg>
-            </a>
-        </div>
+    <div
+      class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4"
+    >
+      <img
+        class="mx-auto rounded-t-lg mt-14 mb-3"
+        src="{% static '/src/img/docs.png' %}"
+        alt=""
+      />
+      <div class="p-5 mt-10">
+        <!-- Adicione a classe mb-4 para adicionar margem inferior -->
+        <a href="#">
+          <h5
+            class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Gestão de Alunos
+          </h5>
+        </a>
+        <p
+          class="mb-3 font-normal text-center text-gray-700 dark:text-gray-400"
+        >
+          Aqui poderá aceder ao CRUD de gestão dos alunos e seus documentos.
+          Poderá editar, eliminar e adicionar alunos e seus documentos.
+        </p>
+        <a
+          href="{% url 'registo' %}"
+          class="flex items-center justify-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Proceder
+          <svg
+            class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 5h12m0 0L9 1m4 4L9 9"
+            />
+          </svg>
+        </a>
+      </div>
     </div>
+  </div>
 </div>
 
-
-
-   
-   
-   
 {% endblock content %}
