@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo,Estagio
 from django.contrib.auth import authenticate, login, logout
-from .forms import CursoForm,DocumentoForm
+from .forms import *
 
 
 
@@ -212,33 +212,17 @@ def view_alunos_do_curso(request):
 
 
 
-def alter_user(request):
-    
+def alter_user(request,user_id):
+    user = CustomUser.objects.get(pk=user_id)
     if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('dash') + f'?user_id={user.id}')
+    else:
+        form = CustomUserChangeForm(instance=user)
     
-        novo_nome = request.POST.get('novo_nome')
-        Password = request.POST.get('password')
-        v_pass= verificar_palavra_passe(Password)
-    
-        if v_pass == False:
-    
-            messages.error(request,"Palavra-passe deve, pelo menos um caractere não alfabético, pelo menos uma letra maiúscula,Mínimo de 8 caracteres, pelo menos um número e pelo menos um caractere especial")
-            return HttpResponseRedirect(reverse('pag'))
-    
-        elif v_pass == True:
-    
-            # Obtenha o usuário atual
-            user = request.user
-            # Faça as alterações necessárias
-            user.first_name = novo_nome
-            user.password = Password
-            # Salve as alterações no banco de dados
-            user.save()
-            messages.success(request, 'As informações foram atualizadas com sucesso!')
-    
-            return HttpResponseRedirect(reverse('pag'))
-    
-    return render(request,'G_Estagios/alteruser.html')
+    return render(request,'G_Estagios/alteruser.html',{'form':form,'user':user})
 
 
 def view_polo_curso(request):

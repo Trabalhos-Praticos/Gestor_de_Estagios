@@ -1,19 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import get_user_model
-from django.core.files.storage import FileSystemStorage
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from django.utils import timezone
-from django import forms
-import schedule
-import time
 from password_strength import PasswordPolicy
 
 class CustomUser(AbstractUser):
     curso = models.CharField(max_length=100, blank=True)
     escola = models.CharField(max_length=100,blank=True)
     morada = models.CharField(max_length=255,blank=True)
+    foto_perfil = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
     is_Coordenador_Curso=models.BooleanField(default=False)
     is_Tutor_estagio_Empresa=models.BooleanField(default=False)
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
