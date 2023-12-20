@@ -13,3 +13,6 @@ class DocumentoForm(forms.ModelForm):
     class Meta:
         model = Documento
         fields = ['tipo', 'arquivo']
+        widgets = [
+            
+        ]
