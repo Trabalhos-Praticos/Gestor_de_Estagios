@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo,Estagio
 from django.contrib.auth import authenticate, login, logout
-from .forms import CursoForm,DocumentoForm, EstagioForm
+from .forms import CursoForm,DocumentoForm
 
 
 
