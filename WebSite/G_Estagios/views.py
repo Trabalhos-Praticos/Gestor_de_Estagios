@@ -361,3 +361,6 @@ def adm_panel(request):
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
     return render(request,'G_Estagios/administracao/adm_panel.html')
+
+def painel_estagios(request):
+    return render(request,'G_Estagios/estagioCC.html')

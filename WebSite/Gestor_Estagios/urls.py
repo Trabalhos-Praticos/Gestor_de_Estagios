@@ -42,5 +42,6 @@ urlpatterns = [
     path('administracao/escola_curso/editar_curso/<int:curso_id>/', views.editar_curso, name='editar_curso'),
     path('administracao/escola_curso/eliminar_polo/<int:polo_id>/', views.eliminar_polo, name='eliminar_polo'),
     path('administracao/estudantes/',views.admin_user,name='painel_users'),
+    path('Estagios/',views.painel_estagios,name='painel_estagios')
 ]
 handler404 = 'G_Estagios.views.pagina_404_personalizada'
