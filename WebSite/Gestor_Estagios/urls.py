@@ -27,7 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.Home, name='Home'),
     path('registo/',views.registo, name='registo'),
-    path('Registo/f_r',views.f_Registo , name="finalizar_registo"),
+    path('Registo/f_r',views.f_Registo,name="finalizar_registo"),
     path('login/', views.view_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/',views.Dashboard, name='dash'),
@@ -42,5 +42,6 @@ urlpatterns = [
     path('administracao/escola_curso/editar_curso/<int:curso_id>/', views.editar_curso, name='editar_curso'),
     path('administracao/escola_curso/eliminar_polo/<int:polo_id>/', views.eliminar_polo, name='eliminar_polo'),
     path('administracao/estudantes/',views.admin_user,name='painel_users'),
+    path('coordenador/estagios',views.pag_estagio,name='pagina_estagio')
 ]
 handler404 = 'G_Estagios.views.pagina_404_personalizada'

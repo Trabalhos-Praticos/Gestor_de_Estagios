@@ -14,13 +14,11 @@ class CustomUser(AbstractUser):
     curso = models.CharField(max_length=100, blank=True)
     escola = models.CharField(max_length=100,blank=True)
     morada = models.CharField(max_length=255,blank=True)
-    is_professor=models.BooleanField(default=False)
     is_Coordenador_Curso=models.BooleanField(default=False)
     is_Tutor_estagio_Empresa=models.BooleanField(default=False)
     is_Tutor_estagio_Escola= models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
-    ano = models.IntegerField(blank=True, default=2)
 
 class Documento(models.Model):
     TIPOS_DOCUMENTO = [

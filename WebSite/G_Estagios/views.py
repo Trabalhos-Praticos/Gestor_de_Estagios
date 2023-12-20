@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
-from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo
+from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo,Estagio
 from django.contrib.auth import authenticate, login, logout
-from .forms import CursoForm,DocumentoForm
+from .forms import CursoForm,DocumentoForm, EstagioForm
 
 
 
@@ -288,9 +288,6 @@ def create_curso(request):
 
 
 
-def addicionar_Polo(request):
-    pass
-
 
 def eliminar_curso(request, curso_id):
     user = request.user
@@ -337,6 +334,20 @@ def create_polo(request):
             
             messages.success(request,'Escola criada com sucesso.')
             return HttpResponseRedirect(reverse('polo_curso'))
+
+
+def pag_estagio(request):
+    if request.method == 'POST':
+        form = EstagioForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Faça algo com os dados do formulário
+            form.save()
+    else:
+        form = EstagioForm()
+        
+    return render(request, 'G_Estagios/estagioCC.html', {'form': form})
+
+
 
 def admin_user(request):
     users = CustomUser.objects.all()
