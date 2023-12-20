@@ -336,17 +336,6 @@ def create_polo(request):
             return HttpResponseRedirect(reverse('polo_curso'))
 
 
-def pag_estagio(request):
-    if request.method == 'POST':
-        form = EstagioForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Faça algo com os dados do formulário
-            form.save()
-    else:
-        form = EstagioForm()
-        
-    return render(request, 'G_Estagios/estagioCC.html', {'form': form})
-
 
 
 def admin_user(request):
