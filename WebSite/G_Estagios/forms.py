@@ -1,5 +1,5 @@
 from django import forms
-from .models import Curso,Documento
+from .models import *
 
 class CursoForm(forms.ModelForm):
     class Meta:
@@ -13,6 +13,9 @@ class DocumentoForm(forms.ModelForm):
     class Meta:
         model = Documento
         fields = ['tipo', 'arquivo']
-        widgets = [
+        widgets = {
             
-        ]
+        }
+
+        
+        
