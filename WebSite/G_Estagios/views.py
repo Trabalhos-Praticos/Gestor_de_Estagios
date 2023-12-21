@@ -237,16 +237,25 @@ def view_polo_curso(request):
 
 
 def submeter_docs(request):
+    user = request.user
+    try:
+        estagio  = Estagio.objects.get(id_aluno=user.id)
+    except Estagio.DoesNotExist:
+        messages.error(request,'Não Podes submeter ficheiros enquanto não estiveres com um estagio associado, contacta o teu coordenador de curso')
+        return HttpResponseRedirect(reverse('dash'))
+    
     if request.method == 'POST':
         form = DocumentoForm(request.POST, request.FILES)
         if form.is_valid():
             documento = form.save(commit=False)
-            documento.user = request.user
+            documento.usuario = request.user
+            documento.estagio = estagio
             documento.save()
-            return redirect('perfil')  # ou a página desejada após adicionar o documento
+            return HttpResponseRedirect(reverse('sub_docs'))  # ou a página desejada após adicionar o documento
     else:
         form = DocumentoForm()
-
+    
+    
     return render(request, 'G_Estagios/documentos.html', {'form': form})
     
     
@@ -405,6 +414,8 @@ def painel_estagios(request):
         # Lógica a ser executada se não houver nenhum resultado
         return render(request,'G_Estagios/Estagio/estagioCC.html',{'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso})
     return render(request,'G_Estagios/Estagio/estagioCC.html',{'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso,'estagio':estagio,'estagios':estagios})
+
+
 def adicionar_estagi(request):
     if request.method == 'POST':
             # Processar dados do formulário para adicionar estágio
@@ -432,39 +443,12 @@ def adicionar_estagi(request):
             messages.success(request,'Estagio criado com sucesso')
             return HttpResponseRedirect(reverse('painel_estagios'))
         
-        
-def editar_estagio(request, id_estagio):
-    estagio = get_object_or_404(Estagio, pk=id_estagio)
-
-    if request.method == 'POST':
-        # Processar dados do formulário para editar estágio
-        estagio.horas_totais = request.POST.get('horas_totais')
-        estagio.id_aluno = request.POST.get('id_aluno')
-        
-        # Atualizar outros campos conforme necessário
-        estagio.save()
-        
-        messages.success(request, 'Estágio editado com sucesso.')
-        
-        return HttpResponseRedirect(reverse('painel_estagios'))  # Redirecione para a página que lista todos os estágios
-
-    return render(request, 'G_Estagios/Estagio/EditarEstagio.html', {'estagio': estagio})
-
 def excluir_estagio(request, id_estagio):
     estagio = get_object_or_404(Estagio, pk=id_estagio)
-
-    if request.method == 'POST':
-        # Confirmar exclusão (você pode adicionar lógicas adicionais aqui)
-        estagio.delete()
-        messages.success(request, 'Estágio excluído com sucesso.')
-        return HttpResponseRedirect(reverse('painel_estagios'))  # Redirecione para a página que lista todos os estágios
-
-
-
-
-
-
-
+    # Confirmar exclusão (você pode adicionar lógicas adicionais aqui)
+    estagio.delete()
+    messages.success(request, 'Estágio excluído com sucesso.')
+    return HttpResponseRedirect(reverse('painel_estagios'))  # Redirecione para a página que lista todos os estágios
 
 
 

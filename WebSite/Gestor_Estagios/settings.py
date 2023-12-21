@@ -83,9 +83,6 @@ TEMPLATES = [
         },
     },
 ]
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'G_Estagios/static'),
-]
 
 
 WSGI_APPLICATION = 'Gestor_Estagios.wsgi.application'
