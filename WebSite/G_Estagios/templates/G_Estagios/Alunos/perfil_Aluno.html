@@ -1,0 +1,24 @@
+{% extends "G_Estagios/_base.html" %}
+{% block content %}
+<!-- perfil.html -->
+<h2>Perfil de {{ aluno.username }}</h2>
+
+{% if estagio %}
+    <h3>Estágio</h3>
+    <p>Nome da Empresa: {{ estagio.id_Empresa.nome }}</p>
+    <!-- Adicione outros detalhes do estágio conforme necessário -->
+{% else %}
+    <p>O aluno não está atualmente em estágio.</p>
+{% endif %}
+
+<h3>Documentos</h3>
+{% if documentos %}
+    <ul>
+        {% for documento in documentos %}
+            <li>{{ documento.tipo }} - <a href="{{ documento.arquivo.url }}" target="_blank">Ver documento</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Nenhum documento disponível.</p>
+{% endif %}
+{% endblock content %}
