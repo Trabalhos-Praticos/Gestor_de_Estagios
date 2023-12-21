@@ -1,0 +1,54 @@
+{% extends "G_Estagios/_base.html" %}
+{% block content %}
+{% if user.is_Coordenador_Curso == True or user.is_superuser == 1%}
+<form class="max-w-md mx-auto" method="POST" action='{% url "editar_estagio" %}'>
+  {% csrf_token %}
+  <h2>Editar Estagio - ID-{{estagio.id}}</h2>
+  
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Aluno</label>
+  <select id="countries" name ='AL' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="{{estagio.id_aluno}}"selected disabled>Aluno</option>
+    {% for aluno in alunos %}
+    <option value="{{aluno.id}}">{{aluno.username}}</option>
+    {% endfor %}
+  </select>
+
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Coordenador</label>
+  <select id="countries" name='CC' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="{{estagio.id_cordenador_curso}}"selected disabled>Coordenador</option>
+    {% for aluno in ccs %}
+    <option value="{{aluno.id}}">{{aluno.username}}</option>
+    {% endfor %}
+  </select>
+  
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tutor de estágio IPVC</label>
+  <select id="countries" name='TE' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="{{estagio.id_tutor_estagio_escolar}}"selected disabled>Tutor de Estagio</option>
+    {% for aluno in TTS %}
+    <option value="{{aluno.id}}">{{aluno.username}}</option>
+    {% endfor %}
+  </select>
+  
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
+  <select id="countries" name='EMP' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="{{estagio.id_Empresa}}"selected disabled>Empresa</option>
+    {% for aluno in emp %}
+    <option value="{{aluno.id}}">{{aluno.nome}}</option>
+    {% endfor %}
+  </select>
+
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Curso</label>
+  <select id="countries" name='curso' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option value="{{estagio.id_curso}}"selected disabled>Curso</option>
+    {% for aluno in curso %}
+    <option value="{{aluno.id}}">{{aluno.nome_curso}}</option>
+    {% endfor %}
+  </select>
+
+  <label for="horas_totais" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Horas Totais</label>
+  <input type="number" value="{{estagio.horas_totais}}" id="horas_totais" name="HT" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Informe as horas totais" required>
+  <button type="submit" class="text-blue bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+</form>
+
+{% endif %}
+{% endblock content %}

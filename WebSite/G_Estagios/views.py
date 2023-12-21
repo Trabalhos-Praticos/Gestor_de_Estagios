@@ -1,5 +1,6 @@
 from datetime import timezone
 import os
+from datetime import datetime
 from django.shortcuts import redirect, render, HttpResponseRedirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -8,7 +9,8 @@ from django.urls import reverse
 from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo,Estagio
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
-
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 
 def Home(request):
@@ -247,6 +249,9 @@ def submeter_docs(request):
 
     return render(request, 'G_Estagios/documentos.html', {'form': form})
     
+    
+    
+
 
 
 def View_DocAluno(request):
@@ -346,8 +351,7 @@ def adm_panel(request):
         return HttpResponseRedirect(reverse('dash'))
     return render(request,'G_Estagios/administracao/adm_panel.html')
 
-def painel_estagios(request):
-    return render(request,'G_Estagios/estagioCC.html')
+
 
 def empresa_view(request):
     empresas = Empresa.objects.all()
@@ -358,9 +362,9 @@ def empresa_view(request):
         empresa.save()
         messages.success(request,'Empresa adicionada com sucesso.')
         return HttpResponseRedirect(reverse('empresa_view'))
-    return render(request,'G_Estagios/Empresas.html',{'empresas':empresas})
+    return render(request,'G_Estagios/Empresa/Empresas.html',{'empresas':empresas})
 
-def alter_empresa(request,id_empresa):
+def alter_empresa(request, id_empresa):
     empresa = get_object_or_404(Empresa, pk=id_empresa)
 
     if request.method == 'POST':
@@ -374,4 +378,107 @@ def alter_empresa(request,id_empresa):
         return HttpResponseRedirect(reverse('empresa_view'))
     else:
         # Se é uma solicitação GET, renderize o formulário com os dados atuais
-        return render(request, 'G_Estagios/alterar_empresa.html', {'empresa': empresa})
+        return render(request, 'G_Estagios/Empresa/alterar_empresa.html', {'empresa': empresa})
+
+
+#estagio
+def painel_estagios(request):
+    user = request.user
+    # Obter a lista de IDs dos alunos que têm um estágio
+    alunos_com_estagio_ids = Estagio.objects.values_list('id_aluno_id', flat=True)
+
+    # Obter a lista de todos os alunos do mesmo curso do usuário
+    alunos_mesmo_curso = CustomUser.objects.filter(privilegio='Aluno', curso=user.curso)
+
+    # Filtrar os alunos que não têm um estágio e pertencem ao mesmo curso do usuário
+    alunos = alunos_mesmo_curso.exclude(id__in=alunos_com_estagio_ids)
+    
+    
+    CC = CustomUser.objects.filter(is_Coordenador_Curso = True)
+    TTES = CustomUser.objects.filter(is_Tutor_estagio_Escola = True)
+    emp = Empresa.objects.all()
+    curso = Curso.objects.all()
+    estagios = Estagio.objects.all()
+    try:
+        estagio = Estagio.objects.get(id_aluno=user.id)
+    except Estagio.DoesNotExist:
+        # Lógica a ser executada se não houver nenhum resultado
+        return render(request,'G_Estagios/Estagio/estagioCC.html',{'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso})
+    return render(request,'G_Estagios/Estagio/estagioCC.html',{'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso,'estagio':estagio,'estagios':estagios})
+def adicionar_estagi(request):
+    if request.method == 'POST':
+            # Processar dados do formulário para adicionar estágio
+            horas_totais = request.POST.get('HT')
+            id_aluno = request.POST.get('AL')
+            id_cc = request.POST['CC']
+            id_TE = request.POST['TE']#id tutor estagio
+            empresa = request.POST['EMP']
+            curso = request.POST['curso']
+            ano_letivo = definir_ano_letivo()
+             
+            tutor_estagio_escolar = get_object_or_404(CustomUser, id=id_TE)
+            coordenador_curso = get_object_or_404(CustomUser, id=id_cc)
+            empresa = get_object_or_404(Empresa, id=empresa)
+            nCurso = get_object_or_404(Curso, id=curso)
+            # Criar instância de Estagio
+            estagio = Estagio.objects.create(
+                Ano_Letivo = ano_letivo,
+                id_aluno_id=id_aluno,
+                id_cordenador_curso =coordenador_curso,id_Empresa=empresa,
+                id_tutor_estagio_escolar = tutor_estagio_escolar,
+                horas_totais=horas_totais,id_curso=nCurso
+            )
+            estagio.save()
+            messages.success(request,'Estagio criado com sucesso')
+            return HttpResponseRedirect(reverse('painel_estagios'))
+        
+        
+def editar_estagio(request, id_estagio):
+    estagio = get_object_or_404(Estagio, pk=id_estagio)
+
+    if request.method == 'POST':
+        # Processar dados do formulário para editar estágio
+        estagio.horas_totais = request.POST.get('horas_totais')
+        estagio.id_aluno = request.POST.get('id_aluno')
+        
+        # Atualizar outros campos conforme necessário
+        estagio.save()
+        
+        messages.success(request, 'Estágio editado com sucesso.')
+        
+        return HttpResponseRedirect(reverse('painel_estagios'))  # Redirecione para a página que lista todos os estágios
+
+    return render(request, 'G_Estagios/Estagio/EditarEstagio.html', {'estagio': estagio})
+
+def excluir_estagio(request, id_estagio):
+    estagio = get_object_or_404(Estagio, pk=id_estagio)
+
+    if request.method == 'POST':
+        # Confirmar exclusão (você pode adicionar lógicas adicionais aqui)
+        estagio.delete()
+        messages.success(request, 'Estágio excluído com sucesso.')
+        return HttpResponseRedirect(reverse('painel_estagios'))  # Redirecione para a página que lista todos os estágios
+
+
+
+
+
+
+
+
+
+
+def definir_ano_letivo():
+    # Lógica para definir o ano letivo com base em algum critério
+    # Por exemplo, você pode obter o ano atual e calcular o próximo ano letivo
+    
+    # Obter o ano atual
+    ano_atual = datetime.now().year
+    
+    # Calcular o próximo ano letivo (assumindo que o ano letivo vai de setembro a agosto)
+    if datetime.now().month >= 9:  # Se já passou setembro
+        ano_letivo = f"{ano_atual}/{ano_atual + 1}"
+    else:
+        ano_letivo = f"{ano_atual - 1}/{ano_atual}"
+    
+    return ano_letivo

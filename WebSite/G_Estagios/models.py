@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from password_strength import PasswordPolicy
 
+
 class CustomUser(AbstractUser):
     curso = models.CharField(max_length=100, blank=True)
     escola = models.CharField(max_length=100,blank=True)
@@ -13,34 +14,6 @@ class CustomUser(AbstractUser):
     is_completed = models.BooleanField(default=False)
     privilegio = models.CharField(max_length=20,blank=True)
 
-class Documento(models.Model):
-    TIPOS_DOCUMENTO = [
-        ('protocolo', 'Protocolo'),
-        ('cv', 'Currículo'),
-        ('assiduidade', 'Assiduidade'),
-        ('relatorio', 'Relatório'),
-    ]
-    
-    MESES = [
-        ('fev', 'Fevereiro'),
-        ('mar', 'Março'),
-        ('abr', 'Abril'),
-        ('mai', 'Maio'),
-        ('jun', 'Junho'),
-        ('jul', 'Julho'),
-        ('ago', 'Agosto'),
-        # Adicione os outros meses conforme necessário
-    ]
-
-    usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=20, choices=TIPOS_DOCUMENTO)
-    arquivo = models.FileField(upload_to='documentos/')
-    
-    # Campo adicional para o mês, só é usado quando o tipo é 'assiduidade'
-    mes = models.CharField(max_length=3, choices=MESES, blank=True)
-
-    def __str__(self):
-        return f"{self.tipo} - {self.usuario.username}"
 
 
 class Polo(models.Model):
@@ -68,7 +41,7 @@ class Alertas(models.Model):
     curso = models.TimeField(blank=True)
 
 class Empresa(models.Model):
-    id= models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=120,blank=True)
     localizacao = models.CharField(max_length=120,blank=True)
     def __str__(self):
@@ -82,13 +55,10 @@ class Estagio(models.Model):
     id_cordenador_curso = models.ForeignKey(CustomUser, related_name='estagios_coordenador', on_delete=models.DO_NOTHING)
     id_tutor_estagio_escolar = models.ForeignKey(CustomUser, related_name='estagios_tutor', on_delete=models.DO_NOTHING)
     id_curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING)
-    Ano_Letivo = models.CharField(max_length=9,blank=True)
+    Ano_Letivo = models.CharField(max_length=9, blank=True, null=True, help_text='Formato: YYYY/YYYY')
     id_Empresa = models.ForeignKey(Empresa, on_delete=models.DO_NOTHING)
-    Assiduidade = models.ForeignKey(Documento,related_name='assiduidade', on_delete=models.DO_NOTHING)
-    id_Protocolos=models.ForeignKey(Documento,related_name='protocolos', on_delete=models.DO_NOTHING)
-    id_Tutor_empresa = models.ForeignKey(Empresa, related_name='tutor_Empresa',on_delete=models.DO_NOTHING)
-    def __str__(self):
-        return self.nome
+    documentos = models.ManyToManyField('Documento', related_name='Estagio', blank=True)
+    id_Tutor_empresa = models.ForeignKey(Empresa, related_name='tutor_Empresa',on_delete=models.DO_NOTHING,blank = True, null = True)
     
 
 def verify_email(Email):
@@ -115,6 +85,35 @@ def verificar_palavra_passe(palavra_passe):
     else:
         return True  # Palavra-passe atende aos critérios
 
+class Documento(models.Model):
+    TIPOS_DOCUMENTO = [
+        ('protocolo', 'Protocolo'),
+        ('cv', 'Currículo'),
+        ('assiduidade', 'Assiduidade'),
+        ('relatorio', 'Relatório'),
+    ]
+    
+    MESES = [
+        ('fev', 'Fevereiro'),
+        ('mar', 'Março'),
+        ('abr', 'Abril'),
+        ('mai', 'Maio'),
+        ('jun', 'Junho'),
+        ('jul', 'Julho'),
+        ('ago', 'Agosto'),
+        # Adicione os outros meses conforme necessário
+    ]
+
+    usuario = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
+    estagio = models.ForeignKey('Estagio', on_delete=models.CASCADE, related_name='Documentos', null=True, blank=True)
+    tipo = models.CharField(max_length=20, choices=TIPOS_DOCUMENTO)
+    arquivo = models.FileField(upload_to='documentos/')
+    
+    # Campo adicional para o mês, só é usado quando o tipo é 'assiduidade'
+    mes = models.CharField(max_length=3, choices=MESES, blank=True)
+
+    def __str__(self):
+        return f"{self.tipo} - {self.usuario.username}"
 
 
 
