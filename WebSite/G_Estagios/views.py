@@ -318,6 +318,8 @@ def editar_curso(request, curso_id):
     return render(request, 'G_Estagios/administracao/editarCurso.html', {'form': form, 'curso': curso,'polos':polos})
 
 
+def alertas(request):
+    return render(request,'G_Estagios/Alertas/alertas.html')
 
 
 def create_polo(request):
