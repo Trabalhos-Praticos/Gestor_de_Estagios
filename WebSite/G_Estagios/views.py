@@ -311,6 +311,7 @@ def editar_curso(request, curso_id):
         form = CursoForm(request.POST, instance=curso)
         if form.is_valid():
             form.save()
+            messages.success(request,'Curso editado com sucesso')
             return HttpResponseRedirect(reverse('polo_curso'))
     else:
         form = CursoForm(instance=curso)
@@ -339,6 +340,8 @@ def create_polo(request):
 def admin_user(request):
     users = CustomUser.objects.all()
     return render(request,'G_Estagios/administracao/Registo_aluno.html',{'users':users})
+
+
 
 def eliminar_polo(request, polo_id):
     user = request.user
@@ -372,6 +375,8 @@ def empresa_view(request):
         messages.success(request,'Empresa adicionada com sucesso.')
         return HttpResponseRedirect(reverse('empresa_view'))
     return render(request,'G_Estagios/Empresa/Empresas.html',{'empresas':empresas})
+
+
 
 def alter_empresa(request, id_empresa):
     empresa = get_object_or_404(Empresa, pk=id_empresa)
