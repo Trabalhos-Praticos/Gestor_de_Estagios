@@ -1,16 +1,13 @@
-from datetime import timezone
 from datetime import datetime
 from django.shortcuts import redirect, render, HttpResponseRedirect,get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo,Estagio
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 from django.contrib.auth.hashers import make_password
+from django.http import FileResponse, HttpResponse
 
 
 def Home(request):
@@ -382,6 +379,7 @@ def alertas(request):
     return render(request,'G_Estagios/Alertas/alertas.html')
 
 
+
 def create_polo(request):
     user = request.user
     if user.is_superuser == 0:
@@ -533,3 +531,35 @@ def definir_ano_letivo():
         ano_letivo = f"{ano_atual - 1}/{ano_atual}"
     
     return ano_letivo
+
+def perfil(request,user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    # Obtém informações sobre o estágio do usuário
+    estagio = Estagio.objects.get(id_aluno=user.id)
+    # Obtém todos os documentos do usuário
+    documentos = Documento.objects.filter(usuario=user)
+
+    
+    return render(request,'G_Estagios/Alunos/perfil_Aluno.html', {'user': user,'estagio': estagio, 'documentos': documentos})
+
+
+def download_documento(request, documento_id):
+    # Obtém a instância do documento com base no ID
+    documento = get_object_or_404(Documento, id=documento_id)
+
+    # Lógica para obter o caminho do arquivo ou objeto File
+    # Substitua isso com base na sua implementação específica
+    caminho_do_arquivo = documento.arquivo.path
+    try:
+        # Abre o arquivo em modo binário e lê seu conteúdo
+        with open(caminho_do_arquivo, 'rb') as arquivo:
+            # Cria uma resposta HTTP com o conteúdo do arquivo
+            response = HttpResponse(arquivo.read(), content_type='application/force-download')
+            response['Content-Disposition'] = f'attachment; filename="{documento.nome_do_arquivo}"'
+
+        # Redireciona para a página "painel_user"
+        return redirect(reverse('painel_user'))
+
+    except Exception as e:
+        messages.error(request, 'Erro ao descaregar o arquivo.')
+    return HttpResponseRedirect(reverse('painel_user'))
