@@ -15,83 +15,58 @@
                   Empresa
               </th>
               <th scope="col" class="px-6 py-3">
-                  Horas Estagiadas
+                  Horas totais
               </th>
               <th scope="col" class="px-6 py-3">
-                Data de começo
+                Ano Letivo
             </th>
-              <th scope="col" class="px-6 py-3">
-                  Documentos em ordem
-              </th>
           </tr>
       </thead>
       <tbody>
+        {% for estagio in estagios %}
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Aluno 1
+                  {{estagio.id_aluno}}
               </th>
               <td class="px-6 py-4">
-                  AvatarSystems
+                  {{estagio.id_empresa}}
               </td>
               <td class="px-6 py-4">
-                  120
+                  {{estagio.horas_totais}}
               </td>
               <td class="px-6 py-4">
-                16/02/2023
+                {{estagio.ano_letivo}}
             </td>
-              <td class="px-6 py-4">
-                <svg class="w-4 h-4" style="margin-left: 70px; text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-                </svg>
-            </td>
-            
-            
-          </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Aluno 3
-              </th>
-              <td class="px-6 py-4">
-                  Data Solutions
-              </td>
-              <td class="px-6 py-4">
-                  452
-              </td>
-              <td class="px-6 py-4">
-                14/02/2023
-            </td>
-              <td class="px-6 py-4">
-                <svg class="w-4 h-4" style="margin-left: 70px; text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-              </td>
-          </tr>
-          <tr class="bg-white dark:bg-gray-800">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Aluno 3
-              </th>
-              <td class="px-6 py-4">
-                  OmniTech Corporation
-              </td>
-              <td class="px-6 py-4">
-                  37
-              </td>
-              <td class="px-6 py-4">
-                20/02/2023
-            </td>
-              <td class="px-6 py-4">
-                <svg class="w-4 h-4" style="margin-left: 70px; text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-                </svg>
-            </td>
-          </tr>
+            {% endfor %}
       </tbody>
   </table>
+  <div aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px text-sm">
+        {% if estagios.has_previous %}
+            <li>
+                <a href="?page={{ estagios.previous_page_number }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+            </li>
+        {% endif %}
+
+        {% for page in estagios.paginator.page_range %}
+            <li>
+                <a href="?page={{ page }}" class="flex items-center justify-center px-3 h-8 leading-tight {% if estagios.number == page %}text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white{% else %}text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white{% endif %}">
+                    {{ page }}
+                </a>
+            </li>
+        {% endfor %}
+
+        {% if estagios.has_next %}
+            <li>
+                <a href="?page={{ estagios.next_page_number }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
 </div>
 
-
-
 {% endif %}
+
 
 <section class="bg-white dark:bg-gray-900">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">

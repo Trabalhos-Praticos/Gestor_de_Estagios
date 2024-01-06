@@ -1,5 +1,4 @@
 from datetime import timezone
-import os
 from datetime import datetime
 from django.shortcuts import redirect, render, HttpResponseRedirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -11,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.contrib.auth.hashers import make_password
 
 
 def Home(request):
@@ -21,37 +21,98 @@ def Home(request):
     return render(request,'G_Estagios/index.html')
 
 
+#def Dashboard(request):
+#    user = request.user
+#    current_page = None
+#    estagio = None
+#    if user.is_Coordenador_Curso:
+#        try:
+#            # Tente obter o objeto Estagio
+#            estagio = Estagio.objects.get(id_cordenador_curso=user.id)
+#            status_documentos = verifica_documentos_estagio(estagio)
+#            Users=CustomUser.objects.filter(curso=user.curso)
+#            # Número de pessoas a serem exibidas por página
+#            pessoas_por_pagina = 10
+#
+#            # Inicialize o paginador com a lista de pessoas e o número de pessoas por página
+#            paginator = Paginator(estagio, pessoas_por_pagina)
+#
+#            # Obtenha o número da página da solicitação. Se não houver número de página, use 1.
+#            page = request.GET.get('page', 1)
+#
+#            try:
+#                # Obtenha a página atual
+#                current_page = paginator.page(page)
+#            except PageNotAnInteger:
+#                # Se a página não for um número inteiro, vá para a primeira página
+#                current_page = paginator.page(1)
+#            except EmptyPage:
+#                # Se a página estiver vazia, vá para a última página
+#                current_page = paginator.page(paginator.num_pages)
+#        except Estagio.DoesNotExist:
+#            return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page,'user':user, 'estagios':estagio})
+#    return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page,'alunos':Users,'user':user, 'status_documento':status_documentos})
+
+def get_alertas(request):
+    user = request.user
+    usercurso= Curso.objects.get(id=user.curso)
+    alertas = Alertas.objects.filter(curso = user.curso)
+
 def Dashboard(request):
     user = request.user
-    #Users=CustomUser.objects.get(curso = user.curso)
-    Users=CustomUser.objects.filter(curso=user.curso)
-        
-         # Recupere todas as pessoas do banco de dados
-    pessoas_list = CustomUser.objects.filter(curso=user.curso)
+    #alerta = get_alertas(request)
+    if user.is_Coordenador_Curso:
+        #Tente obter o objeto Estagio
+        estagios = Estagio.objects.filter(id_cordenador_curso=user.id)
+        # status_documentos = verifica_documentos_estagio(estagio
+         # Faça algo adequado se o Estagio não for encontrado
 
-    # Número de pessoas a serem exibidas por página
-    pessoas_por_pagina = 10
+        # Obtenha a lista de usuários para paginar
+        Users = CustomUser.objects.filter(curso=user.curso)
 
-    # Inicialize o paginador com a lista de pessoas e o número de pessoas por página
-    paginator = Paginator(pessoas_list, pessoas_por_pagina)
+        # Número de pessoas a serem exibidas por página
+        pessoas_por_pagina = 3
 
-    # Obtenha o número da página da solicitação. Se não houver número de página, use 1.
-    page = request.GET.get('page', 1)
+        # Inicialize o paginador com a lista de pessoas e o número de pessoas por página
+        paginator = Paginator(Users, pessoas_por_pagina)
 
-    try:
-        # Obtenha a página atual
-        current_page = paginator.page(page)
-    except PageNotAnInteger:
-        # Se a página não for um número inteiro, vá para a primeira página
-        current_page = paginator.page(1)
-    except EmptyPage:
-        # Se a página estiver vazia, vá para a última página
-        current_page = paginator.page(paginator.num_pages)
+        # Obtenha o número da página da solicitação. Se não houver número de página, use 1.
+        page = request.GET.get('page', 1)
+
+        try:
+            # Obtenha a página atual
+            current_page = paginator.page(page)
+        except PageNotAnInteger:
+            # Se a página não for um número inteiro, vá para a primeira página
+            current_page = paginator.page(1)
+        except EmptyPage:
+            # Se a página estiver vazia, vá para a última página
+            current_page = paginator.page(paginator.num_pages)
+
+        return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page, 'alunos': Users, 'user': user, 'estagios': estagios})
     
-    return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page,'alunos':Users,'user':user})
-        #return render(request, 'G_Estagios/dashboard.html',({ 'alunos': Users, 'user':user}))
-        # Renderize a página com a lista de pessoas da página atual
-        
+    return render(request, 'G_Estagios/dashboard.html')
+    
+      
+      
+      
+      
+def verifica_documentos_estagio(estagio):
+    # Obtém o mês atual
+    mes_atual = datetime.now().strftime('%b').lower()
+
+    # Verifica se existem documentos para o mês atual
+    protocolo_presente = estagio.documentos.filter(tipo='protocolo', mes=mes_atual).exists()
+    cv_presente = estagio.documentos.filter(tipo='cv', mes=mes_atual).exists()
+    assiduidade_presente = estagio.documentos.filter(tipo='assiduidade', mes=mes_atual).exists()
+
+    if protocolo_presente and cv_presente and assiduidade_presente:
+        return True
+    else: 
+        return False
+    
+    
+    
     
 def pagina_404_personalizada(request, exception):
     return render(request, 'G_Estagios/404.html', status=404)    
@@ -59,10 +120,10 @@ def pagina_404_personalizada(request, exception):
 
 
 def registo(request):
+    curso = Curso.objects.all()
     if request.method == "POST":
         User=CustomUser
-        Email= request.POST.get('Email')
-        
+        Email= request.POST.get('username')
         try:
             V_Email = User.objects.get(username=Email)
         
@@ -76,8 +137,11 @@ def registo(request):
             return HttpResponseRedirect(reverse('registo'))
         
         else:
-        
-            Password=request.POST.get('Password')        
+            id_curso = request.POST.get('curso')
+            id_escola = obter_polo_por_curso(id_curso)
+            Escola = Polo.objects.get(id=id_escola)
+            f_Curso= Curso.objects.get(id=id_curso)
+            Password=request.POST.get('password')        
             primeiro_Nome = request.POST.get('pnome')
             ultimo_nome = request.POST.get('unome')
             V_e = verify_email(Email)
@@ -97,7 +161,7 @@ def registo(request):
            
                 elif V_e == 'Aluno':
            
-                    newuser = User.objects.create_user(username=Email,first_name=primeiro_Nome,last_name=ultimo_nome,password=Password,privilegio=V_e,is_professor=False)
+                    newuser = User.objects.create_user(username=Email,first_name=primeiro_Nome,last_name=ultimo_nome,password=Password,privilegio=V_e,curso=f_Curso,escola = Escola,is_completed = True)
                     newuser.save()
                     messages.info(request,"Registo bem sucedido")
                     return HttpResponseRedirect(reverse('registo'))
@@ -111,7 +175,7 @@ def registo(request):
                     return HttpResponseRedirect(reverse('registo'))
                 
                 
-    return render(request,'G_Estagios/Register.html')
+    return render(request,'G_Estagios/Register.html',{'cursos':curso})
 
 
 
@@ -125,11 +189,9 @@ def f_Registo(request):
         id_curso = request.POST.get('Curso')
         id_escola = obter_polo_por_curso(id_curso)
         escola = Polo.objects.get(id=id_escola)
-        nome_escola = escola.nome
         curso= Curso.objects.get(id=id_curso)
-        nome_curso = curso.nome_curso
-        user.curso = nome_curso
-        user.escola = nome_escola
+        user.curso = curso.id
+        user.escola = escola.id
         user.is_completed = True
         user.save()
         return HttpResponseRedirect(reverse('dash'),{'user':user})
@@ -159,9 +221,6 @@ def verificar_tipo_arquivo(arquivo):
     else:
         return None
     
-
-
-
 
 
 def view_login(request):
@@ -219,12 +278,13 @@ def alter_user(request,user_id):
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
+            user.password = make_password(user.password)
             form.save()
-            return HttpResponseRedirect(reverse('dash') + f'?user_id={user.id}')
+            return HttpResponseRedirect(reverse('dash'))
     else:
         form = CustomUserChangeForm(instance=user)
     
-    return render(request,'G_Estagios/editarPerfil.html',{'form':form,'user':user})
+    return render(request,'G_Estagios/editarperfil.html',{'form':form,'user':user})
 
 
 def view_polo_curso(request):

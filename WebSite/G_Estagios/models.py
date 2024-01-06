@@ -3,17 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from password_strength import PasswordPolicy
 
 
-class CustomUser(AbstractUser):
-    curso = models.CharField(max_length=100, blank=True)
-    escola = models.CharField(max_length=100,blank=True)
-    morada = models.CharField(max_length=255,blank=True)
-    foto_perfil = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
-    is_Coordenador_Curso=models.BooleanField(default=False)
-    is_Tutor_estagio_Empresa=models.BooleanField(default=False)
-    is_Tutor_estagio_Escola= models.BooleanField(default=False)
-    is_completed = models.BooleanField(default=False)
-    privilegio = models.CharField(max_length=20,blank=True)
-
 
 
 class Polo(models.Model):
@@ -34,6 +23,19 @@ class Curso(models.Model):
     Polo = models.ForeignKey(Polo,on_delete=models.DO_NOTHING)
     def __str__(self):
         return self.nome_curso
+
+class CustomUser(AbstractUser):
+    curso = models.ForeignKey(Curso,on_delete=models.DO_NOTHING,blank = True)
+    escola = models.ForeignKey(Polo,on_delete=models.DO_NOTHING,blank = True)
+    morada = models.CharField(max_length=255,blank=True)
+    foto_perfil = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
+    is_Coordenador_Curso=models.BooleanField(default=False)
+    is_Tutor_estagio_Empresa=models.BooleanField(default=False)
+    is_Tutor_estagio_Escola= models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
+    privilegio = models.CharField(max_length=20,blank=True)
+
+
 
 class Alertas(models.Model):
     id = models.AutoField(primary_key=True)
