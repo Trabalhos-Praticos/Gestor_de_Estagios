@@ -1,10 +1,16 @@
 {% extends "G_Estagios/_base.html" %}
 {% block content %}
 <!-- perfil.html -->
-<h2>Perfil de {{ aluno.username }}</h2>
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl text-left mb-4">Perfil de {{ aluno.username }}</h2>
+</div>
 
 {% if estagio %}
-    <h3>Estágio</h3>
+
+<div class="container mx-auto p-4 text-center mt-4">
+  <h3 class="text-lg mb-2">Estágio</h3>
+</div>
+    
     <form class="max-w-sm mx-auto">
         <div class="mb-5">
             <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email do Aluno</label>
@@ -19,7 +25,7 @@
         <input type="text" value='{{estagio.id_cordenador_curso}}'  disabled id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
       </div>
       <div class="mb-5">
-        <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email do Tutor de Estagio(IPVC)</label>
+        <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email do Tutor de Estágio(IPVC)</label>
         <input type="text" value='{{estagio.id_tutor_estagio_escolar}}' disabled id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
       </div>
       <div class="mb-5">
@@ -35,8 +41,10 @@
     <p>O aluno não está atualmente em estágio.</p>
 {% endif %}
 
-<h3>Documentos</h3>
-{% if documentos %}
+
+<div class="container mx-auto p-4 text-center mt-4">
+  <h3 class="text-lg mb-2">Documentos</h3>
+  {% if documentos %}
     <ul>
         {% for documento in documentos %}
             <li>{{ documento.tipo }} - <a  href="{% url 'download_documento' documento.id %}" target="_blank">Download</a></li>
@@ -44,5 +52,7 @@
     </ul>
 {% else %}
     <p>Nenhum documento disponível.</p>
+</div>
+
 {% endif %}
 {% endblock content %}
