@@ -1,7 +1,7 @@
 {% extends "G_Estagios/_base.html" %}
 {% block content %}
 <!-- perfil.html -->
-<h2>Perfil de {{ aluno.username }}</h2>
+<h2>Perfil de {{ aluno.first_name }} {{aluno.last_name}}</h2>
 
 {% if estagio %}
     <h3>Estágio</h3>

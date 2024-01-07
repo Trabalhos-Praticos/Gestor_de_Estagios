@@ -540,7 +540,7 @@ def perfil(request,user_id):
     documentos = Documento.objects.filter(usuario=user)
 
     
-    return render(request,'G_Estagios/Alunos/perfil_Aluno.html', {'user': user,'estagio': estagio, 'documentos': documentos})
+    return render(request,'G_Estagios/Alunos/perfil_Aluno.html', {'aluno': user,'estagio': estagio, 'documentos': documentos})
 
 
 def download_documento(request, documento_id):
