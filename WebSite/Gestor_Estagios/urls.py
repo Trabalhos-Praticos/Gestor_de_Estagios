@@ -19,6 +19,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from G_Estagios import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 
@@ -31,7 +33,6 @@ urlpatterns = [
     path('login/', views.view_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/',views.Dashboard, name='dash'),
-    path('alunos-do-curso/', views.view_alunos_do_curso, name='alunos_do_curso'),
     path('Documentos/', views.submeter_docs, name="sub_docs"),
     path('Estagios/',views.painel_estagios,name='painel_estagios'),
     path('Estagios/criar/',views.adicionar_estagi,name='criar_estagio'),
@@ -50,6 +51,6 @@ urlpatterns = [
     path('administracao/escola_curso/eliminar_polo/<int:polo_id>/', views.eliminar_polo, name='eliminar_polo'),
     path('administracao/estudantes/',views.admin_user,name='painel_users'),
     path('user/perfil/<int:user_id>',views.perfil, name='perfil_user'),
-    path('user/perfil/download/<int:documento_id>/', views.download_documento, name='download_documento'),
-]
+    path('alunos/',views.alunos,name='listaalunos'),
+]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 handler404 = 'G_Estagios.views.pagina_404_personalizada'

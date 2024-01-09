@@ -1,14 +1,14 @@
 from datetime import datetime
+from django.utils import timezone
 from django.shortcuts import redirect, render, HttpResponseRedirect,get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
-from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo,Estagio
+from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verificar_palavra_passe,Polo,Estagio, Alertas
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib.auth.hashers import make_password
 from django.http import FileResponse, HttpResponse
-
 
 def Home(request):
     user = request.user
@@ -16,6 +16,15 @@ def Home(request):
         return HttpResponseRedirect(reverse('dash'))
     
     return render(request,'G_Estagios/index.html')
+
+def get_alerts(request):
+    # Obtém a data atual
+    data_atual = timezone.now()
+    
+    # Subtrai 15 dias da data atual
+    data_limite = data_atual - timezone.timedelta(days=15)
+    alertas_recentes = Alertas.objects.filter(created_at__gte=data_limite, curso=request.user.curso)
+    return alertas_recentes
 
 
 #def Dashboard(request):
@@ -50,32 +59,23 @@ def Home(request):
 #            return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page,'user':user, 'estagios':estagio})
 #    return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page,'alunos':Users,'user':user, 'status_documento':status_documentos})
 
-def get_alertas(request):
-    user = request.user
-    usercurso= Curso.objects.get(id=user.curso)
-    alertas = Alertas.objects.filter(curso = user.curso)
-
 def Dashboard(request):
     user = request.user
+    alertas = get_alerts(request)
     #alerta = get_alertas(request)
     if user.is_Coordenador_Curso:
         #Tente obter o objeto Estagio
         estagios = Estagio.objects.filter(id_cordenador_curso=user.id)
         # status_documentos = verifica_documentos_estagio(estagio
          # Faça algo adequado se o Estagio não for encontrado
-
         # Obtenha a lista de usuários para paginar
         Users = CustomUser.objects.filter(curso=user.curso)
-
         # Número de pessoas a serem exibidas por página
         pessoas_por_pagina = 3
-
         # Inicialize o paginador com a lista de pessoas e o número de pessoas por página
         paginator = Paginator(Users, pessoas_por_pagina)
-
         # Obtenha o número da página da solicitação. Se não houver número de página, use 1.
         page = request.GET.get('page', 1)
-
         try:
             # Obtenha a página atual
             current_page = paginator.page(page)
@@ -85,10 +85,9 @@ def Dashboard(request):
         except EmptyPage:
             # Se a página estiver vazia, vá para a última página
             current_page = paginator.page(paginator.num_pages)
+        return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page, 'alunos': Users, 'user': user, 'estagios': estagios,'alertas':alertas})
 
-        return render(request, 'G_Estagios/dashboard.html', {'current_page': current_page, 'alunos': Users, 'user': user, 'estagios': estagios})
-    
-    return render(request, 'G_Estagios/dashboard.html')
+    return render(request, 'G_Estagios/dashboard.html',{'alertas':alertas})
     
       
       
@@ -258,19 +257,10 @@ def logout_view(request):
 
 
 
-def view_alunos_do_curso(request):
-    # Recupere o usuário atualmente autenticado (coordenador de curso)
-    coordenador = CustomUser.objects.get(username=request.user.username)
-
-    # Recupere todos os alunos associados ao curso do coordenador
-    alunos_do_curso = CustomUser.objects.filter(curso=coordenador.curso)
-
-    # Renderize a página com a lista de alunos
-    return render(request, 'alunos_do_curso.html', {'alunos': alunos_do_curso})
-
 
 
 def alter_user(request,user_id):
+    alertas = get_alerts(request)
     user = CustomUser.objects.get(pk=user_id)
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
@@ -281,19 +271,21 @@ def alter_user(request,user_id):
     else:
         form = CustomUserChangeForm(instance=user)
     
-    return render(request,'G_Estagios/editarperfil.html',{'form':form,'user':user})
+    return render(request,'G_Estagios/editarperfil.html',{'form':form,'user':user,'alertas':alertas})
 
 
 def view_polo_curso(request):
+    alertas = get_alerts(request)
     user = request.user
     cursos = Curso.objects.all()
     Polos = Polo.objects.all()
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
-    return render(request,'G_Estagios/administracao/CRUDcurso__e_escola.html',{'cursos':cursos , 'Polos':Polos })
+    return render(request,'G_Estagios/administracao/CRUDcurso__e_escola.html',{'cursos':cursos , 'Polos':Polos,'alertas':alertas})
 
 
 def submeter_docs(request):
+    alertas = get_alerts(request)
     user = request.user
     try:
         estagio  = Estagio.objects.get(id_aluno=user.id)
@@ -313,7 +305,7 @@ def submeter_docs(request):
         form = DocumentoForm()
     
     
-    return render(request, 'G_Estagios/documentos.html', {'form': form})
+    return render(request, 'G_Estagios/documentos.html', {'form': form,'alertas':alertas})
     
     
     
@@ -321,8 +313,9 @@ def submeter_docs(request):
 
 
 def View_DocAluno(request):
+    alertas = get_alerts(request)
     if request.methtod == 'GET':
-         return render(request, 'G_Estagios/Aluno/documentos.html')
+         return render(request, 'G_Estagios/Aluno/documentos.html',{'alertas':alertas})
 
 
 #Funções para o Admin
@@ -357,6 +350,7 @@ def eliminar_curso(request, curso_id):
 
 
 def editar_curso(request, curso_id):
+    alertas = get_alerts(request)
     user = request.user
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
@@ -372,11 +366,17 @@ def editar_curso(request, curso_id):
             return HttpResponseRedirect(reverse('polo_curso'))
     else:
         form = CursoForm(instance=curso)
-    return render(request, 'G_Estagios/administracao/editarCurso.html', {'form': form, 'curso': curso,'polos':polos})
+    return render(request, 'G_Estagios/administracao/editarCurso.html', {'form': form, 'curso': curso,'polos':polos,'alertas':alertas})
 
 
 def alertas(request):
-    return render(request,'G_Estagios/Alertas/alertas.html')
+    alertas = get_alerts(request)
+    if request.method=='POST':
+        texto = request.POST.get('texto')
+        user = CustomUser.objects.get(id = request.user.id)
+        alerta = Alertas.objects.create(Texto = texto,curso=user.curso, id_user=user)
+        alerta.save()
+    return render(request,'G_Estagios/Alertas/alertas.html',{'alertas':alertas})
 
 
 
@@ -398,8 +398,9 @@ def create_polo(request):
 
 
 def admin_user(request):
+    alertas = get_alerts(request)
     users = CustomUser.objects.all()
-    return render(request,'G_Estagios/administracao/Registo_aluno.html',{'users':users})
+    return render(request,'G_Estagios/administracao/Registo_aluno.html',{'users':users,'alertas':alertas})
 
 
 
@@ -418,14 +419,16 @@ def edit_user_admin(request):
         pass
     
 def adm_panel(request):
+    alertas = get_alerts(request)
     user = request.user
     if user.is_superuser == 0:
         return HttpResponseRedirect(reverse('dash'))
-    return render(request,'G_Estagios/administracao/adm_panel.html')
+    return render(request,'G_Estagios/administracao/adm_panel.html',{'alertas':alertas})
 
 
 
 def empresa_view(request):
+    alertas = get_alerts(request)
     empresas = Empresa.objects.all()
     if request.method == 'POST':
         nome_ = request.POST['nome']
@@ -434,13 +437,13 @@ def empresa_view(request):
         empresa.save()
         messages.success(request,'Empresa adicionada com sucesso.')
         return HttpResponseRedirect(reverse('empresa_view'))
-    return render(request,'G_Estagios/Empresa/Empresas.html',{'empresas':empresas})
+    return render(request,'G_Estagios/Empresa/Empresas.html',{'empresas':empresas,'alertas':alertas})
 
 
 
 def alter_empresa(request, id_empresa):
     empresa = get_object_or_404(Empresa, pk=id_empresa)
-
+    alertas = get_alerts(request)
     if request.method == 'POST':
         # Se os dados do formulário foram enviados
         empresa.nome = request.POST['nome']
@@ -452,11 +455,12 @@ def alter_empresa(request, id_empresa):
         return HttpResponseRedirect(reverse('empresa_view'))
     else:
         # Se é uma solicitação GET, renderize o formulário com os dados atuais
-        return render(request, 'G_Estagios/Empresa/alterar_empresa.html', {'empresa': empresa})
+        return render(request, 'G_Estagios/Empresa/alterar_empresa.html', {'empresa': empresa,'alertas':alertas})
 
 
 #estagio
 def painel_estagios(request):
+    alertas = get_alerts(request)
     user = request.user
     # Obter a lista de IDs dos alunos que têm um estágio
     alunos_com_estagio_ids = Estagio.objects.values_list('id_aluno_id', flat=True)
@@ -477,8 +481,8 @@ def painel_estagios(request):
         estagio = Estagio.objects.get(id_aluno=user.id)
     except Estagio.DoesNotExist:
         # Lógica a ser executada se não houver nenhum resultado
-        return render(request,'G_Estagios/Estagio/estagioCC.html',{'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso})
-    return render(request,'G_Estagios/Estagio/estagioCC.html',{'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso,'estagio':estagio,'estagios':estagios})
+        return render(request,'G_Estagios/Estagio/estagioCC.html',{'alertas':alertas,'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso})
+    return render(request,'G_Estagios/Estagio/estagioCC.html',{'alertas':alertas,'alunos':alunos,'ccs':CC,'TTS':TTES,'emp':emp,'curso':curso,'estagio':estagio,'estagios':estagios})
 
 
 def adicionar_estagi(request):
@@ -533,33 +537,23 @@ def definir_ano_letivo():
     return ano_letivo
 
 def perfil(request,user_id):
+    alertas = get_alerts(request)
     user = get_object_or_404(CustomUser, id=user_id)
-    # Obtém informações sobre o estágio do usuário
-    estagio = Estagio.objects.get(id_aluno=user.id)
-    # Obtém todos os documentos do usuário
-    documentos = Documento.objects.filter(usuario=user)
-
-    
-    return render(request,'G_Estagios/Alunos/perfil_Aluno.html', {'aluno': user,'estagio': estagio, 'documentos': documentos})
-
-
-def download_documento(request, documento_id):
-    # Obtém a instância do documento com base no ID
-    documento = get_object_or_404(Documento, id=documento_id)
-
-    # Lógica para obter o caminho do arquivo ou objeto File
-    # Substitua isso com base na sua implementação específica
-    caminho_do_arquivo = documento.arquivo.path
     try:
-        # Abre o arquivo em modo binário e lê seu conteúdo
-        with open(caminho_do_arquivo, 'rb') as arquivo:
-            # Cria uma resposta HTTP com o conteúdo do arquivo
-            response = HttpResponse(arquivo.read(), content_type='application/force-download')
-            response['Content-Disposition'] = f'attachment; filename="{documento.nome_do_arquivo}"'
+        estagio = Estagio.objects.get(id_aluno=user.id)
+    except Estagio.DoesNotExist:
+        estagio = None
 
-        # Redireciona para a página "painel_user"
-        return redirect(reverse('painel_user'))
+    documentos = Documento.objects.filter(usuario=user)
+    
+    return render(request,'G_Estagios/Alunos/perfil_Aluno.html', {'alertas':alertas,'aluno': user,'estagio': estagio, 'documentos': documentos})
 
-    except Exception as e:
-        messages.error(request, 'Erro ao descaregar o arquivo.')
-    return HttpResponseRedirect(reverse('painel_user'))
+def alunos(request):
+    alertas = get_alerts(request)
+    user = request.user
+    if user.is_Coordenador_Curso:
+        alunos = CustomUser.objects.filter(curso = user.curso)
+        return render(request,'G_Estagios/Alunos/lista_alunos',{'alertas':alertas,'alunos':alunos})
+    else:
+        messages.error(request,'Não Podes aceder a essa pagina')
+        return HttpResponseRedirect(reverse('dash'))

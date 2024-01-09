@@ -2,6 +2,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
+from .models import Alertas
 
 class VerificarAutenticacaoMiddleware:
     def __init__(self, get_response):
@@ -17,3 +18,4 @@ class VerificarAutenticacaoMiddleware:
 
         response = self.get_response(request)
         return response
+    

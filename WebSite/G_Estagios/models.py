@@ -40,7 +40,7 @@ class CustomUser(AbstractUser):
 class Alertas(models.Model):
     id = models.AutoField(primary_key=True)
     Texto = models.TextField(blank=True)
-    curso = models.TimeField(blank=True)
+    curso = models.ForeignKey(Curso, null = True,blank=True,on_delete = models.DO_NOTHING)
     id_user = models.ForeignKey(CustomUser, null= True ,related_name='user', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
