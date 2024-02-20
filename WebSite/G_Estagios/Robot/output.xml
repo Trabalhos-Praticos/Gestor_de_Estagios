@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.10.12 on linux)" generated="2024-02-20T15:41:36.523782" rpa="false" schemaversion="5">
+<suite id="s1" name="Modelo" source="/home/andre/Documentos/GitHub/Gestor_de_Estagios/WebSite/G_Estagios/Robot/modelo.robot">
+<test id="s1-t1" name="cenario 1: abrir o Website" line="33">
+<kw name="Abrir o website">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-02-20T15:41:36.713473" level="INFO">Opening browser 'chrome' to base url 'http://127.0.0.1:8000/'.</msg>
+<arg>${URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-02-20T15:41:36.713116" elapsed="1.440969"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-02-20T15:41:38.154523" elapsed="0.118115"/>
+</kw>
+<status status="PASS" start="2024-02-20T15:41:36.711927" elapsed="1.560911"/>
+</kw>
+<status status="PASS" start="2024-02-20T15:41:36.711150" elapsed="1.562217"/>
+</test>
+<test id="s1-t2" name="Cenario 2: Faz login" line="36">
+<kw name="Fazer login">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-02-20T15:41:38.283872" level="INFO">Opening browser 'chrome' to base url 'http://127.0.0.1:8000/'.</msg>
+<arg>${URL}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-02-20T15:41:38.283514" elapsed="1.537235"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-02-20T15:41:39.821991" level="INFO">Clicking element 'css=#loginBtn'.</msg>
+<arg>css=#loginBtn</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2024-02-20T15:41:39.821277" elapsed="0.340152"/>
+</kw>
+<kw name="Input Email">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>css=#email</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2024-02-20T15:41:40.162298" elapsed="0.066199"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-02-20T15:41:40.229286" level="INFO">Typing text 'andre.c@ipvc.pt' into text field 'css=#email'.</msg>
+<arg>css=#email</arg>
+<arg>${email}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-02-20T15:41:40.228815" elapsed="0.210554"/>
+</kw>
+<arg>andre.c@ipvc.pt</arg>
+<status status="PASS" start="2024-02-20T15:41:40.161796" elapsed="0.277813"/>
+</kw>
+<kw name="Input Password">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-02-20T15:41:40.440889" level="INFO">Typing text 'Andre1gpg' into text field 'css=#password'.</msg>
+<arg>css=#password</arg>
+<arg>${Password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-02-20T15:41:40.440490" elapsed="0.168750"/>
+</kw>
+<arg>Andre1gpg</arg>
+<status status="PASS" start="2024-02-20T15:41:40.439926" elapsed="0.169573"/>
+</kw>
+<kw name="Submit Credentials">
+<kw name="Submit Form" owner="SeleniumLibrary">
+<msg time="2024-02-20T15:41:40.610399" level="INFO">Submitting form 'None'.</msg>
+<doc>Submits a form identified by ``locator``.</doc>
+<status status="PASS" start="2024-02-20T15:41:40.610217" elapsed="0.437032"/>
+</kw>
+<status status="PASS" start="2024-02-20T15:41:40.609786" elapsed="0.437741"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-02-20T15:41:41.047863" elapsed="0.118835"/>
+</kw>
+<status status="PASS" start="2024-02-20T15:41:38.282942" elapsed="2.883964"/>
+</kw>
+<status status="PASS" start="2024-02-20T15:41:38.278193" elapsed="2.889044"/>
+</test>
+<status status="PASS" start="2024-02-20T15:41:36.525325" elapsed="4.642555"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Modelo">Modelo</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
