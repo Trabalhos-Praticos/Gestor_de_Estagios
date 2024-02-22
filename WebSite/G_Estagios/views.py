@@ -9,6 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib.auth.hashers import make_password
 from django.http import FileResponse, HttpResponse
+from rest_framework import generics
+from .serializers import UserSerializer
+
 
 def Home(request):
     user = request.user
@@ -26,6 +29,11 @@ def get_alerts(request):
     alertas_recentes = Alertas.objects.filter(created_at__gte=data_limite, curso=request.user.curso)
     return alertas_recentes
 
+
+
+class UserList(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
 
 #def Dashboard(request):
 #    user = request.user
