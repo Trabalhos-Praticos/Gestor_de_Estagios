@@ -12,6 +12,9 @@ class VerificarAutenticacaoMiddleware:
         # Lista de páginas permitidas sem autenticação
         paginas_sem_autenticacao = ['/login/', '/registo/','/']
 
+        if request.path_info.startswith('/api/'):
+            return self.get_response(request)
+
         if not request.user.is_authenticated and request.path_info not in paginas_sem_autenticacao:
             # Redireciona para a página de login se o usuário não estiver autenticado
             return HttpResponseRedirect(reverse('Home'))
