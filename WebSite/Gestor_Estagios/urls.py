@@ -53,5 +53,6 @@ urlpatterns = [
     path('user/perfil/<int:user_id>',views.perfil, name='perfil_user'),
     path('alunos/',views.alunos,name='listaalunos'),
     path('api/users/', views.UserList.as_view(), name='user-list'),
+    path('api/check_email/', views.check_email, name='check_email'),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 handler404 = 'G_Estagios.views.pagina_404_personalizada'

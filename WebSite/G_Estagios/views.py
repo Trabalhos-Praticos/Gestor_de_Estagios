@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 from django.utils import timezone
 from django.shortcuts import redirect, render, HttpResponseRedirect,get_object_or_404
 from django.contrib import messages
@@ -8,9 +9,10 @@ from .models import verify_email,CustomUser,Curso, obter_polo_por_curso , verifi
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib.auth.hashers import make_password
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse, HttpResponse, JsonResponse
 from rest_framework import generics
 from .serializers import UserSerializer
+from django.views.decorators.csrf import csrf_exempt
 
 
 def Home(request):
@@ -35,6 +37,24 @@ class UserList(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
+@csrf_exempt
+def check_email(request):
+    if request.method == 'POST':
+        # Verifique se o corpo da solicitação não está vazio
+        if not request.body:
+            return JsonResponse({'error': 'Corpo da solicitação vazio'}, status=400)
+
+        try:
+            data = json.loads(request.body)
+            email = data.get('email', '')
+            exists = CustomUser.objects.filter(username=email).exists()
+            return JsonResponse({'exists': exists})
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato de JSON inválido'}, status=400)
+    else:
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
+    
+    
 #def Dashboard(request):
 #    user = request.user
 #    current_page = None
