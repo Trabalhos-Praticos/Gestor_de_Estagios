@@ -1,108 +1,111 @@
-# Gestor_de_Estagios
-# **Introdução**
-Este é um projeto que pode vir a ajudar muitas escolas que ainda não tenham esta implementação, nada mais é que uma aplicação onde possam ser geridos os estágios dos alunos.
-# Indice
+# Internship-Management-Platform
+# **Introduction**
+This project aims to assist many schools that have not yet implemented such a system. It is essentially an application for managing student internships.
+
+# Index
 - [Framework](#Framework)
      - [Django](#Django)
-- [Dependencias](#dependências)
+- [Dependencies](#Dependencies)
 - [API](#API)
+
 # Framework
 ## Django
-   Django é uma framework de desenvolvimento web em Python que facilita a criação de sites e aplicações web. Ele fornece um conjunto de ferramentas e funcionalidades pré-construídas para ajudar o processo de desenvolvimento, incluindo gestão de bases de dados, autenticação de utilizadores e criação de interfaces de administração.
- - **Vantagens**
-    - Produtividade: O Django fornece uma série de componentes pré-construídos e funcionalidades comuns, o que acelera o desenvolvimento de aplicações web. Isso permite que os desenvolvedores se concentrem mais na lógica específica da aplicação em vez de reinventar a roda.
-      
-    - Segurança: O Django possui medidas de segurança integradas para proteger contra vulnerabilidades comuns, como a injeção de SQL, cross-site scripting (XSS) e cross-site request forgery (CSRF). Isso ajuda a desenvolver aplicações mais seguras por padrão.
-      
-    - Administração automática: O Django inclui uma interface de administração pronta para uso, que permite aos desenvolvedores criar, ler, atualizar e excluir dados da aplicação sem escrever código personalizado. Isso é útil para a administração e manutenção de sistemas.
-    
-    - Arquitetura baseada em padrões: O Django segue o padrão de arquitetura Modelo-Visão-Template (MVT), que promove a organização limpa do código e a separação de preocupações.
-    
-    - Documentação abrangente: O Django possui uma documentação extensa e uma comunidade ativa, o que facilita o aprendizado e o suporte contínuo.
-    
-    - Reutilização de código: O framework encoraja a reutilização de componentes e bibliotecas, economizando tempo e esforço na criação de funcionalidades comuns.
-    
-    - Escalabilidade: O Django é escalável e pode ser usado para criar aplicações pequenas ou grandes. É utilizado por muitos sites e serviços populares, demonstrando sua capacidade de escala.
-    
-    - Comunidade ativa: Há uma comunidade de desenvolvedores ativos e uma ampla variedade de pacotes de terceiros disponíveis, facilitando a extensão e personalização de aplicações.
-    
-    - Flexibilidade: Embora siga convenções, o Django permite a personalização, permitindo que os desenvolvedores adaptem o framework às necessidades específicas de seus projetos.
-    
-    - Gratuito e de código aberto: O Django é de código aberto e gratuito, tornando-o uma escolha económica para muitos projetos.
+Django is a web development framework in Python that simplifies the creation of websites and web applications. It provides a set of pre-built tools and functionalities to aid the development process, including database management, user authentication, and admin interface creation.
 
-# Api
-APIs são regras que permitem que programas diferentes comuniquem e partilhem informações de forma padronizada, facilitando a integração entre aplicações e a partilha de dados.
+### Advantages
+   - Productivity: Django offers a number of pre-built components and common functionalities, speeding up the development of web applications. This allows developers to focus more on the specific logic of the application instead of reinventing the wheel.
+     
+   - Security: Django includes built-in security measures to protect against common vulnerabilities such as SQL injection, cross-site scripting (XSS), and cross-site request forgery (CSRF). This helps in developing more secure applications by default.
+     
+   - Automatic Administration: Django comes with a ready-to-use admin interface, which enables developers to create, read, update, and delete application data without writing custom code. This is useful for system administration and maintenance.
+   
+   - Standards-based Architecture: Django follows the Model-View-Template (MVT) architectural pattern, which promotes clean code organization and separation of concerns.
+   
+   - Comprehensive Documentation: Django has extensive documentation and an active community, making it easier to learn and receive ongoing support.
+   
+   - Code Reuse: The framework encourages the reuse of components and libraries, saving time and effort in developing common functionalities.
+   
+   - Scalability: Django is scalable and can be used to build small or large applications. It is used by many popular websites and services, demonstrating its scalability.
+   
+   - Active Community: There is an active community of developers and a wide variety of third-party packages available, making it easy to extend and customize applications.
+   
+   - Flexibility: While following conventions, Django allows for customization, enabling developers to tailor the framework to their project's specific needs.
+   
+   - Free and Open Source: Django is open source and free, making it an economical choice for many projects.
+
+# API
+APIs are rules that allow different programs to communicate and share information in a standardized manner, facilitating integration between applications and data sharing.
+
 # Firebase
 
-# Dependências
+# Dependencies
 ## Node.js
-**Node.js** é um ambiente de execução de código JavaScript no lado do servidor, construído no motor V8 do Google Chrome. Permite executar JavaScript no servidor, oferecendo uma maneira eficiente de criar aplicativos da web escaláveis e em tempo real.
+**Node.js** is a server-side JavaScript code execution environment, built on Google Chrome's V8 engine. It allows running JavaScript on the server, offering an efficient way to create scalable and real-time web applications.
 
-## Principais Características
+### Key Features
 
-1. **JavaScript no Lado do Servidor:** O Node.js permite usar JavaScript no servidor, unificando o desenvolvimento da linguagem em todo o aplicativo, desde o front-end até o back-end.
+1. **Server-Side JavaScript:** Node.js enables the use of JavaScript on the server, unifying the development language across the entire application, from front-end to back-end.
 
-2. **Assíncrono e Orientado a Eventos:** O Node.js é projetado para ser não bloqueante e assíncrono. Utiliza um modelo de E/S não bloqueante e é orientado a eventos, o que o torna eficiente para operações intensivas de I/O.
+2. **Asynchronous and Event-Driven:** Node.js is designed to be non-blocking and asynchronous. It uses a non-blocking I/O model and is event-driven, making it efficient for intensive I/O operations.
 
-3. **Desempenho Rápido:** O motor V8 do Google Chrome é altamente otimizado para executar JavaScript de maneira eficiente, proporcionando um desempenho rápido ao Node.js, especialmente em aplicativos que exigem manipulação rápida de eventos em tempo real.
+3. **Fast Performance:** Google Chrome's V8 engine is highly optimized for running JavaScript efficiently, providing fast performance to Node.js, especially in applications that require quick event handling in real-time.
 
-4. **Módulos e Pacotes:** O Node.js segue o modelo CommonJS para modularização, permitindo dividir o código em módulos reutilizáveis. O npm (Node Package Manager) é um sistema de gerenciamento de pacotes que facilita a instalação e distribuição de bibliotecas e ferramentas adicionais.
+4. **Modules and Packages:** Node.js follows the CommonJS model for modularization, allowing the code to be divided into reusable modules. The npm (Node Package Manager) is a package management system that facilitates the installation and distribution of additional libraries and tools.
 
-5. **Comunidade Ativa:** O Node.js possui uma comunidade grande e ativa, com uma ampla variedade de módulos disponíveis no repositório npm. Isso facilita a construção de aplicativos poderosos usando bibliotecas prontamente disponíveis.
+5. **Active Community:** Node.js has a large and active community, with a wide variety of modules available in the npm repository. This makes it easier to build powerful applications using readily available libraries.
 
-6. **Suporte para Programação em Tempo Real:** O Node.js é amplamente utilizado para aplicativos que requerem comunicação em tempo real, como chat em tempo real, jogos online, colaboração em documentos, entre outros.
+6. **Support for Real-Time Programming:** Node.js is widely used for applications requiring real-time communication, such as real-time chat, online games, document collaboration, among others.
 
-O Node.js é uma escolha popular para desenvolvedores que desejam usar JavaScript para construir aplicativos escaláveis e eficientes no lado do servidor. Ele tem sido bem-sucedido em diversos casos de uso, desde APIs RESTful até aplicativos da web em tempo real.
+Node.js is a popular choice for developers wanting to use JavaScript to build scalable and efficient server-side applications. It has been successful in a variety of use cases, from RESTful APIs to real-time web applications.
 
-## Instalação
+### Installation
 
-### Linux
-1. deixar o teminal em  modo sudo:
+#### Linux
+1. Switch to superuser mode:
 ```bash
 sudo su
 ```
-2. Dar update aos pacotes linux
+2. Update linux packages
 ```bash
 apt-get update
 ```
-3. Instalar o node.js e o npm
+3. Install node.js and npm
 ```bash
 apt-get install nodejs npm
 ```
 ### Windows
-#### Passo 1: Baixar o Instalador
+#### Step 1: Download the installer
 
-- Acesse o site oficial do Node.js em [nodejs.org](https://nodejs.org/).
-- Clique em "Downloads" no menu superior.
+- Access the official site of Node.js in [nodejs.org](https://nodejs.org/).
+- Click on "Downloads" in ther superior menu. 
 
-#### Passo 2: Escolher a Versão LTS (Recomendado)
+#### Step 2: Pick the LTS Version (Recommended)
+- On the downloads page, it is recommended to choose the LTS (Long Term Support) version to obtain a stable and long-term supported version. Click on the "LTS" button to download the recommended version.
 
-- Na página de downloads, é recomendável escolher a versão LTS (Long Term Support) para obter uma versão estável e suportada a longo prazo. Clique no botão "LTS" para baixar a versão recomendada.
+#### Step 3: Download the Node.js Installer
 
-#### Passo 3: Baixar o Instalador do Node.js
+- After selecting the LTS version, the download of the installer will start automatically. Wait for the download to complete.
+- 
+### Step 4: Execute the Installer
 
-- Após selecionar a versão LTS, o download do instalador começará automaticamente. Espere o download ser concluído.
+- After the download, run the installer file (usually a .msi file, like node-v14.x.x-x64.msi). Double-click to start the installation.
 
-### Passo 4: Executar o Instalador
+#### Step 5: Configure the Installer
 
-- Após o download, execute o arquivo do instalador (normalmente um arquivo `.msi`, como `node-v14.x.x-x64.msi`). Dê um clique duplo para iniciar a instalação.
+In the installation window, click "Next".
+Accept the terms of the license agreement and click "Next" again.
+Choose the installation directory or leave the default and click "Next".
+Select any additional features, if necessary, and click "Next".
+Click "Install" to start the installation process.
 
-#### Passo 5: Configurar o Instalador
+#### Step 6: Await the Installation
 
-- Na janela de instalação, clique em "Next" (Próximo).
-- Aceite os termos do contrato de licença e clique em "Next" novamente.
-- Escolha o diretório de instalação ou deixe o padrão e clique em "Next".
-- Selecione os recursos adicionais, se necessário, e clique em "Next".
-- Clique em "Install" para iniciar o processo de instalação.
+- Wait while the Node.js installer configures Node.js and npm (Node Package Manager) on your system.
 
-#### Passo 6: Aguardar a Instalação
+#### Step 7: Verify the Installation
 
-- Aguarde enquanto o instalador do Node.js configura o Node.js e o npm (gerenciador de pacotes do Node.js) no seu sistema.
-
-#### Passo 7: Verificar a Instalação
-
-- Após a instalação, abra o Prompt de Comando (cmd) ou o PowerShell.
-- Digite os seguintes comandos para verificar se o Node.js e o npm foram instalados corretamente:
+- After the installation, open the Command Prompt (cmd) or PowerShell.
+- Type the following commands to check if Node.js and npm were installed correctly:
 
   ```bash
   node --version
@@ -110,101 +113,106 @@ apt-get install nodejs npm
 
 ## Python
 
-**Python** é uma linguagem de programação de alto nível, interpretada, orientada a objetos e de propósito geral. Criada por Guido van Rossum e lançada pela primeira vez em 1991, Python destaca-se pela sua simplicidade e legibilidade de código.
+**Python** it is a high-level, interpreted, object-oriented, and general-purpose programming language. Created by Guido van Rossum and first released in 1991, Python is notable for its simplicity and code readability.
 
-## Características Principais
+## Main Characteristics
 
-1. **Sintaxe Simples e Clara:** A sintaxe de Python é projetada para ser fácil de ler e escrever, enfatizando a legibilidade do código.
+1. **Simple and Clear Syntax:** Python's syntax is designed to be easy to read and write, emphasizing code readability.
 
-2. **Multiplataforma:** Python é compatível com várias plataformas, incluindo Windows, macOS e Linux, tornando-o altamente portátil.
+2. **Cross-Platform:** Python is compatible with various platforms, including Windows, macOS, and Linux, making it highly portable.
 
-3. **Ampla Biblioteca Padrão:** Python possui uma biblioteca padrão extensa, fornecendo módulos e pacotes para realizar diversas tarefas, desde manipulação de arquivos até desenvolvimento web.
+3. **Extensive Standard Library:** Python has an extensive standard library, providing modules and packages for a wide range of tasks, from file manipulation to web development.
 
-4. **Interpretada e Compilada Just-In-Time:** Python é uma linguagem interpretada, mas utiliza compilação just-in-time para melhorar o desempenho em tempo de execução.
+4. **Interpreted and Just-In-Time Compiled:** Python is an interpreted language, but it uses just-in-time compilation to improve performance at runtime.
 
-5. **Comunidade Ativa:** A comunidade Python é vasta e ativa, com suporte e contribuições contínuas. O gerenciador de pacotes `pip` facilita a instalação e compartilhamento de bibliotecas.
+5. **Active Community:** The Python community is vast and active, with continuous support and contributions. The package manager 'pip' makes it easy to install and share libraries.
 
-6. **Versatilidade:** Python é utilizado em diversas áreas, incluindo desenvolvimento web, automação, ciência de dados, inteligência artificial, aprendizado de máquina, entre outras.
+6. **Versatility:** Python is used in various areas, including web development, automation, data science, artificial intelligence, machine learning, and more.
 
-## Exemplo Simples
 
-Aqui está um exemplo simples de código Python que imprime "Olá, Mundo!":
+## Simple Example
+
+Here is a simple example of Python code that prints "Hello, World!":
 
 ```python
-print("Olá, mundo)
+print("Hello, World")
 ```
 ## Linux
-#### Passo 1: Verificar a Versão do Python Pré-instalada
-Abre um terminal e verifica se o Python já está instalado e a sua versão com o comando:
+#### Step 1: Verify the Version of Python Pre-installed
+
+Open a terminal and check if Python is already installed and its version with the command:
   ```bash
   python --version
   ```
-  ou
+  or
   ```bash
   python3 --version
   ```
-  Se o Python já estiver instalado, o comando mostrará a versão. Caso contrário, continua para o próximo passo.
+ 
+If Python is already installed, the command will display the version. Otherwise, proceed to the next step.
 
-#### Passo 2: Atualizar o Gestor de Pacotes
-Antes de instalar o Python, é sempre uma boa prática atualizar o gestor de pacotes do teu sistema. Utiliza o seguinte comando, dependendo do teu sistema:
+#### Step 2: Update the Package Manager
+Before installing Python, it's always good practice to update your system's package manager. Use the following command, depending on your system:
 
-Para sistemas baseados no Debian (Ubuntu, Debian, etc.):
+For Debian-based systems (Ubuntu, Debian, etc.):
 ```bash
 sudo apt-get update
 ```
-Para sistemas baseados no Red Hat (Fedora, CentOS, etc.):
+For Red Hat-based systems (Fedora, CentOS, etc.):
 ```bash
 sudo yum update
 ```
-#### Passo 3: Instalar o Python
-Agora podes instalar o Python utilizando o gestor de pacotes do teu sistema. Utiliza os comandos apropriados conforme o teu sistema:
+#### Step 3: Install Python
 
-Para sistemas baseados no Debian:
+Now you can install Python using your system's package manager. Use the appropriate commands for your system:
+
+For Debian-based systems (Ubuntu, Debian, etc.):
 ```bash
 sudo apt-get install python3
 ```
-Para sistemas baseados no Red Hat:
+For Red Hat-based systems (Fedora, CentOS, etc.):
 ```bash
 sudo yum install python3
 ```
-#### Passo 4: Verificar a Instalação
-Depois de instalado, verifica a versão do Python utilizando:
+#### Step 4: Verify the Installation
+
+After installation, check the Python version using:
 ```bash
 python3 --version
 ```
-Se a instalação foi bem-sucedida, deverá mostrar a versão do Python.
+If the installation was successful, it should display the Python version.
 
-Lembra-te de que, em alguns sistemas, o comando python pode ser usado em vez de python3. Certifica-te de ajustar conforme necessário.
+Remember that, on some systems, the command python might be used instead of python3. Make sure to adjust as necessary.
 
 ## Windows
-#### Passo 1: Descarregar o Python
+#### Step 1: Download Python
 
-- Visita o site oficial do Python em [python.org](https://www.python.org/).
-- Clica em "Downloads" no menu superior.
+- Visit the official Python website at [python.org](https://www.python.org/).
+- Click on "Downloads" in the top menu.
 
-#### Passo 2: Descarregar o Instalador
+#### Step 2: Download the Installer
 
-- Desce até à secção "Looking for a specific release?" e escolhe a versão desejada.
-- Clica no link para descarregar o instalador (normalmente um ficheiro `.exe`, como `python-3.x.x.exe`).
+- Scroll down to the "Looking for a specific release?" section and choose the desired version.
+- Click on the link to download the installer (usually a .exe file, such as python-3.x.x.exe).
 
-#### Passo 3: Executar o Instalador
+#### Step 3: Execute the Installer
 
-- Após o download, executa o ficheiro `.exe` que descarregaste.
+- After downloading, run the '.exe' file you downloaded.
 
-#### Passo 4: Configurar o Instalador
+#### Step 4: Configure the Installer
 
-- Na janela de instalação, assinala a opção "Add Python to PATH" (Adicionar Python ao PATH).
-- Clica em "Install Now" (Instalar Agora).
+- In the installation window, check the option "Add Python to PATH".
+- Click on "Install Now".
 
-#### Passo 5: Aguardar a Instalação
+#### Step 5: Await the Installation
 
-- Aguarda enquanto o instalador configura o Python no teu sistema.
+- Wait while the installer configures Python on your system.
 
-#### Passo 6: Verificar a Instalação
+#### Step 6: Verify the Installation
 
-- Abre o Prompt de Comando (cmd) ou o PowerShell.
-- Digita `python --version` ou `python -V` e pressiona Enter. Deve mostrar a versão do Python instalada.
+Open the Command Prompt (cmd) or PowerShell.
+Type python '--version' or 'python -V' and press Enter. It should display the installed Python version.
 
-#### Passo 7: Instalação Bem-Sucedida
+#### Step 7: Successful Installation
 
-- Se vires a versão do Python, a instalação foi bem-sucedida.
+- If you see the Python version, the installation was successful.
